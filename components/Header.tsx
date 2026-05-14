@@ -27,17 +27,18 @@ const Header = () => {
       {/* Pill constrained to max-w-4xl, centered */}
       <div className="mx-auto max-w-4xl px-4">
         <div
-          className={`
-            flex items-center justify-between rounded-full px-5 py-2 transition-all duration-300
-            ${
-              scrolled
-                ? 'border border-[#E8E4DF] bg-white/90 shadow-lg shadow-black/5 backdrop-blur-md dark:border-white/10 dark:bg-[#0f0f0f]/90'
-                : 'border border-[#E8E4DF]/60 bg-white/70 backdrop-blur-sm dark:border-white/8 dark:bg-[#0f0f0f]/70'
-            }
-          `}
+          className={`flex items-center justify-between rounded-full px-5 py-2 transition-all duration-300 ${
+            scrolled
+              ? 'border border-[#E8E4DF] bg-white/90 shadow-lg shadow-black/5 backdrop-blur-md dark:border-white/10 dark:bg-[#0f0f0f]/90'
+              : 'border border-[#E8E4DF]/60 bg-white/70 backdrop-blur-sm dark:border-white/8 dark:bg-[#0f0f0f]/70'
+          } `}
         >
           {/* Left: Logo + Brand */}
-          <Link href="/" aria-label={siteMetadata.headerTitle} className="flex items-center gap-2.5">
+          <Link
+            href="/"
+            aria-label={siteMetadata.headerTitle}
+            className="flex items-center gap-2.5"
+          >
             <Image
               src="/static/images/akash-logo.png"
               alt="Akash Logo"
@@ -47,7 +48,7 @@ const Header = () => {
               priority
             />
             {typeof siteMetadata.headerTitle === 'string' ? (
-              <span className="hidden text-base font-bold tracking-tight text-gray-900 dark:text-white sm:block">
+              <span className="hidden text-base font-bold tracking-tight text-gray-900 sm:block dark:text-white">
                 {siteMetadata.headerTitle}
               </span>
             ) : (
@@ -83,7 +84,7 @@ const Header = () => {
             <ThemeSwitch />
             <Link
               href="/blog"
-              className="hidden rounded-full bg-[#FF8A1E] px-4 py-1.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-[#e6780f] hover:shadow-md hover:shadow-orange-200 dark:hover:shadow-orange-900/30 sm:block"
+              className="hidden rounded-full bg-[#FF8A1E] px-4 py-1.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-[#e6780f] hover:shadow-md hover:shadow-orange-200 sm:block dark:hover:shadow-orange-900/30"
             >
               Newsletter
             </Link>

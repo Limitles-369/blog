@@ -58,7 +58,9 @@ export default function Footer() {
           {/* Link columns */}
           {Object.entries(footerLinks).map(([heading, links]) => (
             <div key={heading}>
-              <h3 className="mb-4 text-sm font-semibold text-gray-900 dark:text-white">{heading}</h3>
+              <h3 className="mb-4 text-sm font-semibold text-gray-900 dark:text-white">
+                {heading}
+              </h3>
               <ul className="space-y-2.5">
                 {links.map((link) => (
                   <li key={link.label}>
@@ -76,7 +78,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="flex flex-col items-center justify-between gap-3 border-t border-[#E8E4DF] py-6 text-sm text-gray-400 dark:border-white/10 sm:flex-row">
+        <div className="flex flex-col items-center justify-between gap-3 border-t border-[#E8E4DF] py-6 text-sm text-gray-400 sm:flex-row dark:border-white/10">
           <span>© {new Date().getFullYear()} Akash. All rights reserved.</span>
           <span>
             Built with{' '}
