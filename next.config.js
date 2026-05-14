@@ -68,12 +68,14 @@ module.exports = () => {
     basePath,
     reactStrictMode: true,
     trailingSlash: true,
-    turbopack: {
-      root: process.cwd(),
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
+    experimental: {
+      turbo: {
+        root: process.cwd(),
+        rules: {
+          '*.svg': {
+            loaders: ['@svgr/webpack'],
+            as: '*.js',
+          },
         },
       },
     },
