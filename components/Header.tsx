@@ -3,12 +3,12 @@
 import { useState, useEffect } from 'react'
 import siteMetadata from '@/data/siteMetadata'
 import headerNavLinks from '@/data/headerNavLinks'
-import Logo from '@/data/logo.svg'
 import Link from './Link'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
 import SearchButton from './SearchButton'
 import { usePathname } from 'next/navigation'
+import Image from 'next/image'
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false)
@@ -23,12 +23,12 @@ const Header = () => {
   }, [])
 
   return (
-    <header className="sticky top-0 z-50 w-full">
-      {/* Outer padding wrapper */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 xl:px-8">
+    <header className="sticky top-0 z-50 w-full pt-3">
+      {/* Pill constrained to max-w-4xl, centered */}
+      <div className="mx-auto max-w-4xl px-4">
         <div
           className={`
-            mt-3 flex items-center justify-between rounded-full px-4 py-2.5 transition-all duration-300
+            flex items-center justify-between rounded-full px-5 py-2 transition-all duration-300
             ${
               scrolled
                 ? 'border border-[#E8E4DF] bg-white/90 shadow-lg shadow-black/5 backdrop-blur-md dark:border-white/10 dark:bg-[#0f0f0f]/90'
@@ -38,9 +38,14 @@ const Header = () => {
         >
           {/* Left: Logo + Brand */}
           <Link href="/" aria-label={siteMetadata.headerTitle} className="flex items-center gap-2.5">
-            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#FF8A1E]">
-              <Logo />
-            </div>
+            <Image
+              src="/static/images/akash-logo.png"
+              alt="Akash Logo"
+              width={32}
+              height={32}
+              className="rounded-full"
+              priority
+            />
             {typeof siteMetadata.headerTitle === 'string' ? (
               <span className="hidden text-base font-bold tracking-tight text-gray-900 dark:text-white sm:block">
                 {siteMetadata.headerTitle}

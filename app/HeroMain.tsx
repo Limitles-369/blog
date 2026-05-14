@@ -14,14 +14,15 @@ const CARD_IMAGES = [
   '/static/images/blog-cards/card-5.png',
 ]
 
-const MAX_DISPLAY = 6
+const MAX_DISPLAY = 7
 
 interface BlogCardProps {
   post: CoreContent<Blog>
   index: number
+  featured?: boolean
 }
 
-function BlogCard({ post, index }: BlogCardProps) {
+function BlogCard({ post, index, featured = false }: BlogCardProps) {
   const { slug, date, title, summary, tags } = post
   const img = post.images?.[0] ?? CARD_IMAGES[index % CARD_IMAGES.length]
   const tag = tags?.[0] ?? 'Article'
@@ -32,22 +33,22 @@ function BlogCard({ post, index }: BlogCardProps) {
       className={`group flex flex-col overflow-hidden rounded-2xl border border-[#E8E4DF] bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/8 dark:border-white/10 dark:bg-[#1a1a1a] animate-fade-in-up ${stagger}`}
     >
       {/* Thumbnail */}
-      <div className="relative aspect-[16/9] w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
+      <div className={`relative w-full overflow-hidden bg-gray-100 dark:bg-gray-800 ${featured ? 'aspect-[16/9]' : 'aspect-[16/9]'}`}>
         <Image
           src={img}
           alt={title}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-105"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          sizes={featured ? '(max-width: 640px) 100vw, 50vw' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'}
         />
-        {/* Category badge over image */}
+        {/* Category badge */}
         <span className="absolute top-3 left-3 rounded-full bg-[#FF8A1E]/90 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-white backdrop-blur-sm">
           {tag}
         </span>
       </div>
 
       {/* Content */}
-      <div className="flex flex-1 flex-col gap-3 p-5">
+      <div className={`flex flex-1 flex-col gap-3 ${featured ? 'p-6' : 'p-5'}`}>
         <time
           dateTime={date}
           className="text-xs font-medium text-gray-400 dark:text-gray-500"
@@ -56,21 +57,21 @@ function BlogCard({ post, index }: BlogCardProps) {
           {formatDate(date, siteMetadata.locale)}
         </time>
 
-        <h2 className="text-lg font-semibold leading-snug tracking-tight text-gray-900 transition-colors group-hover:text-[#FF8A1E] dark:text-white dark:group-hover:text-[#FF8A1E] line-clamp-2">
+        <h2 className={`font-semibold leading-snug tracking-tight text-gray-900 transition-colors group-hover:text-[#FF8A1E] dark:text-white dark:group-hover:text-[#FF8A1E] line-clamp-2 ${featured ? 'text-xl' : 'text-lg'}`}>
           <Link href={`/blog/${slug}`} aria-label={`Read "${title}"`}>
             {title}
           </Link>
         </h2>
 
         {summary && (
-          <p className="text-sm leading-relaxed text-gray-500 dark:text-gray-400 line-clamp-3 flex-1">
+          <p className={`leading-relaxed text-gray-500 dark:text-gray-400 flex-1 ${featured ? 'text-sm line-clamp-4' : 'text-sm line-clamp-3'}`}>
             {summary}
           </p>
         )}
 
         <Link
           href={`/blog/${slug}`}
-          className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-[#FF8A1E] transition-gap duration-200 hover:gap-2.5"
+          className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-[#FF8A1E]"
           aria-label={`Read more: "${title}"`}
         >
           Learn More
@@ -88,6 +89,9 @@ interface HomeProps {
 }
 
 export default function HeroMain({ posts }: HomeProps) {
+  const featuredPosts = posts.slice(0, 2)
+  const regularPosts = posts.slice(2, MAX_DISPLAY)
+
   return (
     <>
       {/* ── Hero Section ─────────────────────────────────────────────── */}
@@ -103,7 +107,7 @@ export default function HeroMain({ posts }: HomeProps) {
         </h1>
 
         {/* Sub-headline */}
-        <p className="animate-fade-in-up stagger-2 mx-auto mt-5 max-w-[580px] text-base leading-relaxed text-gray-500 dark:text-gray-400 sm:text-lg">
+        <p className="animate-fade-in-up stagger-2 mx-auto mt-5 max-w-[560px] text-base leading-relaxed text-gray-500 dark:text-gray-400 sm:text-lg">
           {siteMetadata.description}
         </p>
 
@@ -124,24 +128,34 @@ export default function HeroMain({ posts }: HomeProps) {
         <div className="mb-8 flex items-center justify-between">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">All Articles</h2>
           {posts.length > MAX_DISPLAY && (
-            <Link
-              href="/blog"
-              className="text-sm font-semibold text-[#FF8A1E] hover:underline"
-            >
+            <Link href="/blog" className="text-sm font-semibold text-[#FF8A1E] hover:underline">
               View all →
             </Link>
           )}
         </div>
 
-        {/* Grid */}
         {!posts.length ? (
           <p className="text-gray-500 dark:text-gray-400">No posts found.</p>
         ) : (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {posts.slice(0, MAX_DISPLAY).map((post, i) => (
-              <BlogCard key={post.slug} post={post} index={i} />
-            ))}
-          </div>
+          <>
+            {/* Featured top row — 2 large cards */}
+            {featuredPosts.length > 0 && (
+              <div className="mb-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
+                {featuredPosts.map((post, i) => (
+                  <BlogCard key={post.slug} post={post} index={i} featured={true} />
+                ))}
+              </div>
+            )}
+
+            {/* Regular 3-col grid */}
+            {regularPosts.length > 0 && (
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {regularPosts.map((post, i) => (
+                  <BlogCard key={post.slug} post={post} index={i + 2} featured={false} />
+                ))}
+              </div>
+            )}
+          </>
         )}
 
         {/* View More */}

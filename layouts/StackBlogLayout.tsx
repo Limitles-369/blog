@@ -80,7 +80,7 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
 
 // ─── Blog Card ───────────────────────────────────────────────────────────────
 
-function BlogCard({ post, index }: { post: CoreContent<Blog>; index: number }) {
+function BlogCard({ post, index, featured = false }: { post: CoreContent<Blog>; index: number; featured?: boolean }) {
   const { path, slug: postSlug, date, title, summary, tags } = post
   const img = post.images?.[0] ?? CARD_IMAGES[index % CARD_IMAGES.length]
   const tag = tags?.[0] ?? 'Article'
@@ -97,7 +97,7 @@ function BlogCard({ post, index }: { post: CoreContent<Blog>; index: number }) {
           alt={title}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-105"
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          sizes={featured ? '(max-width: 640px) 100vw, 50vw' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'}
         />
         <span className="absolute top-3 left-3 rounded-full bg-[#FF8A1E]/90 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-white backdrop-blur-sm">
           {tag}
@@ -105,7 +105,7 @@ function BlogCard({ post, index }: { post: CoreContent<Blog>; index: number }) {
       </div>
 
       {/* Content */}
-      <div className="flex flex-1 flex-col gap-3 p-5">
+      <div className={`flex flex-1 flex-col gap-3 ${featured ? 'p-6' : 'p-5'}`}>
         <time
           dateTime={date}
           className="text-xs font-medium text-gray-400 dark:text-gray-500"
@@ -114,14 +114,14 @@ function BlogCard({ post, index }: { post: CoreContent<Blog>; index: number }) {
           {formatDate(date, siteMetadata.locale)}
         </time>
 
-        <h2 className="text-lg font-semibold leading-snug tracking-tight text-gray-900 transition-colors group-hover:text-[#FF8A1E] dark:text-white dark:group-hover:text-[#FF8A1E] line-clamp-2">
+        <h2 className={`font-semibold leading-snug tracking-tight text-gray-900 transition-colors group-hover:text-[#FF8A1E] dark:text-white dark:group-hover:text-[#FF8A1E] line-clamp-2 ${featured ? 'text-xl' : 'text-lg'}`}>
           <Link href={`/${path}`} aria-label={`Read "${title}"`}>
             {title}
           </Link>
         </h2>
 
         {summary && (
-          <p className="text-sm leading-relaxed text-gray-500 dark:text-gray-400 line-clamp-3 flex-1">
+          <p className={`leading-relaxed text-gray-500 dark:text-gray-400 flex-1 ${featured ? 'text-sm line-clamp-4' : 'text-sm line-clamp-3'}`}>
             {summary}
           </p>
         )}
@@ -277,11 +277,24 @@ export default function StackBlogLayout({
         {displayPosts.length === 0 ? (
           <p className="py-16 text-center text-gray-400 dark:text-gray-500">No posts found.</p>
         ) : (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {displayPosts.map((post, i) => (
-              <BlogCard key={post.path} post={post} index={i} />
-            ))}
-          </div>
+          <>
+            {/* Featured top row — 2 large cards */}
+            {displayPosts.slice(0, 2).length > 0 && (
+              <div className="mb-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
+                {displayPosts.slice(0, 2).map((post, i) => (
+                  <BlogCard key={post.path} post={post} index={i} featured={true} />
+                ))}
+              </div>
+            )}
+            {/* Regular 3-col grid */}
+            {displayPosts.slice(2).length > 0 && (
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {displayPosts.slice(2).map((post, i) => (
+                  <BlogCard key={post.path} post={post} index={i + 2} featured={false} />
+                ))}
+              </div>
+            )}
+          </>
         )}
 
         {/* Pagination */}

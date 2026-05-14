@@ -1,7 +1,7 @@
 import Link from './Link'
 import siteMetadata from '@/data/siteMetadata'
 import SocialIcon from '@/components/social-icons'
-import Logo from '@/data/logo.svg'
+import Image from 'next/image'
 
 const footerLinks = {
   Articles: [
@@ -26,16 +26,20 @@ const footerLinks = {
 
 export default function Footer() {
   return (
-    <footer className="mt-24 border-t border-[#E8E4DF] bg-white dark:border-white/10 dark:bg-[#0f0f0f]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 xl:px-8">
+    <footer className="mt-16 border-t border-[#E8E4DF] bg-white dark:border-white/10 dark:bg-[#0f0f0f]">
+      <div className="px-4 sm:px-6 xl:px-10 2xl:px-16">
         {/* Top grid */}
         <div className="grid grid-cols-1 gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand column */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2.5">
-              <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#FF8A1E]">
-                <Logo />
-              </div>
+              <Image
+                src="/static/images/akash-logo.png"
+                alt="Akash Logo"
+                width={32}
+                height={32}
+                className="rounded-full"
+              />
               <span className="text-base font-bold text-gray-900 dark:text-white">
                 {siteMetadata.headerTitle}
               </span>
@@ -43,7 +47,6 @@ export default function Footer() {
             <p className="max-w-[220px] text-sm leading-relaxed text-gray-500 dark:text-gray-400">
               {siteMetadata.description}
             </p>
-            {/* Social icons row */}
             <div className="flex items-center gap-3 pt-1">
               <SocialIcon kind="github" href={siteMetadata.github} size={5} />
               <SocialIcon kind="x" href={siteMetadata.x} size={5} />
@@ -74,9 +77,7 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="flex flex-col items-center justify-between gap-3 border-t border-[#E8E4DF] py-6 text-sm text-gray-400 dark:border-white/10 sm:flex-row">
-          <span>
-            © {new Date().getFullYear()} {siteMetadata.author}. All rights reserved.
-          </span>
+          <span>© {new Date().getFullYear()} Akash. All rights reserved.</span>
           <span>
             Built with{' '}
             <Link
