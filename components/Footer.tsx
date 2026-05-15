@@ -4,18 +4,18 @@ import SocialIcon from '@/components/social-icons'
 import Image from 'next/image'
 
 const footerLinks = {
-  Articles: [
-    { label: 'Technology', href: '/tags/technology' },
-    { label: 'Tools', href: '/tags/tools' },
-    { label: 'Design', href: '/tags/design' },
-    { label: 'Productivity', href: '/tags/productivity' },
+  Pages: [
+    { label: 'Home', href: '/' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'Tags', href: '/tags' },
+    { label: 'Projects', href: '/projects' },
+    { label: 'About', href: '/about' },
   ],
-  Products: [
-    { label: 'Podcast', href: '#' },
-    { label: 'Assets', href: '#' },
-    { label: 'Product Hunt', href: '#' },
-    { label: 'Newsletter', href: '#' },
+  Legal: [
+    { label: 'Privacy Policy', href: '/privacy' },
+    { label: 'Terms and Conditions', href: '/terms' },
   ],
+  Contact: [{ label: 'Email', href: `mailto:${siteMetadata.email}` }],
   'Social Media': [
     { label: 'Instagram', href: siteMetadata.instagram || '#' },
     { label: 'Twitter / X', href: siteMetadata.x || '#' },
@@ -27,27 +27,27 @@ const footerLinks = {
 export default function Footer() {
   return (
     <footer className="mt-16 border-t border-[#E8E4DF] bg-white dark:border-white/10 dark:bg-[#0f0f0f]">
-      <div className="px-4 sm:px-6 xl:px-10 2xl:px-16">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Top grid */}
-        <div className="grid grid-cols-1 gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-10 py-10 sm:grid-cols-2 lg:grid-cols-6 lg:gap-12 lg:py-16">
           {/* Brand column */}
-          <div className="space-y-4">
+          <div className="space-y-5 lg:col-span-2 lg:pr-8">
             <Link href="/" className="flex items-center gap-2.5">
               <Image
                 src="/static/images/akash-logo.png"
                 alt="Akash Logo"
-                width={32}
-                height={32}
+                width={36}
+                height={36}
                 className="rounded-full"
               />
-              <span className="text-base font-bold text-gray-900 dark:text-white">
+              <span className="text-lg font-bold tracking-tight text-gray-900 dark:text-white">
                 {siteMetadata.headerTitle}
               </span>
             </Link>
-            <p className="max-w-[220px] text-sm leading-relaxed text-gray-500 dark:text-gray-400">
+            <p className="max-w-sm text-sm leading-relaxed text-gray-500 dark:text-gray-400">
               {siteMetadata.description}
             </p>
-            <div className="flex items-center gap-3 pt-1">
+            <div className="flex items-center gap-4 pt-2">
               <SocialIcon kind="github" href={siteMetadata.github} size={5} />
               <SocialIcon kind="x" href={siteMetadata.x} size={5} />
               <SocialIcon kind="instagram" href={siteMetadata.instagram} size={5} />
@@ -58,15 +58,15 @@ export default function Footer() {
           {/* Link columns */}
           {Object.entries(footerLinks).map(([heading, links]) => (
             <div key={heading}>
-              <h3 className="mb-4 text-sm font-semibold text-gray-900 dark:text-white">
+              <h3 className="mb-5 text-sm font-semibold tracking-wide text-gray-900 dark:text-white">
                 {heading}
               </h3>
-              <ul className="space-y-2.5">
+              <ul className="space-y-3.5">
                 {links.map((link) => (
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-gray-500 transition-colors hover:text-[#FF8A1E] dark:text-gray-400 dark:hover:text-[#FF8A1E]"
+                      className="text-sm font-medium text-gray-500 transition-colors hover:text-[#FF8A1E] dark:text-gray-400 dark:hover:text-[#FF8A1E]"
                     >
                       {link.label}
                     </Link>
@@ -78,17 +78,8 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="flex flex-col items-center justify-between gap-3 border-t border-[#E8E4DF] py-6 text-sm text-gray-400 sm:flex-row dark:border-white/10">
-          <span>© {new Date().getFullYear()} Akash. All rights reserved.</span>
-          <span>
-            Built with{' '}
-            <Link
-              href="https://github.com/timlrx/tailwind-nextjs-starter-blog"
-              className="text-[#FF8A1E] hover:underline"
-            >
-              Tailwind Next.js Blog
-            </Link>
-          </span>
+        <div className="flex flex-col items-center justify-center gap-3 border-t border-[#E8E4DF] py-8 text-sm font-medium text-gray-400 sm:flex-row dark:border-white/10">
+          <span>© {new Date().getFullYear()} Akash Samui. All rights reserved.</span>
         </div>
       </div>
     </footer>

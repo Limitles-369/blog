@@ -66,7 +66,11 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
       </span>
 
       {nextPage ? (
-        <Link href={`/${basePath}/page/${currentPage + 1}`} rel="next" className="btn-orange text-sm">
+        <Link
+          href={`/${basePath}/page/${currentPage + 1}`}
+          rel="next"
+          className="btn-orange text-sm"
+        >
           Next →
         </Link>
       ) : (
@@ -80,7 +84,15 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
 
 // ─── Blog Card ───────────────────────────────────────────────────────────────
 
-function BlogCard({ post, index, featured = false }: { post: CoreContent<Blog>; index: number; featured?: boolean }) {
+function BlogCard({
+  post,
+  index,
+  featured = false,
+}: {
+  post: CoreContent<Blog>
+  index: number
+  featured?: boolean
+}) {
   const { path, slug: postSlug, date, title, summary, tags } = post
   const img = post.images?.[0] ?? CARD_IMAGES[index % CARD_IMAGES.length]
   const tag = tags?.[0] ?? 'Article'
@@ -88,7 +100,7 @@ function BlogCard({ post, index, featured = false }: { post: CoreContent<Blog>; 
 
   return (
     <article
-      className={`group flex flex-col overflow-hidden rounded-2xl border border-[#E8E4DF] bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/8 dark:border-white/10 dark:bg-[#1a1a1a] animate-fade-in-up ${stagger}`}
+      className={`group animate-fade-in-up flex flex-col overflow-hidden rounded-2xl border border-[#E8E4DF] bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/8 dark:border-white/10 dark:bg-[#1a1a1a] ${stagger}`}
     >
       {/* Thumbnail */}
       <div className="relative aspect-[16/9] w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
@@ -97,9 +109,13 @@ function BlogCard({ post, index, featured = false }: { post: CoreContent<Blog>; 
           alt={title}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-105"
-          sizes={featured ? '(max-width: 640px) 100vw, 50vw' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'}
+          sizes={
+            featured
+              ? '(max-width: 640px) 100vw, 50vw'
+              : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
+          }
         />
-        <span className="absolute top-3 left-3 rounded-full bg-[#FF8A1E]/90 px-2.5 py-0.5 text-xs font-semibold uppercase tracking-wide text-white backdrop-blur-sm">
+        <span className="absolute top-3 left-3 rounded-full bg-[#FF8A1E]/90 px-2.5 py-0.5 text-xs font-semibold tracking-wide text-white uppercase backdrop-blur-sm">
           {tag}
         </span>
       </div>
@@ -114,14 +130,18 @@ function BlogCard({ post, index, featured = false }: { post: CoreContent<Blog>; 
           {formatDate(date, siteMetadata.locale)}
         </time>
 
-        <h2 className={`font-semibold leading-snug tracking-tight text-gray-900 transition-colors group-hover:text-[#FF8A1E] dark:text-white dark:group-hover:text-[#FF8A1E] line-clamp-2 ${featured ? 'text-xl' : 'text-lg'}`}>
+        <h2
+          className={`line-clamp-2 leading-snug font-semibold tracking-tight text-gray-900 transition-colors group-hover:text-[#FF8A1E] dark:text-white dark:group-hover:text-[#FF8A1E] ${featured ? 'text-xl' : 'text-lg'}`}
+        >
           <Link href={`/${path}`} aria-label={`Read "${title}"`}>
             {title}
           </Link>
         </h2>
 
         {summary && (
-          <p className={`leading-relaxed text-gray-500 dark:text-gray-400 flex-1 ${featured ? 'text-sm line-clamp-4' : 'text-sm line-clamp-3'}`}>
+          <p
+            className={`flex-1 leading-relaxed text-gray-500 dark:text-gray-400 ${featured ? 'line-clamp-4 text-sm' : 'line-clamp-3 text-sm'}`}
+          >
             {summary}
           </p>
         )}
@@ -168,8 +188,7 @@ export default function StackBlogLayout({
     return posts.filter((post) => {
       const search = post.title + (post.summary ?? '') + (post.tags?.join(' ') ?? '')
       const matchesSearch = search.toLowerCase().includes(searchValue.toLowerCase())
-      const matchesTag =
-        activeTag === 'all' || post.tags?.some((t) => slug(t) === slug(activeTag))
+      const matchesTag = activeTag === 'all' || post.tags?.some((t) => slug(t) === slug(activeTag))
       return matchesSearch && matchesTag
     })
   }, [posts, searchValue, activeTag])
@@ -187,10 +206,10 @@ export default function StackBlogLayout({
     <>
       {/* ── Page Hero ─────────────────────────────────────────────────── */}
       <section className="flex flex-col items-center pt-20 pb-14 text-center sm:pt-24 sm:pb-16">
-        <span className="animate-fade-in mb-5 inline-flex items-center rounded-full border border-[#FF8A1E]/30 bg-[#FF8A1E]/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-widest text-[#FF8A1E]">
+        <span className="animate-fade-in mb-5 inline-flex items-center rounded-full border border-[#FF8A1E]/30 bg-[#FF8A1E]/10 px-3.5 py-1 text-xs font-semibold tracking-widest text-[#FF8A1E] uppercase">
           ✦ Blog
         </span>
-        <h1 className="animate-fade-in-up stagger-1 mx-auto max-w-[700px] text-4xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-5xl">
+        <h1 className="animate-fade-in-up stagger-1 mx-auto max-w-[700px] text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl dark:text-white">
           Insight and Updates
         </h1>
         <p className="animate-fade-in-up stagger-2 mx-auto mt-4 max-w-[520px] text-base text-gray-500 dark:text-gray-400">
@@ -211,10 +230,10 @@ export default function StackBlogLayout({
         {/* Search + tag pills row */}
         <div className="mt-5 flex flex-wrap items-center gap-3">
           {/* Search input */}
-          <div className="relative flex-1 min-w-[220px] max-w-sm">
+          <div className="relative max-w-sm min-w-[220px] flex-1">
             <span className="sr-only">Search articles</span>
             <svg
-              className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"
+              className="absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-gray-400"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -232,7 +251,7 @@ export default function StackBlogLayout({
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
               placeholder="Search articles..."
-              className="w-full rounded-full border border-[#E8E4DF] bg-white py-2 pl-10 pr-4 text-sm text-gray-900 placeholder-gray-400 transition-all focus:border-[#FF8A1E] focus:outline-none focus:ring-2 focus:ring-[#FF8A1E]/20 dark:border-white/10 dark:bg-[#1a1a1a] dark:text-white dark:placeholder-gray-500 dark:focus:border-[#FF8A1E]"
+              className="w-full rounded-full border border-[#E8E4DF] bg-white py-2 pr-4 pl-10 text-sm text-gray-900 placeholder-gray-400 transition-all focus:border-[#FF8A1E] focus:ring-2 focus:ring-[#FF8A1E]/20 focus:outline-none dark:border-white/10 dark:bg-[#1a1a1a] dark:text-white dark:placeholder-gray-500 dark:focus:border-[#FF8A1E]"
             />
           </div>
 
@@ -241,7 +260,7 @@ export default function StackBlogLayout({
             {/* "All Articles" pill */}
             <button
               onClick={() => setActiveTag('all')}
-              className={`rounded-full border px-3.5 py-1.5 text-xs font-semibold uppercase tracking-wide transition-all ${
+              className={`rounded-full border px-3.5 py-1.5 text-xs font-semibold tracking-wide uppercase transition-all ${
                 activeTag === 'all'
                   ? 'border-[#FF8A1E] bg-[#FF8A1E] text-white'
                   : 'border-[#E8E4DF] bg-white text-gray-600 hover:border-[#FF8A1E] hover:text-[#FF8A1E] dark:border-white/10 dark:bg-[#1a1a1a] dark:text-gray-300'
@@ -257,7 +276,7 @@ export default function StackBlogLayout({
                 <button
                   key={t}
                   onClick={() => setActiveTag(isActive ? 'all' : tagSlug)}
-                  className={`rounded-full border px-3.5 py-1.5 text-xs font-semibold capitalize tracking-wide transition-all ${
+                  className={`rounded-full border px-3.5 py-1.5 text-xs font-semibold tracking-wide capitalize transition-all ${
                     isActive
                       ? 'border-[#FF8A1E] bg-[#FF8A1E] text-white'
                       : 'border-[#E8E4DF] bg-white text-gray-600 hover:border-[#FF8A1E] hover:text-[#FF8A1E] dark:border-white/10 dark:bg-[#1a1a1a] dark:text-gray-300'
@@ -299,10 +318,7 @@ export default function StackBlogLayout({
 
         {/* Pagination */}
         {pagination && pagination.totalPages > 1 && !searchValue && activeTag === 'all' && (
-          <Pagination
-            currentPage={pagination.currentPage}
-            totalPages={pagination.totalPages}
-          />
+          <Pagination currentPage={pagination.currentPage} totalPages={pagination.totalPages} />
         )}
       </section>
     </>

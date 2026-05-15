@@ -119,21 +119,22 @@ export default function HeroMain({ posts }: HomeProps) {
 
         {/* Headline */}
         <h1 className="animate-fade-in-up stagger-1 mx-auto max-w-[750px] text-4xl leading-tight font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl dark:text-white">
-          Insights&nbsp;&amp;&nbsp;Updates
+          Insights, Projects &amp; Developer Notes
         </h1>
 
         {/* Sub-headline */}
         <p className="animate-fade-in-up stagger-2 mx-auto mt-5 max-w-[560px] text-base leading-relaxed text-gray-500 sm:text-lg dark:text-gray-400">
-          {siteMetadata.description}
+          Thoughts, tutorials, and real-world learnings from building modern web apps, interactive
+          experiences, and scalable digital products.
         </p>
 
         {/* CTAs */}
         <div className="animate-fade-in-up stagger-3 mt-8 flex flex-wrap items-center justify-center gap-3">
           <Link href="/blog" className="btn-orange">
-            Browse All Posts
+            Read the Blog →
           </Link>
           <Link href="/about" className="btn-ghost">
-            About the Author
+            About Me →
           </Link>
         </div>
       </section>
