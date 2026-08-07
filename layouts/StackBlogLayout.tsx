@@ -46,7 +46,7 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
   const nextPage = currentPage + 1 <= totalPages
 
   return (
-    <div className="mt-14 flex items-center justify-center gap-4">
+    <nav aria-label="Pagination" className="mt-14 flex items-center justify-center gap-4">
       {prevPage ? (
         <Link
           href={currentPage - 1 === 1 ? `/${basePath}/` : `/${basePath}/page/${currentPage - 1}`}
@@ -56,12 +56,12 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
           ← Previous
         </Link>
       ) : (
-        <button disabled className="btn-ghost cursor-not-allowed text-sm opacity-40">
+        <span aria-hidden="true" className="btn-ghost text-sm opacity-40">
           ← Previous
-        </button>
+        </span>
       )}
 
-      <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
+      <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
         Page {currentPage} of {totalPages}
       </span>
 
@@ -74,11 +74,11 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
           Next →
         </Link>
       ) : (
-        <button disabled className="btn-orange cursor-not-allowed text-sm opacity-40">
+        <span aria-hidden="true" className="btn-ghost text-sm opacity-40">
           Next →
-        </button>
+        </span>
       )}
-    </div>
+    </nav>
   )
 }
 
@@ -94,19 +94,20 @@ function BlogCard({
   featured?: boolean
 }) {
   const { path, slug: postSlug, date, title, summary, tags } = post
-  const img = post.images?.[0] ?? CARD_IMAGES[index % CARD_IMAGES.length]
+  const ownImage = post.images?.[0]
+  const img = ownImage ?? CARD_IMAGES[index % CARD_IMAGES.length]
   const tag = tags?.[0] ?? 'Article'
   const stagger = `stagger-${Math.min((index % 6) + 1, 6)}`
 
   return (
     <article
-      className={`group animate-fade-in-up flex flex-col overflow-hidden rounded-2xl border border-[#E8E4DF] bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/8 dark:border-white/10 dark:bg-[#1a1a1a] ${stagger}`}
+      className={`group animate-fade-in-up border-edge dark:bg-surface-dark relative flex flex-col overflow-hidden rounded-2xl border bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/8 focus-within:-translate-y-1 dark:border-white/10 ${stagger}`}
     >
       {/* Thumbnail */}
       <div className="relative aspect-[16/9] w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
         <Image
           src={img}
-          alt={title}
+          alt={ownImage ? `Cover image for ${title}` : ''}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-105"
           sizes={
@@ -115,7 +116,7 @@ function BlogCard({
               : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
           }
         />
-        <span className="absolute top-3 left-3 rounded-full bg-[#FF8A1E]/90 px-2.5 py-0.5 text-xs font-semibold tracking-wide text-white uppercase backdrop-blur-sm">
+        <span className="bg-accent text-accent-ink absolute top-3 left-3 rounded-full px-2.5 py-0.5 text-xs font-semibold tracking-wide uppercase">
           {tag}
         </span>
       </div>
@@ -124,32 +125,31 @@ function BlogCard({
       <div className={`flex flex-1 flex-col gap-3 ${featured ? 'p-6' : 'p-5'}`}>
         <time
           dateTime={date}
-          className="text-xs font-medium text-gray-400 dark:text-gray-500"
+          className="text-xs font-medium text-gray-500 dark:text-gray-400"
           suppressHydrationWarning
         >
           {formatDate(date, siteMetadata.locale)}
         </time>
 
         <h2
-          className={`line-clamp-2 leading-snug font-semibold tracking-tight text-gray-900 transition-colors group-hover:text-[#FF8A1E] dark:text-white dark:group-hover:text-[#FF8A1E] ${featured ? 'text-xl' : 'text-lg'}`}
+          className={`group-hover:text-accent-strong dark:group-hover:text-accent line-clamp-2 leading-snug font-semibold tracking-tight text-gray-900 transition-colors dark:text-white ${featured ? 'text-xl' : 'text-lg'}`}
         >
-          <Link href={`/${path}`} aria-label={`Read "${title}"`}>
+          <Link href={`/${path}`} className="after:absolute after:inset-0">
             {title}
           </Link>
         </h2>
 
         {summary && (
           <p
-            className={`flex-1 leading-relaxed text-gray-500 dark:text-gray-400 ${featured ? 'line-clamp-4 text-sm' : 'line-clamp-3 text-sm'}`}
+            className={`flex-1 text-sm leading-relaxed text-gray-600 dark:text-gray-400 ${featured ? 'line-clamp-4' : 'line-clamp-3'}`}
           >
             {summary}
           </p>
         )}
 
-        <Link
-          href={`/${path}`}
-          className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-[#FF8A1E]"
-          aria-label={`Read more: "${title}"`}
+        <span
+          className="text-accent-strong dark:text-accent mt-2 inline-flex items-center gap-1.5 text-sm font-semibold"
+          aria-hidden="true"
         >
           Learn More
           <svg
@@ -161,7 +161,7 @@ function BlogCard({
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
-        </Link>
+        </span>
       </div>
     </article>
   )
@@ -175,7 +175,6 @@ export default function StackBlogLayout({
   initialDisplayPosts = [],
   pagination,
 }: ListLayoutProps) {
-  const pathname = usePathname()
   const [searchValue, setSearchValue] = useState('')
   const [activeTag, setActiveTag] = useState('all')
 
@@ -200,21 +199,22 @@ export default function StackBlogLayout({
         ? initialDisplayPosts
         : posts
 
-  const isOnTagPage = pathname.startsWith('/tags/')
+  const resultCount = displayPosts.length
+  const isFiltering = Boolean(searchValue) || activeTag !== 'all'
 
   return (
     <>
       {/* ── Page Hero ─────────────────────────────────────────────────── */}
       <section className="flex flex-col items-center pt-20 pb-14 text-center sm:pt-24 sm:pb-16">
-        <span className="animate-fade-in mb-5 inline-flex items-center rounded-full border border-[#FF8A1E]/30 bg-[#FF8A1E]/10 px-3.5 py-1 text-xs font-semibold tracking-widest text-[#FF8A1E] uppercase">
+        <span className="border-accent/30 bg-accent/10 text-accent-strong dark:text-accent animate-fade-in mb-5 inline-flex items-center rounded-full border px-3.5 py-1 text-xs font-semibold tracking-widest uppercase">
           ✦ Blog
         </span>
         <h1 className="animate-fade-in-up stagger-1 mx-auto max-w-[700px] text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl dark:text-white">
-          Insight and Updates
+          Insights and Updates
         </h1>
-        <p className="animate-fade-in-up stagger-2 mx-auto mt-4 max-w-[520px] text-base text-gray-500 dark:text-gray-400">
-          A collection of hand-picked articles. Deep dives, insights, and honest advice to navigate
-          the modern landscape.
+        <p className="animate-fade-in-up stagger-2 mx-auto mt-4 max-w-[520px] text-base text-gray-600 dark:text-gray-400">
+          Notes on full-stack engineering — what I'm building, what broke, and what I learned fixing
+          it.
         </p>
       </section>
 
@@ -222,8 +222,8 @@ export default function StackBlogLayout({
       <section className="pb-10">
         <div className="mb-3">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white">All Articles</h2>
-          <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-            Find all tools that will help you grow — vetted and curated from the start.
+          <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
+            Search by title, summary, or tag.
           </p>
         </div>
 
@@ -231,9 +231,12 @@ export default function StackBlogLayout({
         <div className="mt-5 flex flex-wrap items-center gap-3">
           {/* Search input */}
           <div className="relative max-w-sm min-w-[220px] flex-1">
-            <span className="sr-only">Search articles</span>
+            <label htmlFor="article-search" className="sr-only">
+              Search articles
+            </label>
             <svg
-              className="absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-gray-400"
+              aria-hidden="true"
+              className="absolute top-1/2 left-3.5 h-4 w-4 -translate-y-1/2 text-gray-500"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -246,12 +249,12 @@ export default function StackBlogLayout({
               />
             </svg>
             <input
-              aria-label="Search articles"
-              type="text"
+              id="article-search"
+              type="search"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
               placeholder="Search articles..."
-              className="w-full rounded-full border border-[#E8E4DF] bg-white py-2 pr-4 pl-10 text-sm text-gray-900 placeholder-gray-400 transition-all focus:border-[#FF8A1E] focus:ring-2 focus:ring-[#FF8A1E]/20 focus:outline-none dark:border-white/10 dark:bg-[#1a1a1a] dark:text-white dark:placeholder-gray-500 dark:focus:border-[#FF8A1E]"
+              className="border-edge focus:border-accent focus:ring-accent/30 dark:bg-surface-dark dark:focus:border-accent min-h-11 w-full rounded-full border bg-white py-2 pr-4 pl-10 text-sm text-gray-900 placeholder-gray-500 transition-all focus:ring-2 focus:outline-none dark:border-white/10 dark:text-white dark:placeholder-gray-400"
             />
           </div>
 
@@ -260,10 +263,11 @@ export default function StackBlogLayout({
             {/* "All Articles" pill */}
             <button
               onClick={() => setActiveTag('all')}
-              className={`rounded-full border px-3.5 py-1.5 text-xs font-semibold tracking-wide uppercase transition-all ${
+              aria-pressed={activeTag === 'all'}
+              className={`inline-flex min-h-11 items-center rounded-full border px-3.5 text-xs font-semibold tracking-wide uppercase transition-all ${
                 activeTag === 'all'
-                  ? 'border-[#FF8A1E] bg-[#FF8A1E] text-white'
-                  : 'border-[#E8E4DF] bg-white text-gray-600 hover:border-[#FF8A1E] hover:text-[#FF8A1E] dark:border-white/10 dark:bg-[#1a1a1a] dark:text-gray-300'
+                  ? 'border-accent bg-accent text-accent-ink'
+                  : 'border-edge hover:border-accent hover:text-accent-strong dark:bg-surface-dark bg-white text-gray-700 dark:border-white/10 dark:text-gray-300'
               }`}
             >
               All Articles
@@ -276,12 +280,12 @@ export default function StackBlogLayout({
                 <button
                   key={t}
                   onClick={() => setActiveTag(isActive ? 'all' : tagSlug)}
-                  className={`rounded-full border px-3.5 py-1.5 text-xs font-semibold tracking-wide capitalize transition-all ${
+                  aria-pressed={isActive}
+                  className={`inline-flex min-h-11 items-center rounded-full border px-3.5 text-xs font-semibold tracking-wide uppercase transition-all ${
                     isActive
-                      ? 'border-[#FF8A1E] bg-[#FF8A1E] text-white'
-                      : 'border-[#E8E4DF] bg-white text-gray-600 hover:border-[#FF8A1E] hover:text-[#FF8A1E] dark:border-white/10 dark:bg-[#1a1a1a] dark:text-gray-300'
+                      ? 'border-accent bg-accent text-accent-ink'
+                      : 'border-edge hover:border-accent hover:text-accent-strong dark:bg-surface-dark bg-white text-gray-700 dark:border-white/10 dark:text-gray-300'
                   }`}
-                  aria-label={`Filter by ${t}`}
                 >
                   {t}
                 </button>
@@ -289,12 +293,33 @@ export default function StackBlogLayout({
             })}
           </div>
         </div>
+
+        <p className="sr-only" role="status">
+          {resultCount} {resultCount === 1 ? 'article' : 'articles'}
+          {isFiltering ? ' match your filters' : ''}
+        </p>
       </section>
 
       {/* ── Card Grid ─────────────────────────────────────────────────── */}
       <section className="pb-16">
         {displayPosts.length === 0 ? (
-          <p className="py-16 text-center text-gray-400 dark:text-gray-500">No posts found.</p>
+          <div className="border-edge dark:bg-surface-dark rounded-2xl border border-dashed bg-white/50 py-20 text-center dark:border-white/10">
+            <p className="text-base font-semibold text-gray-900 dark:text-white">
+              No articles match that.
+            </p>
+            <p className="mx-auto mt-2 max-w-sm text-sm text-gray-600 dark:text-gray-400">
+              Try a different search term, or clear the filters to see everything.
+            </p>
+            <button
+              onClick={() => {
+                setSearchValue('')
+                setActiveTag('all')
+              }}
+              className="btn-ghost mt-6 text-sm"
+            >
+              Clear filters
+            </button>
+          </div>
         ) : (
           <>
             {/* Featured top row — 2 large cards */}

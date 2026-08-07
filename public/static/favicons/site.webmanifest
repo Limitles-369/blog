@@ -3,12 +3,18 @@
   "short_name": "Akash Samui",
   "icons": [
     {
-      "src": "/android-chrome-96x96.png",
+      "src": "/static/favicons/android-chrome-96x96.png",
       "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/favicons/apple-touch-icon.png",
+      "sizes": "180x180",
       "type": "image/png"
     }
   ],
-  "theme_color": "#000000",
-  "background_color": "#000000",
+  "start_url": "/",
+  "theme_color": "#FF8A1E",
+  "background_color": "#F7F5F2",
   "display": "standalone"
 }

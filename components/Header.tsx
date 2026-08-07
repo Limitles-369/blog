@@ -24,24 +24,20 @@ const Header = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full pt-3">
-      {/* Pill constrained to max-w-4xl, centered */}
-      <div className="mx-auto max-w-4xl px-4">
+      {/* Width and gutters come from the parent SectionContainer */}
+      <div className="w-full">
         <div
           className={`flex items-center justify-between rounded-full px-5 py-2 transition-all duration-300 ${
             scrolled
-              ? 'border border-[#E8E4DF] bg-white/90 shadow-lg shadow-black/5 backdrop-blur-md dark:border-white/10 dark:bg-[#0f0f0f]/90'
-              : 'border border-[#E8E4DF]/60 bg-white/70 backdrop-blur-sm dark:border-white/8 dark:bg-[#0f0f0f]/70'
-          } `}
+              ? 'border-edge dark:bg-page-dark/90 border bg-white/90 shadow-lg shadow-black/5 backdrop-blur-md dark:border-white/10'
+              : 'border-edge/60 dark:bg-page-dark/70 border bg-white/70 backdrop-blur-sm dark:border-white/10'
+          }`}
         >
           {/* Left: Logo + Brand */}
-          <Link
-            href="/"
-            aria-label={siteMetadata.headerTitle}
-            className="flex items-center gap-2.5"
-          >
+          <Link href="/" className="flex items-center gap-2.5 py-2">
             <Image
               src="/static/images/akash-logo.png"
-              alt="Akash Logo"
+              alt=""
               width={32}
               height={32}
               className="rounded-full"
@@ -54,10 +50,11 @@ const Header = () => {
             ) : (
               siteMetadata.headerTitle
             )}
+            <span className="sr-only">{siteMetadata.headerTitle} — home</span>
           </Link>
 
           {/* Center: Nav links */}
-          <nav className="no-scrollbar hidden items-center gap-1 overflow-x-auto sm:flex">
+          <nav aria-label="Main" className="no-scrollbar hidden items-center gap-1 sm:flex">
             {headerNavLinks
               .filter((link) => link.href !== '/')
               .map((link) => {
@@ -66,10 +63,11 @@ const Header = () => {
                   <Link
                     key={link.title}
                     href={link.href}
-                    className={`rounded-full px-3.5 py-1.5 text-sm font-medium transition-all duration-150 ${
+                    aria-current={isActive ? 'page' : undefined}
+                    className={`inline-flex min-h-11 items-center rounded-full px-3.5 text-sm font-medium transition-all duration-150 ${
                       isActive
-                        ? 'bg-[#FF8A1E] text-white'
-                        : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-white'
+                        ? 'bg-accent text-accent-ink font-semibold'
+                        : 'text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-white/10 dark:hover:text-white'
                     }`}
                   >
                     {link.title}
@@ -78,16 +76,10 @@ const Header = () => {
               })}
           </nav>
 
-          {/* Right: Search + Theme + CTA + Mobile */}
+          {/* Right: Search + Theme + Mobile */}
           <div className="flex items-center gap-2">
             <SearchButton />
             <ThemeSwitch />
-            <Link
-              href="/blog"
-              className="hidden rounded-full bg-[#FF8A1E] px-4 py-1.5 text-sm font-semibold text-white transition-all duration-200 hover:bg-[#e6780f] hover:shadow-md hover:shadow-orange-200 sm:block dark:hover:shadow-orange-900/30"
-            >
-              Newsletter
-            </Link>
             <MobileNav />
           </div>
         </div>

@@ -10,7 +10,7 @@ const ContentSecurityPolicy = `
   script-src 'self' 'unsafe-eval' 'unsafe-inline' giscus.app analytics.umami.is;
   style-src 'self' 'unsafe-inline';
   img-src * blob: data:;
-  media-src *.s3.amazonaws.com;
+  media-src 'self' *.s3.amazonaws.com;
   connect-src *;
   font-src 'self';
   frame-src giscus.app
@@ -81,6 +81,8 @@ module.exports = () => {
     },
     pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
     images: {
+      formats: ['image/avif', 'image/webp'],
+      minimumCacheTTL: 31536000,
       remotePatterns: [
         {
           protocol: 'https',

@@ -1,7 +1,9 @@
 import { NewsletterAPI } from 'pliny/newsletter'
 import siteMetadata from '@/data/siteMetadata'
 
-export const dynamic = 'force-static'
+// Must stay dynamic: a force-static route is prerendered at build time and
+// cannot execute the POST handler that submits a subscriber to the provider.
+export const dynamic = 'force-dynamic'
 
 const handler = NewsletterAPI({
   // @ts-ignore

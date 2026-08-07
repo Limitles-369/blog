@@ -1,9 +1,9 @@
 import { sortPosts, allCoreContent } from 'pliny/utils/contentlayer'
-import { allBlogs } from 'contentlayer/generated'
+import { publishedBlogs } from '@/data/publishedBlogs'
 import HeroMain from './HeroMain'
 
 export default async function Page() {
-  const sortedPosts = sortPosts(allBlogs)
+  const sortedPosts = sortPosts(publishedBlogs)
   const posts = allCoreContent(sortedPosts)
   return <HeroMain posts={posts} />
 }

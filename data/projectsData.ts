@@ -1,27 +1,23 @@
-interface Project {
+export interface Project {
+  /** Project name as it should read on the card. */
   title: string
+  /** One or two sentences: what it does and what was hard about it. */
   description: string
+  /** Tech actually used — rendered as chips. Keep to 3-5 entries. */
+  stack?: string[]
+  /** Live deployment. Omit if there isn't one. */
   href?: string
+  /** Source repository. Omit if private. */
+  repo?: string
+  /** 16:9 screenshot under /public/static/images/projects/. */
   imgSrc?: string
 }
 
-const projectsData: Project[] = [
-  {
-    title: 'A Search Engine',
-    description: `What if you could look up any information in the world? Webpages, images, videos
-    and more. Google has many features to help you find exactly what you're looking
-    for.`,
-    imgSrc: '/static/images/google.png',
-    href: 'https://www.google.com',
-  },
-  {
-    title: 'The Time Machine',
-    description: `Imagine being able to travel back in time or to the future. Simple turn the knob
-    to the desired date and press "Go". No more worrying about lost keys or
-    forgotten headphones with this simple yet affordable solution.`,
-    imgSrc: '/static/images/time-machine.jpg',
-    href: '/blog/the-time-machine',
-  },
-]
+/**
+ * Real projects only. This page is usually a recruiter's first click, so a
+ * placeholder here costs more than an empty state — the page renders a short
+ * "in progress" message when this array is empty.
+ */
+const projectsData: Project[] = []
 
 export default projectsData

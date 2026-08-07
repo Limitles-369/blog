@@ -4,9 +4,12 @@ const siteMetadata = {
   author: 'Akash Samui',
   headerTitle: 'Akash Samui',
   description: 'Full-Stack Developer building modern, scalable, and interactive web applications with React, Next.js, Node.js, Flutter, Three.js, and modern web technologies.',
-  language: 'en-us',
+  language: 'en-US',
   theme: 'system', // system, dark or light
   siteUrl: 'https://akashsamui.in',
+  // Left empty on purpose: the blog source is not public. PostLayout and
+  // PostSimple check this before rendering "View on GitHub", so an empty
+  // value hides the link rather than emitting a broken relative one.
   siteRepo: '',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
   socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.png`,

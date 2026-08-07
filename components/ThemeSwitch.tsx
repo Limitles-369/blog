@@ -17,7 +17,8 @@ const Sun = () => (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
     fill="currentColor"
-    className="group:hover:text-gray-100 h-6 w-6"
+    aria-hidden="true"
+    className="h-6 w-6"
   >
     <path
       fillRule="evenodd"
@@ -31,7 +32,8 @@ const Moon = () => (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
     fill="currentColor"
-    className="group:hover:text-gray-100 h-6 w-6"
+    aria-hidden="true"
+    className="h-6 w-6"
   >
     <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
   </svg>
@@ -45,7 +47,8 @@ const Monitor = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="group:hover:text-gray-100 h-6 w-6"
+    aria-hidden="true"
+    className="h-6 w-6"
   >
     <rect x="3" y="3" width="14" height="10" rx="2" ry="2"></rect>
     <line x1="7" y1="17" x2="13" y2="17"></line>
@@ -53,6 +56,12 @@ const Monitor = () => (
   </svg>
 )
 const Blank = () => <svg className="h-6 w-6" />
+
+const THEME_OPTIONS = [
+  { value: 'light', label: 'Light', Icon: Sun },
+  { value: 'dark', label: 'Dark', Icon: Moon },
+  { value: 'system', label: 'System', Icon: Monitor },
+] as const
 
 const ThemeSwitch = () => {
   const [mounted, setMounted] = useState(false)
@@ -64,11 +73,12 @@ const ThemeSwitch = () => {
   return (
     <div className="flex items-center">
       <Menu as="div" className="relative inline-block text-left">
-        <div className="hover:text-primary-500 dark:hover:text-primary-400 flex items-center justify-center">
-          <MenuButton aria-label="Theme switcher">
-            {mounted ? resolvedTheme === 'dark' ? <Moon /> : <Sun /> : <Blank />}
-          </MenuButton>
-        </div>
+        <MenuButton
+          aria-label={mounted ? `Theme: ${theme}. Change theme` : 'Change theme'}
+          className="hover:text-accent-strong dark:hover:text-accent inline-flex h-11 w-11 items-center justify-center rounded-full"
+        >
+          {mounted ? resolvedTheme === 'dark' ? <Moon /> : <Sun /> : <Blank />}
+        </MenuButton>
         <Transition
           as={Fragment}
           enter="transition ease-out duration-100"
@@ -78,56 +88,47 @@ const ThemeSwitch = () => {
           leaveFrom="transform opacity-100 scale-100"
           leaveTo="transform opacity-0 scale-95"
         >
-          <MenuItems className="ring-opacity-5 absolute right-0 z-50 mt-2 w-32 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black focus:outline-hidden dark:bg-gray-800">
+          <MenuItems className="border-edge dark:bg-surface-dark absolute right-0 z-50 mt-2 w-36 origin-top-right rounded-xl border bg-white p-1 shadow-lg shadow-black/5 focus:outline-hidden dark:border-white/10">
             <RadioGroup value={theme} onChange={setTheme}>
-              <div className="p-1">
-                <Radio value="light">
-                  <MenuItem>
-                    {({ focus }) => (
-                      <button
-                        className={`${focus ? 'bg-primary-600 text-white' : ''} group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                      >
-                        <div className="mr-2">
-                          <Sun />
-                        </div>
-                        Light
-                      </button>
-                    )}
-                  </MenuItem>
-                </Radio>
-                <Radio value="dark">
-                  <MenuItem>
-                    {({ focus }) => (
-                      <button
-                        className={`${
-                          focus ? 'bg-primary-600 text-white' : ''
-                        } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                      >
-                        <div className="mr-2">
-                          <Moon />
-                        </div>
-                        Dark
-                      </button>
-                    )}
-                  </MenuItem>
-                </Radio>
-                <Radio value="system">
-                  <MenuItem>
-                    {({ focus }) => (
-                      <button
-                        className={`${
-                          focus ? 'bg-primary-600 text-white' : ''
-                        } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                      >
-                        <div className="mr-2">
-                          <Monitor />
-                        </div>
-                        System
-                      </button>
-                    )}
-                  </MenuItem>
-                </Radio>
-              </div>
+              {THEME_OPTIONS.map(({ value, label, Icon }) => {
+                const isActive = mounted && theme === value
+                return (
+                  <Radio key={value} value={value}>
+                    <MenuItem>
+                      {({ focus }) => (
+                        <button
+                          className={`flex min-h-11 w-full items-center rounded-lg px-2 text-sm transition-colors ${
+                            focus ? 'bg-gray-100 dark:bg-white/10' : ''
+                          } ${
+                            isActive
+                              ? 'text-accent-strong dark:text-accent font-semibold'
+                              : 'text-gray-700 dark:text-gray-300'
+                          }`}
+                        >
+                          <span className="mr-2">
+                            <Icon />
+                          </span>
+                          {label}
+                          {isActive && (
+                            <svg
+                              aria-hidden="true"
+                              viewBox="0 0 20 20"
+                              fill="currentColor"
+                              className="ml-auto h-4 w-4"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0L3.3 9.7a1 1 0 011.4-1.4l3.8 3.8 6.8-6.8a1 1 0 011.4 0z"
+                                clipRule="evenodd"
+                              />
+                            </svg>
+                          )}
+                        </button>
+                      )}
+                    </MenuItem>
+                  </Radio>
+                )
+              })}
             </RadioGroup>
           </MenuItems>
         </Transition>

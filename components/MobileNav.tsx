@@ -10,30 +10,34 @@ const MobileNav = () => {
   const [navShow, setNavShow] = useState(false)
   const navRef = useRef(null)
 
-  const onToggleNav = () => {
-    setNavShow((status) => {
-      if (status) {
-        enableBodyScroll(navRef.current)
-      } else {
-        // Prevent scrolling
-        disableBodyScroll(navRef.current)
-      }
-      return !status
-    })
-  }
+  const onToggleNav = () => setNavShow((status) => !status)
 
   useEffect(() => {
-    return clearAllBodyScrollLocks
-  })
+    if (!navRef.current) return
+    if (navShow) {
+      disableBodyScroll(navRef.current)
+    } else {
+      enableBodyScroll(navRef.current)
+    }
+  }, [navShow])
+
+  useEffect(() => clearAllBodyScrollLocks, [])
 
   return (
     <>
-      <button aria-label="Toggle Menu" onClick={onToggleNav} className="sm:hidden">
+      <button
+        aria-label="Open menu"
+        aria-expanded={navShow}
+        aria-controls="mobile-nav-panel"
+        onClick={onToggleNav}
+        className="inline-flex h-11 w-11 items-center justify-center sm:hidden"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           fill="currentColor"
-          className="hover:text-primary-500 dark:hover:text-primary-400 h-8 w-8 text-gray-900 dark:text-gray-100"
+          aria-hidden="true"
+          className="hover:text-accent-strong dark:hover:text-accent h-8 w-8 text-gray-900 dark:text-gray-100"
         >
           <path
             fillRule="evenodd"
@@ -67,16 +71,21 @@ const MobileNav = () => {
             leaveTo="translate-x-full opacity-0"
             unmount={false}
           >
-            <DialogPanel className="fixed top-0 left-0 z-70 h-full w-full bg-white/95 duration-300 dark:bg-gray-950/98">
+            <DialogPanel
+              id="mobile-nav-panel"
+              aria-label="Site menu"
+              className="dark:bg-page-dark/98 fixed top-0 left-0 z-70 h-full w-full bg-white/95 duration-300"
+            >
               <nav
                 ref={navRef}
+                aria-label="Mobile"
                 className="mt-8 flex h-full basis-0 flex-col items-start overflow-y-auto pt-2 pl-12 text-left"
               >
                 {headerNavLinks.map((link) => (
                   <Link
                     key={link.title}
                     href={link.href}
-                    className="hover:text-primary-500 dark:hover:text-primary-400 mb-4 py-2 pr-4 text-2xl font-bold tracking-widest text-gray-900 outline outline-0 dark:text-gray-100"
+                    className="hover:text-accent-strong dark:hover:text-accent mb-4 py-2 pr-4 text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
                     onClick={onToggleNav}
                   >
                     {link.title}
@@ -85,11 +94,16 @@ const MobileNav = () => {
               </nav>
 
               <button
-                className="hover:text-primary-500 dark:hover:text-primary-400 fixed top-7 right-4 z-80 h-16 w-16 p-4 text-gray-900 dark:text-gray-100"
-                aria-label="Toggle Menu"
+                className="hover:text-accent-strong dark:hover:text-accent fixed top-7 right-4 z-80 h-16 w-16 p-4 text-gray-900 dark:text-gray-100"
+                aria-label="Close menu"
                 onClick={onToggleNav}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
                   <path
                     fillRule="evenodd"
                     d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"

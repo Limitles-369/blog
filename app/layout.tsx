@@ -2,7 +2,7 @@ import 'css/tailwind.css'
 import 'pliny/search/algolia.css'
 import 'remark-github-blockquote-alert/alert.css'
 
-import { Space_Grotesk, Inter, Plus_Jakarta_Sans } from 'next/font/google'
+import { Space_Grotesk } from 'next/font/google'
 import { Analytics, AnalyticsConfig } from 'pliny/analytics'
 import { SearchProvider, SearchConfig } from 'pliny/search'
 import Header from '@/components/Header'
@@ -16,18 +16,6 @@ const space_grotesk = Space_Grotesk({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-space-grotesk',
-})
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-})
-
-const plus_jakarta = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-jakarta',
 })
 
 export const metadata: Metadata = {
@@ -76,7 +64,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang={siteMetadata.language}
-      className={`${space_grotesk.variable} ${inter.variable} ${plus_jakarta.variable} scroll-smooth`}
+      className={`${space_grotesk.variable} scroll-smooth`}
       suppressHydrationWarning
     >
       <link
@@ -100,19 +88,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <link
         rel="mask-icon"
         href={`${basePath}/static/favicons/safari-pinned-tab.svg`}
-        color="#5bbad5"
+        color="#FF8A1E"
       />
-      <meta name="msapplication-TileColor" content="#000000" />
-      <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fff" />
-      <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000" />
+      <meta name="msapplication-TileColor" content="#FF8A1E" />
+      <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F7F5F2" />
+      <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0f0f0f" />
       <link rel="alternate" type="application/rss+xml" href={`${basePath}/feed.xml`} />
-      <body className="flex min-h-screen flex-col bg-[#F7F5F2] pl-[calc(100vw-100%)] text-black antialiased dark:bg-[#0f0f0f] dark:text-white">
+      <body className="bg-page dark:bg-page-dark flex min-h-screen flex-col pl-[calc(100vw-100%)] text-gray-900 antialiased dark:text-white">
         <ThemeProviders>
+          <a
+            href="#main-content"
+            className="bg-accent text-accent-ink sr-only rounded-full px-4 py-2 font-semibold focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-100"
+          >
+            Skip to content
+          </a>
           <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
           <SectionContainer>
             <SearchProvider searchConfig={siteMetadata.search as SearchConfig}>
               <Header />
-              <main className="mb-auto">{children}</main>
+              <main id="main-content" className="mb-auto">
+                {children}
+              </main>
             </SearchProvider>
           </SectionContainer>
           <Footer />

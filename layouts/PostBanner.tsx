@@ -6,7 +6,6 @@ import type { Blog } from 'contentlayer/generated'
 import Comments from '@/components/Comments'
 import Link from '@/components/Link'
 import PageTitle from '@/components/PageTitle'
-import SectionContainer from '@/components/SectionContainer'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 
@@ -23,7 +22,7 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
     images && images.length > 0 ? images[0] : 'https://picsum.photos/seed/picsum/800/400'
 
   return (
-    <SectionContainer>
+    <>
       <ScrollTopAndComment />
       <article>
         <div>
@@ -39,7 +38,7 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
               <PageTitle>{title}</PageTitle>
             </div>
           </div>
-          <div className="prose dark:prose-invert max-w-none py-4">{children}</div>
+          <div className="prose dark:prose-invert mx-auto max-w-[68ch] py-4">{children}</div>
           {siteMetadata.comments && (
             <div className="pt-6 pb-6 text-center text-gray-700 dark:text-gray-300" id="comment">
               <Comments slug={slug} />
@@ -73,6 +72,6 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
           </footer>
         </div>
       </article>
-    </SectionContainer>
+    </>
   )
 }

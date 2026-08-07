@@ -15,27 +15,24 @@ const footerLinks = {
     { label: 'Privacy Policy', href: '/privacy' },
     { label: 'Terms and Conditions', href: '/terms' },
   ],
-  Contact: [{ label: 'Email', href: `mailto:${siteMetadata.email}` }],
-  'Social Media': [
-    { label: 'Instagram', href: siteMetadata.instagram || '#' },
-    { label: 'Twitter / X', href: siteMetadata.x || '#' },
-    { label: 'LinkedIn', href: siteMetadata.linkedin || '#' },
-    { label: 'GitHub', href: siteMetadata.github || '#' },
+  Contact: [
+    { label: 'Email', href: `mailto:${siteMetadata.email}` },
+    { label: 'RSS Feed', href: '/feed.xml' },
   ],
 }
 
 export default function Footer() {
   return (
-    <footer className="mt-16 border-t border-[#E8E4DF] bg-white dark:border-white/10 dark:bg-[#0f0f0f]">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <footer className="border-edge dark:bg-page-dark mt-16 border-t bg-white dark:border-white/10">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 xl:px-10 2xl:px-16">
         {/* Top grid */}
-        <div className="grid grid-cols-1 gap-10 py-10 sm:grid-cols-2 lg:grid-cols-6 lg:gap-12 lg:py-16">
+        <div className="grid grid-cols-1 gap-10 py-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-12 lg:py-16">
           {/* Brand column */}
           <div className="space-y-5 lg:col-span-2 lg:pr-8">
             <Link href="/" className="flex items-center gap-2.5">
               <Image
                 src="/static/images/akash-logo.png"
-                alt="Akash Logo"
+                alt=""
                 width={36}
                 height={36}
                 className="rounded-full"
@@ -44,7 +41,7 @@ export default function Footer() {
                 {siteMetadata.headerTitle}
               </span>
             </Link>
-            <p className="max-w-sm text-sm leading-relaxed text-gray-500 dark:text-gray-400">
+            <p className="max-w-sm text-sm leading-relaxed text-gray-600 dark:text-gray-400">
               {siteMetadata.description}
             </p>
             <div className="flex items-center gap-4 pt-2">
@@ -66,7 +63,7 @@ export default function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm font-medium text-gray-500 transition-colors hover:text-[#FF8A1E] dark:text-gray-400 dark:hover:text-[#FF8A1E]"
+                      className="hover:text-accent-strong dark:hover:text-accent inline-flex min-h-9 items-center text-sm font-medium text-gray-600 transition-colors dark:text-gray-400"
                     >
                       {link.label}
                     </Link>
@@ -78,7 +75,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="flex flex-col items-center justify-center gap-3 border-t border-[#E8E4DF] py-8 text-sm font-medium text-gray-400 sm:flex-row dark:border-white/10">
+        <div className="border-edge flex flex-col items-center justify-center gap-3 border-t py-8 text-sm font-medium text-gray-600 sm:flex-row dark:border-white/10 dark:text-gray-400">
           <span>© {new Date().getFullYear()} Akash Samui. All rights reserved.</span>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import Link from '@/components/Link'
+import NewsletterForm from '@/components/NewsletterForm'
 import siteMetadata from '@/data/siteMetadata'
 import { formatDate } from 'pliny/utils/formatDate'
 import { CoreContent } from 'pliny/utils/contentlayer'
@@ -24,21 +25,20 @@ interface BlogCardProps {
 
 function BlogCard({ post, index, featured = false }: BlogCardProps) {
   const { slug, date, title, summary, tags } = post
-  const img = post.images?.[0] ?? CARD_IMAGES[index % CARD_IMAGES.length]
+  const ownImage = post.images?.[0]
+  const img = ownImage ?? CARD_IMAGES[index % CARD_IMAGES.length]
   const tag = tags?.[0] ?? 'Article'
   const stagger = `stagger-${Math.min(index + 1, 6)}`
 
   return (
     <article
-      className={`group animate-fade-in-up flex flex-col overflow-hidden rounded-2xl border border-[#E8E4DF] bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/8 dark:border-white/10 dark:bg-[#1a1a1a] ${stagger}`}
+      className={`group animate-fade-in-up border-edge dark:bg-surface-dark relative flex flex-col overflow-hidden rounded-2xl border bg-white shadow-sm transition-all duration-300 focus-within:-translate-y-1 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/8 dark:border-white/10 ${stagger}`}
     >
       {/* Thumbnail */}
-      <div
-        className={`relative w-full overflow-hidden bg-gray-100 dark:bg-gray-800 ${featured ? 'aspect-[16/9]' : 'aspect-[16/9]'}`}
-      >
+      <div className="relative aspect-[16/9] w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
         <Image
           src={img}
-          alt={title}
+          alt={ownImage ? `Cover image for ${title}` : ''}
           fill
           className="object-cover transition-transform duration-500 group-hover:scale-105"
           sizes={
@@ -48,7 +48,7 @@ function BlogCard({ post, index, featured = false }: BlogCardProps) {
           }
         />
         {/* Category badge */}
-        <span className="absolute top-3 left-3 rounded-full bg-[#FF8A1E]/90 px-2.5 py-0.5 text-xs font-semibold tracking-wide text-white uppercase backdrop-blur-sm">
+        <span className="bg-accent text-accent-ink absolute top-3 left-3 rounded-full px-2.5 py-0.5 text-xs font-semibold tracking-wide uppercase">
           {tag}
         </span>
       </div>
@@ -57,32 +57,31 @@ function BlogCard({ post, index, featured = false }: BlogCardProps) {
       <div className={`flex flex-1 flex-col gap-3 ${featured ? 'p-6' : 'p-5'}`}>
         <time
           dateTime={date}
-          className="text-xs font-medium text-gray-400 dark:text-gray-500"
+          className="text-xs font-medium text-gray-500 dark:text-gray-400"
           suppressHydrationWarning
         >
           {formatDate(date, siteMetadata.locale)}
         </time>
 
         <h2
-          className={`line-clamp-2 leading-snug font-semibold tracking-tight text-gray-900 transition-colors group-hover:text-[#FF8A1E] dark:text-white dark:group-hover:text-[#FF8A1E] ${featured ? 'text-xl' : 'text-lg'}`}
+          className={`group-hover:text-accent-strong dark:group-hover:text-accent line-clamp-2 leading-snug font-semibold tracking-tight text-gray-900 transition-colors dark:text-white ${featured ? 'text-xl' : 'text-lg'}`}
         >
-          <Link href={`/blog/${slug}`} aria-label={`Read "${title}"`}>
+          <Link href={`/blog/${slug}`} className="after:absolute after:inset-0">
             {title}
           </Link>
         </h2>
 
         {summary && (
           <p
-            className={`flex-1 leading-relaxed text-gray-500 dark:text-gray-400 ${featured ? 'line-clamp-4 text-sm' : 'line-clamp-3 text-sm'}`}
+            className={`flex-1 text-sm leading-relaxed text-gray-600 dark:text-gray-400 ${featured ? 'line-clamp-4' : 'line-clamp-3'}`}
           >
             {summary}
           </p>
         )}
 
-        <Link
-          href={`/blog/${slug}`}
-          className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-[#FF8A1E]"
-          aria-label={`Read more: "${title}"`}
+        <span
+          className="text-accent-strong dark:text-accent mt-2 inline-flex items-center gap-1.5 text-sm font-semibold"
+          aria-hidden="true"
         >
           Learn More
           <svg
@@ -94,7 +93,7 @@ function BlogCard({ post, index, featured = false }: BlogCardProps) {
           >
             <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
-        </Link>
+        </span>
       </div>
     </article>
   )
@@ -187,24 +186,19 @@ export default function HeroMain({ posts }: HomeProps) {
 
       {/* ── Newsletter CTA ───────────────────────────────────────────── */}
       <section className="pb-24">
-        <div className="animate-fade-in-up rounded-3xl border border-[#E8E4DF] bg-white px-8 py-16 text-center shadow-sm dark:border-white/10 dark:bg-[#1a1a1a]">
-          <span className="mb-4 inline-flex items-center rounded-full bg-[#FF8A1E]/10 px-3 py-1 text-xs font-semibold tracking-widest text-[#FF8A1E] uppercase">
+        <div className="animate-fade-in-up border-edge dark:bg-surface-dark rounded-3xl border bg-white px-8 py-16 text-center shadow-sm dark:border-white/10">
+          <span className="bg-accent/10 text-accent-strong dark:text-accent mb-4 inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold tracking-widest uppercase">
             Newsletter
           </span>
           <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl dark:text-white">
             Stay in the loop
           </h2>
-          <p className="mx-auto mt-4 max-w-md text-base text-gray-500 dark:text-gray-400">
-            Get the latest articles, tools and insights delivered straight to your inbox. No spam,
-            ever.
+          <p className="mx-auto mt-4 max-w-md text-base text-gray-600 dark:text-gray-400">
+            New posts on full-stack engineering, straight to your inbox. No spam, unsubscribe any
+            time.
           </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link href="/blog" className="btn-orange">
-              Browse Articles
-            </Link>
-            <Link href="/about" className="btn-ghost">
-              Contact Us
-            </Link>
+          <div className="mt-8">
+            <NewsletterForm />
           </div>
         </div>
       </section>

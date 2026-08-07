@@ -6,6 +6,7 @@ import { components } from '@/components/MDXComponents'
 import { MDXLayoutRenderer } from 'pliny/mdx-components'
 import { sortPosts, coreContent, allCoreContent } from 'pliny/utils/contentlayer'
 import { allBlogs, allAuthors } from 'contentlayer/generated'
+import { publishedBlogs } from '@/data/publishedBlogs'
 import type { Authors, Blog } from 'contentlayer/generated'
 import PostSimple from '@/layouts/PostSimple'
 import PostLayout from '@/layouts/PostLayout'
@@ -56,7 +57,7 @@ export async function generateMetadata(props: {
       title: post.title,
       description: post.summary,
       siteName: siteMetadata.title,
-      locale: 'en_US',
+      locale: siteMetadata.locale.replace('-', '_'),
       type: 'article',
       publishedTime: publishedAt,
       modifiedTime: modifiedAt,
@@ -68,20 +69,21 @@ export async function generateMetadata(props: {
       card: 'summary_large_image',
       title: post.title,
       description: post.summary,
-      images: imageList,
+      images: ogImages.map((img) => img.url),
     },
   }
 }
 
 export const generateStaticParams = async () => {
-  return allBlogs.map((p) => ({ slug: p.slug.split('/').map((name) => decodeURI(name)) }))
+  return publishedBlogs.map((p) => ({ slug: p.slug.split('/').map((name) => decodeURI(name)) }))
 }
 
 export default async function Page(props: { params: Promise<{ slug: string[] }> }) {
   const params = await props.params
   const slug = decodeURI(params.slug.join('/'))
-  // Filter out drafts in production
-  const sortedCoreContents = allCoreContent(sortPosts(allBlogs))
+  // publishedBlogs drops drafts in production, so a draft URL 404s there while
+  // staying reachable in dev, and prev/next never point at an unpublished post.
+  const sortedCoreContents = allCoreContent(sortPosts(publishedBlogs))
   const postIndex = sortedCoreContents.findIndex((p) => p.slug === slug)
   if (postIndex === -1) {
     return notFound()
@@ -101,8 +103,20 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
     return {
       '@type': 'Person',
       name: author.name,
+      url: `${siteMetadata.siteUrl}/about/`,
     }
   })
+  // Google treats publisher and mainEntityOfPage as expected properties on
+  // BlogPosting; contentlayer's computed structuredData omits both.
+  jsonLd['publisher'] = {
+    '@type': 'Person',
+    name: siteMetadata.author,
+    url: siteMetadata.siteUrl,
+  }
+  jsonLd['mainEntityOfPage'] = {
+    '@type': 'WebPage',
+    '@id': `${siteMetadata.siteUrl}/${post.path}/`,
+  }
 
   const Layout = layouts[post.layout || defaultLayout]
 
