@@ -2,12 +2,12 @@
   "agentic-ai": 1,
   "ai-agents": 1,
   "ai-coding-tools": 1,
-  "cybersecurity": 2,
+  "cybersecurity": 3,
   "encryption": 1,
   "full-stack-development": 2,
   "post-quantum-cryptography": 1,
   "q-day": 1,
   "quantum-computing": 1,
-  "software-development": 2,
-  "web-security": 1
+  "software-development": 3,
+  "web-security": 2
 }
