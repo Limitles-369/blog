@@ -14,7 +14,9 @@ const compat = new FlatCompat({
 
 export default [
   {
-    ignores: ['next-env.d.ts', 'next.config.js'],
+    // tools/ holds standalone Node packages with their own tsconfig and
+    // dependencies; the Next/React ruleset here does not apply to them.
+    ignores: ['next-env.d.ts', 'next.config.js', 'tools/**'],
   },
   js.configs.recommended,
   ...compat.extends(

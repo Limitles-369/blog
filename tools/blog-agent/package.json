@@ -1,0 +1,30 @@
+{
+  "name": "blog-agent",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Autonomous research-and-draft pipeline that opens a PR with a new blog post",
+  "engines": {
+    "node": ">=20.11"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "start": "tsx src/cli.ts",
+    "doctor": "tsx src/cli.ts doctor",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src test --ext .ts",
+    "verify": "npm run typecheck && npm run test"
+  },
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "gray-matter": "4.0.3",
+    "zod": "3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "20.17.10",
+    "tsx": "4.19.2",
+    "typescript": "5.7.2",
+    "vitest": "2.1.8"
+  }
+}
