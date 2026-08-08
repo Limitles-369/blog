@@ -56,6 +56,7 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
     const usage: TokenUsage = {
       input: m['promptTokenCount'] ?? 0,
       output: m['candidatesTokenCount'] ?? 0,
+      thoughts: m['thoughtsTokenCount'] ?? 0,
       total: m['totalTokenCount'] ?? 0,
     }
     running = addUsage(running, usage)
@@ -99,7 +100,7 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
     return { sources, queries }
   }
 
-  function textOf(res: unknown, label: string): string {
+  function textOf(res: unknown, label: string, usage: TokenUsage): string {
     const direct = (res as { text?: unknown })?.text
     if (typeof direct === 'string' && direct.length > 0) return direct
 
@@ -112,7 +113,24 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
       .join('')
     if (joined.length > 0) return joined
 
-    throw new ModelResponseError(`${label}: model returned no text`, JSON.stringify(res).slice(0, 800))
+    // An empty completion is almost never a mystery: either the model spent its
+    // entire token budget on internal reasoning, or generation stopped early.
+    // Both are actionable, so say which one happened rather than "no text".
+    const finish = (res as { candidates?: { finishReason?: string }[] })?.candidates?.[0]
+      ?.finishReason
+    const hints: string[] = []
+    if (usage.thoughts > 0 && usage.output === 0) {
+      hints.push(
+        `the model used ${usage.thoughts} reasoning token(s) and produced no visible output — ` +
+          `raise maxOutputTokens or set thinkingBudget: 0`
+      )
+    }
+    if (finish && finish !== 'STOP') hints.push(`finishReason=${finish}`)
+
+    throw new ModelResponseError(
+      `${label}: model returned no text${hints.length ? ` (${hints.join('; ')})` : ''}`,
+      JSON.stringify(res).slice(0, 800)
+    )
   }
 
   return {
@@ -126,18 +144,21 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
             ...(opts.grounded ? { tools: [{ googleSearch: {} }] } : {}),
             temperature: opts.temperature ?? 0.7,
             ...(opts.maxOutputTokens ? { maxOutputTokens: opts.maxOutputTokens } : {}),
+            ...(opts.thinkingBudget === undefined
+              ? {}
+              : { thinkingConfig: { thinkingBudget: opts.thinkingBudget } }),
           },
         })
       )
       const { sources, queries } = extractSources(res)
-      const usage = track((res as Record<string, unknown>)['usageMetadata'])
+      const usage = track((res as unknown as Record<string, unknown>)['usageMetadata'])
       log.debug('generateText', {
         label: opts.label,
         grounded: Boolean(opts.grounded),
         sources: sources.length,
         ...usage,
       })
-      return { text: textOf(res, opts.label), sources, queries, usage }
+      return { text: textOf(res, opts.label, usage), sources, queries, usage }
     },
 
     async generateJson<T>(opts: GenerateJsonOptions<T>): Promise<JsonResult<T>> {
@@ -147,15 +168,19 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
           contents: opts.prompt,
           config: {
             ...(opts.system ? { systemInstruction: opts.system } : {}),
+            ...(opts.grounded ? { tools: [{ googleSearch: {} }] } : {}),
             responseMimeType: 'application/json',
             responseSchema: opts.responseSchema,
             temperature: opts.temperature ?? 0.3,
             ...(opts.maxOutputTokens ? { maxOutputTokens: opts.maxOutputTokens } : {}),
+            ...(opts.thinkingBudget === undefined
+              ? {}
+              : { thinkingConfig: { thinkingBudget: opts.thinkingBudget } }),
           },
         })
       )
-      const usage = track((res as Record<string, unknown>)['usageMetadata'])
-      const raw = textOf(res, opts.label)
+      const usage = track((res as unknown as Record<string, unknown>)['usageMetadata'])
+      const raw = textOf(res, opts.label, usage)
 
       let parsed: unknown
       try {
@@ -223,7 +248,7 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
         for (const part of parts) {
           const inline = part['inlineData'] as { data?: string; mimeType?: string } | undefined
           if (inline?.data) {
-            const usage = track((res as Record<string, unknown>)['usageMetadata'])
+            const usage = track((res as unknown as Record<string, unknown>)['usageMetadata'])
             return {
               bytes: Buffer.from(inline.data, 'base64'),
               mimeType: inline.mimeType ?? 'image/png',

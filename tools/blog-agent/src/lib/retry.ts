@@ -59,6 +59,9 @@ function statusOf(err: unknown): number | undefined {
 
 export function isRetryable(err: unknown): boolean {
   if (err instanceof TimeoutError) return true
+  // Checked before the status allowlist: an exhausted quota is a 429 that will
+  // not clear within any backoff window we would reasonably wait.
+  if (isExhaustedQuota(err)) return false
   const status = statusOf(err)
   if (status !== undefined && RETRYABLE_STATUS.has(status)) return true
   if (status !== undefined) return false
@@ -73,17 +76,69 @@ export function isRetryable(err: unknown): boolean {
 /** Honour Retry-After, in either seconds or HTTP-date form. */
 function retryAfterMs(err: unknown): number | undefined {
   const headers = (err as { headers?: unknown })?.headers
-  if (!headers) return undefined
+  if (!headers) return googleRetryDelayMs(err)
   const raw =
     typeof (headers as Headers).get === 'function'
       ? (headers as Headers).get('retry-after')
       : ((headers as Record<string, string>)['retry-after'] ??
         (headers as Record<string, string>)['Retry-After'])
-  if (!raw) return undefined
+  if (!raw) return googleRetryDelayMs(err)
   const seconds = Number(raw)
   if (Number.isFinite(seconds)) return Math.max(0, seconds * 1000)
   const date = Date.parse(raw)
-  return Number.isNaN(date) ? undefined : Math.max(0, date - Date.now())
+  return Number.isNaN(date) ? googleRetryDelayMs(err) : Math.max(0, date - Date.now())
+}
+
+/**
+ * The Gemini SDK stringifies the API error body into `message` rather than
+ * exposing structured fields, so the retry hints have to be parsed back out.
+ */
+function googleErrorBody(err: unknown): Record<string, unknown> | undefined {
+  const msg = err instanceof Error ? err.message : typeof err === 'string' ? err : ''
+  const start = msg.indexOf('{')
+  if (start === -1) return undefined
+  try {
+    const parsed = JSON.parse(msg.slice(start)) as { error?: Record<string, unknown> }
+    return parsed.error ?? undefined
+  } catch {
+    return undefined
+  }
+}
+
+/** google.rpc.RetryInfo carries a duration like "51s" when a retry is sane. */
+function googleRetryDelayMs(err: unknown): number | undefined {
+  const details = googleErrorBody(err)?.['details']
+  if (!Array.isArray(details)) return undefined
+  for (const d of details) {
+    const entry = d as Record<string, unknown>
+    if (typeof entry['@type'] === 'string' && entry['@type'].endsWith('RetryInfo')) {
+      const delay = entry['retryDelay']
+      if (typeof delay === 'string') {
+        const seconds = Number.parseFloat(delay)
+        if (Number.isFinite(seconds)) return Math.max(0, seconds * 1000)
+      }
+    }
+  }
+  return undefined
+}
+
+/**
+ * Distinguishes the two very different 429s.
+ *
+ * A per-minute rate limit clears on its own and ships a RetryInfo telling you
+ * when. An exhausted daily quota does not clear for hours and ships only a
+ * documentation link. Retrying the latter burns five attempts and ~10s to
+ * arrive at the same failure, and in a scheduled run it delays the real signal.
+ * Absence of retry guidance on a quota error is the tell.
+ */
+export function isExhaustedQuota(err: unknown): boolean {
+  if (statusOf(err) !== 429) return false
+  if (googleRetryDelayMs(err) !== undefined) return false
+  const body = googleErrorBody(err)
+  const status = typeof body?.['status'] === 'string' ? (body['status'] as string) : ''
+  const message = typeof body?.['message'] === 'string' ? (body['message'] as string) : ''
+  if (status === 'RESOURCE_EXHAUSTED') return true
+  return /\b(quota|billing|plan)\b/i.test(message)
 }
 
 export interface RetryOptions {

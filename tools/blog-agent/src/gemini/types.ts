@@ -30,6 +30,12 @@ export interface JsonResult<T> {
 export interface TokenUsage {
   input: number
   output: number
+  /**
+   * Internal reasoning tokens. Billed and charged against maxOutputTokens, but
+   * NOT part of the visible response — so a budget that looks generous can be
+   * consumed entirely by thinking, yielding an empty completion.
+   */
+  thoughts: number
   total: number
 }
 
@@ -52,6 +58,13 @@ export interface GenerateTextOptions {
   grounded?: boolean
   temperature?: number
   maxOutputTokens?: number
+  /**
+   * Reasoning-token budget. 0 disables thinking entirely, which is right for
+   * mechanical stages. Omit to let the model decide. Because thinking tokens
+   * are drawn from maxOutputTokens, a small cap plus unbounded thinking is the
+   * documented way to get an empty response.
+   */
+  thinkingBudget?: number
   label: string
 }
 
@@ -60,6 +73,15 @@ export interface GenerateJsonOptions<T> {
   system?: string
   schema: z.ZodType<T>
   /**
+   * Enable Google Search grounding alongside constrained decoding.
+   *
+   * Historically the API rejected this combination, which is why the discovery
+   * stage is split into a grounded free-text call followed by an ungrounded
+   * structuring call. Exposed so `doctor` can probe whether that restriction
+   * still holds; production stages should not rely on it until it does.
+   */
+  grounded?: boolean
+  /**
    * JSON Schema handed to the API for constrained decoding. Supplied
    * separately because the API accepts an OpenAPI subset rather than
    * arbitrary JSON Schema, so it cannot always be derived from the Zod type.
@@ -67,6 +89,7 @@ export interface GenerateJsonOptions<T> {
   responseSchema: Record<string, unknown>
   temperature?: number
   maxOutputTokens?: number
+  thinkingBudget?: number
   label: string
 }
 
@@ -104,12 +127,13 @@ export class ModelResponseError extends Error {
   }
 }
 
-export const zeroUsage = (): TokenUsage => ({ input: 0, output: 0, total: 0 })
+export const zeroUsage = (): TokenUsage => ({ input: 0, output: 0, thoughts: 0, total: 0 })
 
 export function addUsage(a: TokenUsage, b: TokenUsage): TokenUsage {
   return {
     input: a.input + b.input,
     output: a.output + b.output,
+    thoughts: a.thoughts + b.thoughts,
     total: a.total + b.total,
   }
 }

@@ -119,7 +119,7 @@ describe('decidePublish', () => {
   })
 
   it('publishes exactly at the floor', () => {
-    const last = new Date('2026-08-08T02:00:00Z')
+    const last = new Date('2026-08-08T12:00:00Z')
     const d = decidePublish({
       now: new Date(last.getTime() + MIN_GAP_MS),
       cadence: cadence({ lastPublishedDay: '2026-08-08', lastPublishedAt: last.toISOString() }),
