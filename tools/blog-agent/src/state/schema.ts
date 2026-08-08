@@ -77,8 +77,8 @@ export type PublishedFile = z.infer<typeof publishedFile>
 
 /**
  * Cadence anchor. `lastPublishedDay` is a UTC date key, not an elapsed-time
- * measurement: cron jitter on the congested `0 */6` slot makes an
- * `elapsed >= 24h` test drift forward every run, eventually starving whole
+ * measurement: cron jitter on a congested top-of-hour slot makes an
+ * "elapsed >= 24h" test drift forward every run, eventually starving whole
  * days. The day key is jitter-immune; the timestamp adds a floor so a 23:50 +
  * 00:10 pair cannot slip through.
  */
