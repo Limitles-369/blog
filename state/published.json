@@ -36,10 +36,28 @@
       ],
       "state": "open",
       "branch": "bot/post-hardening-github-actions-oidc-trust-policies-20260809-8ff530f7",
+      "prNumber": 7,
       "runId": "20260809-8ff530f7",
       "createdAt": "2026-08-09T21:08:02.225Z",
-      "updatedAt": "2026-08-09T21:08:37.669Z",
-      "prNumber": 7
+      "updatedAt": "2026-08-09T21:08:37.669Z"
+    },
+    {
+      "slug": "automating-legacy-guis-claude-3-5",
+      "title": "Automating Legacy GUIs with Claude 3.5",
+      "dedupText": "Automating Legacy GUIs with Claude 3.5\nMove beyond brittle Selenium scripts. Discover how vision-based agentic workflows allow you to automate legacy software by interpreting visual interfaces rather than code.\njavascript, refactoring, software-architecture, typescript",
+      "textHash": "3cb91f1bdcb177680f5043151b3f36551fa33cf20bb307c12685b5f8cfc32ede",
+      "tags": [
+        "typescript",
+        "javascript",
+        "refactoring",
+        "software-architecture"
+      ],
+      "state": "open",
+      "branch": "bot/post-automating-legacy-guis-claude-3-5-20260809-ba0b0d6c",
+      "runId": "20260809-ba0b0d6c",
+      "createdAt": "2026-08-09T21:16:48.078Z",
+      "updatedAt": "2026-08-09T21:17:30.520Z",
+      "prNumber": 8
     }
   ]
 }

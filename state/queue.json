@@ -225,23 +225,6 @@
       "attempts": 0
     },
     {
-      "id": "20260809-8ff530f7-0",
-      "title": "Moving Beyond Selenium: Automating Legacy GUIs with Claude 3.5",
-      "angle": "Explain how Anthropic's 'Computer Use' API enables agentic workflows to interact with software lacking traditional APIs, contrasting this with script-based automation.",
-      "dedupText": "Moving Beyond Selenium: Automating Legacy GUIs with Claude 3.5\nExplain how Anthropic's 'Computer Use' API enables agentic workflows to interact with software lacking traditional APIs, contrasting this with script-based automation.\nAI, Automation, Claude, Legacy Systems",
-      "textHash": "9d68cb1c00065af844636b57547a7234f47626154d1c8199c2815bb4160b23f4",
-      "tags": [
-        "AI",
-        "Automation",
-        "Claude",
-        "Legacy Systems"
-      ],
-      "score": 92,
-      "sources": [],
-      "discoveredAt": "2026-08-09T21:08:02.225Z",
-      "attempts": 0
-    },
-    {
       "id": "20260809-8ff530f7-1",
       "title": "PostgreSQL 17: Mastering the New SQL/JSON Standard",
       "angle": "Provide a practical guide on using the new standardized SQL/JSON functions like JSON_TABLE to improve query portability and data manipulation.",
