@@ -1,13 +1,7 @@
 {
-  "agentic-ai": 1,
-  "ai-agents": 1,
-  "ai-coding-tools": 1,
-  "cybersecurity": 4,
-  "encryption": 1,
-  "full-stack-development": 3,
-  "post-quantum-cryptography": 1,
-  "q-day": 1,
-  "quantum-computing": 1,
-  "software-development": 4,
-  "web-security": 3
+  "javascript": 1,
+  "refactoring": 1,
+  "software-architecture": 1,
+  "typescript": 1,
+  "web-performance": 1
 }
