@@ -1,0 +1,47 @@
+---
+title: 'Hardening GitHub Actions OIDC Trust Policies'
+date: '2026-08-09'
+tags: ['github-actions', 'ci-cd', 'security', 'oidc', 'devops', 'cloud-security']
+draft: false
+summary: 'Learn how to secure your CI/CD pipeline by moving beyond basic OIDC setups. Discover how to implement granular trust policies in AWS, GCP, and Azure to prevent unauthorized access.'
+authors: ['default']
+layout: PostLayout
+---
+
+Moving from long-lived secret keys to OIDC for CI/CD was a massive win for security. It removed the nightmare of rotating access keys stored in GitHub Secrets. However, I have noticed that many initial setups rely on overly permissive trust policies. If your configuration trusts an entire organization or repository without further constraints, a compromised workflow in a low-security branch could potentially escalate privileges to your production cloud environment.
+
+## The Hidden Risk of Over-Privileged OIDC
+
+When we first connect GitHub Actions to a cloud provider, it is tempting to set a broad trust policy. We want the pipeline to work, so we often grant access based simply on the repository name or even the organization. The problem is that OIDC tokens are essentially identity documents. If your IAM role or service account trusts any request coming from your GitHub organization, any repository within that org can potentially request a token.
+
+If an attacker manages to inject code into a feature branch or a dependency used by a non-critical workflow, they can trigger an action that assumes the cloud identity you have configured. Once that happens, the attacker has the same permissions as your CI/CD pipeline. By failing to restrict the scope, we effectively turn our OIDC provider into a wide-open door for lateral movement.
+
+## Understanding Audience Claims in OIDC
+
+The audience claim, often referred to as the `aud` field, is the cloud provider's way of verifying that the token was intended for them. In the context of GitHub Actions, this claim usually defaults to the URL of the cloud provider. By strictly validating this claim, we ensure that a token generated for one specific service cannot be maliciously redirected or reused by another.
+
+Think of the audience claim as a "to" address on an envelope. If a token arrives at your cloud provider with an incorrect audience, the provider should reject it immediately. Beyond the audience, we can also look at subject claims. These claims contain specific details about the workflow, such as the repository name, the environment, and the specific branch or tag. By checking these fields, we add a layer of verification that ensures the requestor is exactly who we expect them to be.
+
+## Hardening AWS IAM Roles for GitHub Actions
+
+In AWS, we manage this via the IAM Role Trust Policy. When you initially set this up, the policy likely checks the `sub` claim for the repository. To harden this, you need to add conditions that verify the specific branch or environment.
+
+Instead of just checking for `repo:your-org/your-repo:*`, update your policy to check for `repo:your-org/your-repo:ref:refs/heads/main`. This ensures that only the main branch can assume the role. If you want to use GitHub Environments, you can further refine this by checking the `environment` claim. By using the `StringLike` condition in your policy, you can force the trust relationship to only accept tokens from workflows running in a specific environment, effectively locking out any development or feature branch workflows from touching your production resources.
+
+## Restricting GCP Workload Identity Federation
+
+GCP uses attribute mapping and attribute conditions to handle OIDC trust. When you configure your Workload Identity Pool, you map GitHub OIDC claims to GCP attributes. The real security happens in the attribute conditions, which act as a firewall for your service account access.
+
+You should configure an attribute condition that checks the `assertion.repository` and `assertion.ref`. Similar to AWS, you can write a CEL expression that mandates that `assertion.ref` must equal `refs/heads/main`. By enforcing this, even if someone creates a malicious workflow in a fork or a different branch, the GCP Workload Identity Federation will reject the request because the attribute condition will fail to match. Keep these conditions as granular as possible; if a service account only needs to deploy a specific microservice, restrict the condition to only allow the repository associated with that service.
+
+## Securing Azure Managed Identities
+
+Azure handles this through Federated Identity Credentials. When you add a credential to a User-Assigned Managed Identity, you specify the subject identifier. This is where most people stop, but you can go further by scoping the credential to specific environments.
+
+In the Azure portal or via CLI, you can define the subject in a way that includes the environment name. By setting the subject identifier to match the specific GitHub workflow context, you ensure that the Managed Identity is only accessible when the pipeline explicitly targets that environment. This prevents developers from accidentally—or maliciously—using their own experimental branches to run tasks that require production Managed Identity permissions. Always audit these credentials to ensure you haven't left behind legacy federations for repositories that are no longer active.
+
+## Auditing and Maintaining Your Trust Policies
+
+Security configurations are not "set and forget." Over time, your repository structure will change, branches will be deleted, and new workflows will be added. I make it a point to audit these trust policies during every quarterly review.
+
+The best way to maintain these is through Infrastructure as Code. By defining your IAM roles, service accounts, and identity pools in Terraform or Bicep, you can track changes to your trust policies in version control. This allows you to see exactly who changed a policy and why. If you find your policies drifting toward being overly permissive, you have the historical context to revert them. Treating your trust policies as code is the only way to ensure that your CI/CD security remains as robust as the applications you are deploying.
