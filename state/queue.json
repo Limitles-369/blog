@@ -371,6 +371,142 @@
       "sources": [],
       "discoveredAt": "2026-08-09T21:36:22.714Z",
       "attempts": 0
+    },
+    {
+      "id": "20260809-e854e22e-0",
+      "title": "Migrating to Tailwind CSS v4.0: Embracing the Rust-Powered Oxide Engine",
+      "angle": "Explain how the new Rust-based Oxide engine achieves up to 10x faster full builds and how to transition to automatic content detection without manual file path configuration.",
+      "dedupText": "Migrating to Tailwind CSS v4.0: Embracing the Rust-Powered Oxide Engine\nExplain how the new Rust-based Oxide engine achieves up to 10x faster full builds and how to transition to automatic content detection without manual file path configuration.\nCSS, Rust, Tailwind CSS, Web Performance",
+      "textHash": "d9426339d688c2bc9c9de36cbb43debea4fd83e9604ad4d9ad25731d7ddfaa73",
+      "tags": [
+        "Tailwind CSS",
+        "CSS",
+        "Rust",
+        "Web Performance"
+      ],
+      "score": 82,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:45:37.502Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-e854e22e-1",
+      "title": "Future-Proofing Your Codebase with TypeScript 5.8’s --erasableSyntaxOnly Flag",
+      "angle": "Explain how the new --erasableSyntaxOnly flag acts as a compiler guardrail to ensure compatibility with zero-build runtimes by banning runtime-generating syntax like enums and namespaces.",
+      "dedupText": "Future-Proofing Your Codebase with TypeScript 5.8’s --erasableSyntaxOnly Flag\nExplain how the new --erasableSyntaxOnly flag acts as a compiler guardrail to ensure compatibility with zero-build runtimes by banning runtime-generating syntax like enums and namespaces.\nJavaScript, Node.js, Software Architecture, TypeScript",
+      "textHash": "53af1263f00001d9d1ecf05dd275d61cb78f4a1df82340d207cf6d09aff85602",
+      "tags": [
+        "TypeScript",
+        "JavaScript",
+        "Node.js",
+        "Software Architecture"
+      ],
+      "score": 93,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:45:37.502Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-e854e22e-3",
+      "title": "Running TypeScript Natively in Node.js v23.6.0 Without External Compilers",
+      "angle": "Explain how Node.js v23.6.0's stabilized native TS execution and improved module resolution via --experimental-strip-types allow developers to eliminate dev-dependencies like ts-node or tsx.",
+      "dedupText": "Running TypeScript Natively in Node.js v23.6.0 Without External Compilers\nExplain how Node.js v23.6.0's stabilized native TS execution and improved module resolution via --experimental-strip-types allow developers to eliminate dev-dependencies like ts-node or tsx.\nBackend, Developer Experience, Node.js, TypeScript",
+      "textHash": "60627af3d3c6a805e86ca5ef97e807c534d727d71aa2138e64fd65768ccaf0f6",
+      "tags": [
+        "Node.js",
+        "TypeScript",
+        "Backend",
+        "Developer Experience"
+      ],
+      "score": 94,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:45:37.502Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-e854e22e-4",
+      "title": "Bypassing the AWS SDK: Native S3 File Operations in Bun 1.2",
+      "angle": "Argue that Bun 1.2's native S3 protocol support (Bun.file) simplifies cloud architecture and reduces bundle sizes by eliminating the need for the heavy @aws-sdk/client-s3 package.",
+      "dedupText": "Bypassing the AWS SDK: Native S3 File Operations in Bun 1.2\nArgue that Bun 1.2's native S3 protocol support (Bun.file) simplifies cloud architecture and reduces bundle sizes by eliminating the need for the heavy @aws-sdk/client-s3 package.\nAWS S3, Bun, Cloud Architecture, Serverless",
+      "textHash": "b4ca99c41d725abb09a49425fb3b93f648dfe2adf2dc0aff31ab798cc1255712",
+      "tags": [
+        "Bun",
+        "AWS S3",
+        "Cloud Architecture",
+        "Serverless"
+      ],
+      "score": 87,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:45:37.502Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-e854e22e-5",
+      "title": "Optimizing Serverless Cold Starts with Prisma 6's Reduced Engine Size",
+      "angle": "Explain how Prisma 6's 50% reduction in engine binary size directly addresses cold-start latency on serverless platforms like AWS Lambda and Vercel.",
+      "dedupText": "Optimizing Serverless Cold Starts with Prisma 6's Reduced Engine Size\nExplain how Prisma 6's 50% reduction in engine binary size directly addresses cold-start latency on serverless platforms like AWS Lambda and Vercel.\nDatabases, Prisma, Serverless, Web Performance",
+      "textHash": "3b4790840dc595aa7a18b245df1a1e5fb56f1ae6eb22ffca99c72c1011a94547",
+      "tags": [
+        "Prisma",
+        "Serverless",
+        "Databases",
+        "Web Performance"
+      ],
+      "score": 58,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:45:37.502Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-e854e22e-6",
+      "title": "Type-Safe Raw SQL: Mastering Prisma 6's Stabilized typedSql Feature",
+      "angle": "Argue that Prisma 6's typedSql offers a best-of-both-worlds approach by compiling raw .sql files into fully typed TypeScript functions, bypassing ORM performance overhead without losing type safety.",
+      "dedupText": "Type-Safe Raw SQL: Mastering Prisma 6's Stabilized typedSql Feature\nArgue that Prisma 6's typedSql offers a best-of-both-worlds approach by compiling raw .sql files into fully typed TypeScript functions, bypassing ORM performance overhead without losing type safety.\nDatabases, Prisma, SQL, TypeScript",
+      "textHash": "0b38c59c2db22b29be74cb6676e67a37a822c8cb65ddf42172450e54b1a941f5",
+      "tags": [
+        "Prisma",
+        "SQL",
+        "TypeScript",
+        "Databases"
+      ],
+      "score": 90,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:45:37.502Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-e854e22e-7",
+      "title": "Scaling Bun 1.2 in Production: Lockfile v2 and Expanded Node.js Compatibility",
+      "angle": "Explain how Bun 1.2's optimized lockfile format and expanded support for native Node APIs (like node:net and node:dgram) make it viable for running complex, production-grade Node databases and network tools.",
+      "dedupText": "Scaling Bun 1.2 in Production: Lockfile v2 and Expanded Node.js Compatibility\nExplain how Bun 1.2's optimized lockfile format and expanded support for native Node APIs (like node:net and node:dgram) make it viable for running complex, production-grade Node databases and network tools.\nBackend, Bun, DevOps, Node.js",
+      "textHash": "2c51d6fa7a5a1ec32e6c54d2a725134b5f0dd82465fce74d48faef2a34d15a2e",
+      "tags": [
+        "Bun",
+        "Node.js",
+        "DevOps",
+        "Backend"
+      ],
+      "score": 68,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:45:37.502Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-e854e22e-8",
+      "title": "Modernizing CSS Architecture: Tailwind CSS v4.0 and Native Cascade Layers",
+      "angle": "Explain how Tailwind v4.0's compilation of utility classes into native CSS @layer directives aligns with modern browser specifications and improves CSS architecture.",
+      "dedupText": "Modernizing CSS Architecture: Tailwind CSS v4.0 and Native Cascade Layers\nExplain how Tailwind v4.0's compilation of utility classes into native CSS @layer directives aligns with modern browser specifications and improves CSS architecture.\nCSS, Frontend Architecture, Tailwind CSS, Web Standards",
+      "textHash": "890e58f69442981f0b321fede96dbaf3ec86b5cb86a8704b6830b3833ceee2b2",
+      "tags": [
+        "Tailwind CSS",
+        "CSS",
+        "Frontend Architecture",
+        "Web Standards"
+      ],
+      "score": 64,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:45:37.502Z",
+      "attempts": 0
     }
   ]
 }

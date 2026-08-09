@@ -59,6 +59,24 @@
       "createdAt": "2026-08-09T21:16:48.078Z",
       "updatedAt": "2026-08-09T21:35:28.664Z",
       "publishedAt": "2026-08-09T21:18:05Z"
+    },
+    {
+      "slug": "typescript-5-8-esm-commonjs-interop",
+      "title": "TypeScript 5.8 Simplifies ESM and CommonJS Interop",
+      "dedupText": "TypeScript 5.8 Simplifies ESM and CommonJS Interop\nLearn how TypeScript 5.8 aligns with Node.js to allow synchronous require of ES modules, eliminating dual-package hazards and simplifying legacy codebase migrations.\njavascript, refactoring, software-architecture, typescript",
+      "textHash": "6c8219829fd17a3921221256bfe82d7fbd85bfeb38e2929094e65bb97f63fbcf",
+      "tags": [
+        "typescript",
+        "javascript",
+        "refactoring",
+        "software-architecture"
+      ],
+      "state": "open",
+      "branch": "bot/post-typescript-5-8-esm-commonjs-interop-20260809-e854e22e",
+      "runId": "20260809-e854e22e",
+      "createdAt": "2026-08-09T21:45:37.502Z",
+      "updatedAt": "2026-08-09T21:49:19.535Z",
+      "prNumber": 9
     }
   ]
 }
