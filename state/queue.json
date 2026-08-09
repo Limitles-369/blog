@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "id": "20260809-a04a23e1-0",
+      "title": "Navigating the Next.js 15 Caching Shift",
+      "angle": "Explain why moving from implicit to explicit caching in Next.js 15 is a net positive for application predictability and how to refactor existing data-fetching patterns.",
+      "dedupText": "Navigating the Next.js 15 Caching Shift\nExplain why moving from implicit to explicit caching in Next.js 15 is a net positive for application predictability and how to refactor existing data-fetching patterns.\nCaching, Next.js, Web Development",
+      "textHash": "4a05d50199c423f3e203c7004b87c37792812e020dbbeb0e641b92717bb3ad6b",
+      "tags": [
+        "Next.js",
+        "Web Development",
+        "Caching"
+      ],
+      "score": 85,
+      "sources": [],
+      "discoveredAt": "2026-08-09T20:50:15.477Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-a04a23e1-2",
+      "title": "Optimizing High-Write Workloads with PostgreSQL 17",
+      "angle": "Argue that the new memory-based vacuuming in PostgreSQL 17 is the most significant performance update for database-heavy applications in years.",
+      "dedupText": "Optimizing High-Write Workloads with PostgreSQL 17\nArgue that the new memory-based vacuuming in PostgreSQL 17 is the most significant performance update for database-heavy applications in years.\nBackend, Database, PostgreSQL",
+      "textHash": "fd185d2a66b31c5e78ce4ca86162de293013f27a9aeba7cc847863693342e10d",
+      "tags": [
+        "PostgreSQL",
+        "Database",
+        "Backend"
+      ],
+      "score": 75,
+      "sources": [],
+      "discoveredAt": "2026-08-09T20:50:15.477Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-a04a23e1-3",
+      "title": "Debugging Containers Without Bloating Images",
+      "angle": "Show how Docker Desktop 4.35's unified debugging tools allow developers to troubleshoot production-like environments without installing language-specific debuggers in the final image.",
+      "dedupText": "Debugging Containers Without Bloating Images\nShow how Docker Desktop 4.35's unified debugging tools allow developers to troubleshoot production-like environments without installing language-specific debuggers in the final image.\nDebugging, DevOps, Docker",
+      "textHash": "b398330548e93abe8478c66d1cab9640dfbc3a2b24e2fff00bc47ae63203590c",
+      "tags": [
+        "Docker",
+        "DevOps",
+        "Debugging"
+      ],
+      "score": 88,
+      "sources": [],
+      "discoveredAt": "2026-08-09T20:50:15.477Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-a04a23e1-4",
+      "title": "Is Your Supply Chain Secure? Understanding OpenSSF Scorecard v5",
+      "angle": "Explain the updated criteria for 'Binary-Artifacts' and 'Dangerous-Workflow' checks and why developers need to re-evaluate their CI/CD security gates.",
+      "dedupText": "Is Your Supply Chain Secure? Understanding OpenSSF Scorecard v5\nExplain the updated criteria for 'Binary-Artifacts' and 'Dangerous-Workflow' checks and why developers need to re-evaluate their CI/CD security gates.\nCI/CD, Security, Supply Chain",
+      "textHash": "ae1e61aa01b9a126a1829bfc7db01f534eaf6e1c236127399e9ed076ed09f649",
+      "tags": [
+        "Security",
+        "CI/CD",
+        "Supply Chain"
+      ],
+      "score": 70,
+      "sources": [],
+      "discoveredAt": "2026-08-09T20:50:15.477Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-a04a23e1-5",
+      "title": "Efficient Local LLM Lifecycle Management with Ollama 0.4.0",
+      "angle": "Explain how improved GPU memory management in Ollama 0.4.0 enables developers to build more complex RAG pipelines on local hardware without manual VRAM intervention.",
+      "dedupText": "Efficient Local LLM Lifecycle Management with Ollama 0.4.0\nExplain how improved GPU memory management in Ollama 0.4.0 enables developers to build more complex RAG pipelines on local hardware without manual VRAM intervention.\nAI Engineering, LLM, Ollama",
+      "textHash": "42c78ce29e6c98074e69a9ddbbb3ae420957419155e378882a3a71284497cb4c",
+      "tags": [
+        "AI Engineering",
+        "Ollama",
+        "LLM"
+      ],
+      "score": 82,
+      "sources": [],
+      "discoveredAt": "2026-08-09T20:50:15.477Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-a04a23e1-6",
+      "title": "The Future of Incremental Builds in TypeScript",
+      "angle": "Analyze how the performance improvements in TypeScript 5.7's incremental builds impact developer productivity in monorepo architectures.",
+      "dedupText": "The Future of Incremental Builds in TypeScript\nAnalyze how the performance improvements in TypeScript 5.7's incremental builds impact developer productivity in monorepo architectures.\nBuild Tools, Monorepo, TypeScript",
+      "textHash": "544ee206a9b620ec9ceff2b1300b7770f16b7bd78430610fa31fc64f806fc4a2",
+      "tags": [
+        "TypeScript",
+        "Build Tools",
+        "Monorepo"
+      ],
+      "score": 65,
+      "sources": [],
+      "discoveredAt": "2026-08-09T20:50:15.477Z",
+      "attempts": 0
+    }
+  ]
+}

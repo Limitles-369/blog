@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "slug": "eliminating-dead-side-effect-imports-typescript",
+      "title": "Eliminating Dead Side-Effect Imports in TypeScript",
+      "dedupText": "Eliminating Dead Side-Effect Imports in TypeScript\nLearn how to identify and prune unused side-effect imports in your TypeScript projects. Improve bundle performance and maintainability by cleaning up your dependency graph.\njavascript, refactoring, software-architecture, typescript, web-performance",
+      "textHash": "69406604cb88d43823322723c521958b48542189a0d42b72454df0e546519a9c",
+      "tags": [
+        "typescript",
+        "javascript",
+        "web-performance",
+        "refactoring",
+        "software-architecture"
+      ],
+      "state": "open",
+      "branch": "bot/post-eliminating-dead-side-effect-imports-typescript-20260809-a04a23e1",
+      "runId": "20260809-a04a23e1",
+      "createdAt": "2026-08-09T20:50:15.477Z",
+      "updatedAt": "2026-08-09T20:50:56.294Z",
+      "prNumber": 6
+    }
+  ]
+}
