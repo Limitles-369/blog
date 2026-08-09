@@ -80,14 +80,18 @@ export async function runCompileGate(input: CompileGateInput): Promise<CompileGa
         // which makes createTagCount count draft tags. Committing that output
         // would put draft-only tags on /tags and into the sitemap, pointing at
         // pages that render zero posts.
-        env: { ...process.env, NODE_ENV: 'production' },
+        env: {
+          ...Object.fromEntries(Object.entries(process.env).filter(([k]) => !k.startsWith('npm_') && k !== 'PWD')),
+          NODE_ENV: 'production',
+          INIT_CWD: undefined
+        } as NodeJS.ProcessEnv,
         maxBuffer: 32 * 1024 * 1024,
       })
       stderr = result.stderr
     } catch (cause) {
       failed = true
       const e = cause as { stderr?: string; stdout?: string; message?: string }
-      stderr = e.stderr ?? e.stdout ?? e.message ?? String(cause)
+      stderr = e.stderr || e.stdout || e.message || String(cause)
     }
 
     if (failed) {

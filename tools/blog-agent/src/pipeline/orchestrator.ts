@@ -195,9 +195,12 @@ export async function runPipeline(opts: RunOptions): Promise<RunOutcomeShape> {
   const key = imageKey(slug)
   const heroRel = path.posix.join('static/images/blog', key, 'hero.png')
 
-  const hero = await log.timed('hero image', () =>
-    generateHero({ client, subject: meta.imagePrompt, logger: log })
-  )
+  let hero = null
+  if (config.GENERATE_HERO_IMAGE) {
+    hero = await log.timed('hero image', () =>
+      generateHero({ client, subject: meta.imagePrompt, logger: log })
+    )
+  }
 
   const frontmatter: Frontmatter = {
     title: meta.title,
@@ -205,7 +208,7 @@ export async function runPipeline(opts: RunOptions): Promise<RunOutcomeShape> {
     tags: meta.tags,
     draft: false,
     summary: meta.summary,
-    images: [`/${heroRel}`],
+    ...(hero ? { images: [`/${heroRel}`] } : {}),
     authors: [config.POST_AUTHOR],
     layout: config.POST_LAYOUT,
   }
@@ -219,8 +222,10 @@ export async function runPipeline(opts: RunOptions): Promise<RunOutcomeShape> {
   // ---- Phase 5: gates ----------------------------------------------------
   const assets = new Map<string, string>()
   const heroAbs = path.join(paths.artifacts, runId, 'hero.png')
-  await writeArtifact(heroAbs, hero.bytes)
-  assets.set(path.posix.join('public', heroRel), heroAbs)
+  if (hero) {
+    await writeArtifact(heroAbs, hero.bytes)
+    assets.set(path.posix.join('public', heroRel), heroAbs)
+  }
 
   const report = await log.timed('gates', () =>
     runGates({
@@ -280,7 +285,7 @@ export async function runPipeline(opts: RunOptions): Promise<RunOutcomeShape> {
     title: meta.title,
     source,
     postPath: path.posix.join('data/blog', `${slug}.mdx`),
-    assets: new Map([[path.posix.join('public', heroRel), hero.bytes]]),
+    assets: hero ? new Map([[path.posix.join('public', heroRel), hero.bytes]]) : new Map(),
     ...(report.tagData ? { tagData: report.tagData } : {}),
     report,
     sources: next.sources,

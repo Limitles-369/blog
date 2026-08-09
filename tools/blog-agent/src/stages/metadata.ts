@@ -113,7 +113,7 @@ export async function generateHero(input: {
 }): Promise<HeroImage> {
   const res = await input.client.generateImage({
     prompt: `${HERO_STYLE_PREFIX} ${input.subject}`,
-    aspectRatio: '2:1',
+    aspectRatio: '16:9',
     label: 'image.hero',
   })
   input.logger.info('hero image generated', { bytes: res.bytes.length, mime: res.mimeType })
