@@ -96,6 +96,86 @@
       "sources": [],
       "discoveredAt": "2026-08-09T20:50:15.477Z",
       "attempts": 0
+    },
+    {
+      "id": "20260809-5db3b8cd-0",
+      "title": "Enhancing JSDoc Type Safety in Legacy JavaScript",
+      "angle": "Explain how TypeScript 5.7's improved JSDoc support allows teams to gain type safety without the overhead of a full migration to TypeScript.",
+      "dedupText": "Enhancing JSDoc Type Safety in Legacy JavaScript\nExplain how TypeScript 5.7's improved JSDoc support allows teams to gain type safety without the overhead of a full migration to TypeScript.\nJavaScript, Refactoring, TypeScript",
+      "textHash": "0e03735b00c98eb478779f1728449b8fce496ffaa69128fce01c63b932205826",
+      "tags": [
+        "TypeScript",
+        "JavaScript",
+        "Refactoring"
+      ],
+      "score": 88,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:03:16.210Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-5db3b8cd-1",
+      "title": "Preparing Your Infrastructure for Kubernetes 1.32",
+      "angle": "Argue that the deprecation of in-tree cloud provider code necessitates a shift toward standardized CSI/CNI drivers for long-term stability.",
+      "dedupText": "Preparing Your Infrastructure for Kubernetes 1.32\nArgue that the deprecation of in-tree cloud provider code necessitates a shift toward standardized CSI/CNI drivers for long-term stability.\nCloud Native, DevOps, Kubernetes",
+      "textHash": "2b3cbc48d4f7aeec9a51c60ca3dedf46ceaee1caa07ee133d3461cb67a2f00c3",
+      "tags": [
+        "Kubernetes",
+        "DevOps",
+        "Cloud Native"
+      ],
+      "score": 70,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:03:16.210Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-5db3b8cd-2",
+      "title": "Building Local Multimodal Pipelines with Llama 3.2",
+      "angle": "Explain how to integrate vision models into local, private workflows using llama.cpp, moving beyond simple text-based LLM interactions.",
+      "dedupText": "Building Local Multimodal Pipelines with Llama 3.2\nExplain how to integrate vision models into local, private workflows using llama.cpp, moving beyond simple text-based LLM interactions.\nAI, LLM, Local Inference",
+      "textHash": "f7f8390d0fc53b3d79f8e2b6322d7b0f9542b2fa9b235c8e6c17c9166b715c77",
+      "tags": [
+        "AI",
+        "LLM",
+        "Local Inference"
+      ],
+      "score": 85,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:03:16.210Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-5db3b8cd-3",
+      "title": "Beyond Basic Audits: Using OpenSSF Scorecard for Nuanced Security",
+      "angle": "Explain how updated Scorecard heuristics for branch protection and dependency pinning provide a more accurate picture of project security health.",
+      "dedupText": "Beyond Basic Audits: Using OpenSSF Scorecard for Nuanced Security\nExplain how updated Scorecard heuristics for branch protection and dependency pinning provide a more accurate picture of project security health.\nOpen Source, Security, Supply Chain",
+      "textHash": "9ac44a01806a6463f3fbd870545c20f5ab1d279dcfbb6e3f84b869961c2572d0",
+      "tags": [
+        "Security",
+        "Open Source",
+        "Supply Chain"
+      ],
+      "score": 78,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:03:16.210Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-5db3b8cd-4",
+      "title": "Designing for Progressive Enhancement with Next.js 15 Forms",
+      "angle": "Argue that the new form component simplifies the creation of resilient, accessible web applications that work even when JavaScript fails.",
+      "dedupText": "Designing for Progressive Enhancement with Next.js 15 Forms\nArgue that the new form component simplifies the creation of resilient, accessible web applications that work even when JavaScript fails.\nNext.js, UX, Web Standards",
+      "textHash": "f033d1f28a42ce3edeece843e98ffa054c67683edf3f2468e290ae2135c9296b",
+      "tags": [
+        "Next.js",
+        "Web Standards",
+        "UX"
+      ],
+      "score": 72,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:03:16.210Z",
+      "attempts": 0
     }
   ]
 }
