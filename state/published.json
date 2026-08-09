@@ -52,12 +52,13 @@
         "refactoring",
         "software-architecture"
       ],
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-automating-legacy-guis-claude-3-5-20260809-ba0b0d6c",
+      "prNumber": 8,
       "runId": "20260809-ba0b0d6c",
       "createdAt": "2026-08-09T21:16:48.078Z",
-      "updatedAt": "2026-08-09T21:17:30.520Z",
-      "prNumber": 8
+      "updatedAt": "2026-08-09T21:35:28.664Z",
+      "publishedAt": "2026-08-09T21:18:05Z"
     }
   ]
 }

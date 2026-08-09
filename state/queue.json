@@ -274,6 +274,55 @@
       "sources": [],
       "discoveredAt": "2026-08-09T21:08:02.225Z",
       "attempts": 0
+    },
+    {
+      "id": "20260809-02e69899-0",
+      "title": "Beyond Naive RAG: Implementing Contextual Retrieval Patterns",
+      "angle": "Argue that simple vector search is insufficient and demonstrate how adding hierarchical summaries and metadata to chunks improves retrieval accuracy.",
+      "dedupText": "Beyond Naive RAG: Implementing Contextual Retrieval Patterns\nArgue that simple vector search is insufficient and demonstrate how adding hierarchical summaries and metadata to chunks improves retrieval accuracy.\nAI, LangChain, LlamaIndex, RAG",
+      "textHash": "540d69035ce2263976d1223dd0cd38ee8ef0039a4e3910565d748db0e6ec907c",
+      "tags": [
+        "AI",
+        "RAG",
+        "LangChain",
+        "LlamaIndex"
+      ],
+      "score": 82,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:35:28.664Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-02e69899-1",
+      "title": "Securing Your CI/CD Pipeline Against Malicious npm Install Scripts",
+      "angle": "Explain why running npm install without audit flags is a security risk and provide a configuration guide for safer dependency management.",
+      "dedupText": "Securing Your CI/CD Pipeline Against Malicious npm Install Scripts\nExplain why running npm install without audit flags is a security risk and provide a configuration guide for safer dependency management.\nDevOps, Security, npm",
+      "textHash": "a4cc428aba3746b70f2e43a4c17bb19c9ab4208424219267db86f13a6f351806",
+      "tags": [
+        "Security",
+        "npm",
+        "DevOps"
+      ],
+      "score": 65,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:35:28.664Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-02e69899-2",
+      "title": "The React Compiler: What It Means for Your Next.js 15 Architecture",
+      "angle": "Explain how the React Compiler integration changes the need for manual memoization and how it impacts component design in Next.js 15.",
+      "dedupText": "The React Compiler: What It Means for Your Next.js 15 Architecture\nExplain how the React Compiler integration changes the need for manual memoization and how it impacts component design in Next.js 15.\nNext.js, Performance, React",
+      "textHash": "8ea3781133b28953f7d6c97b8e9051cfb1da3e43c9d7833739f75493f86e7a44",
+      "tags": [
+        "React",
+        "Next.js",
+        "Performance"
+      ],
+      "score": 75,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:35:28.664Z",
+      "attempts": 0
     }
   ]
 }
