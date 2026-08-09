@@ -61,6 +61,11 @@ const computedFields: ComputedFields = {
 
 /**
  * Count the occurrences of all tags across blog posts and write to json file
+ *
+ * Keys are sorted before writing. Contentlayer resolves documents in
+ * completion order, so an unsorted object produced a different key order on
+ * every build — the committed file churned on runs where no tag had changed,
+ * and two branches adding different tags conflicted over the whole file.
  */
 async function createTagCount(allBlogs) {
   const tagCount: Record<string, number> = {}
@@ -76,7 +81,10 @@ async function createTagCount(allBlogs) {
       })
     }
   })
-  const formatted = await prettier.format(JSON.stringify(tagCount, null, 2), { parser: 'json' })
+  const sorted = Object.fromEntries(
+    Object.entries(tagCount).sort(([a], [b]) => a.localeCompare(b))
+  )
+  const formatted = await prettier.format(JSON.stringify(sorted, null, 2), { parser: 'json' })
   writeFileSync('./app/tag-data.json', formatted)
 }
 
@@ -179,9 +187,16 @@ export default makeSource({
       rehypePresetMinify,
     ],
   },
+  // Both default to 'skip-warn', which drops a post with missing or
+  // mistyped frontmatter and still exits 0 — the page then 404s in
+  // production with nothing having failed. Fail the build instead.
+  onMissingOrIncompatibleData: 'fail',
+  onUnknownDocuments: 'fail',
   onSuccess: async (importData) => {
     const { allBlogs } = await importData()
-    createTagCount(allBlogs)
+    // Awaited: createTagCount awaits prettier.format before writing, so a
+    // bare call can lose the write to process exit or race webpack's read.
+    await createTagCount(allBlogs)
     createSearchIndex(allBlogs)
   },
 })
