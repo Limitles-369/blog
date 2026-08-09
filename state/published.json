@@ -13,12 +13,13 @@
         "refactoring",
         "software-architecture"
       ],
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-eliminating-dead-side-effect-imports-typescript-20260809-a04a23e1",
+      "prNumber": 6,
       "runId": "20260809-a04a23e1",
       "createdAt": "2026-08-09T20:50:15.477Z",
-      "updatedAt": "2026-08-09T20:50:56.294Z",
-      "prNumber": 6
+      "updatedAt": "2026-08-09T21:05:58.766Z",
+      "publishedAt": "2026-08-09T21:04:32Z"
     }
   ]
 }

@@ -176,6 +176,69 @@
       "sources": [],
       "discoveredAt": "2026-08-09T21:03:16.210Z",
       "attempts": 0
+    },
+    {
+      "id": "20260809-2a80dffd-0",
+      "title": "Mastering the next/after API in Next.js 15",
+      "angle": "Explain how to use the new next/after API to offload non-critical tasks like logging or analytics without blocking the primary server response.",
+      "dedupText": "Mastering the next/after API in Next.js 15\nExplain how to use the new next/after API to offload non-critical tasks like logging or analytics without blocking the primary server response.\nNext.js, Server Components, Web Performance",
+      "textHash": "6a080d7acb2ae35cb96676d84b4a3c93ed2a934a74d45ed1e801820f722e5e17",
+      "tags": [
+        "Next.js",
+        "Web Performance",
+        "Server Components"
+      ],
+      "score": 85,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:05:58.766Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-2a80dffd-1",
+      "title": "Preventing Import Errors with TypeScript 5.7 Checked Changes",
+      "angle": "Demonstrate how the new 'Checked Changes' feature in TypeScript 5.7 catches relative path typos during development, reducing build-time failures.",
+      "dedupText": "Preventing Import Errors with TypeScript 5.7 Checked Changes\nDemonstrate how the new 'Checked Changes' feature in TypeScript 5.7 catches relative path typos during development, reducing build-time failures.\nDeveloper Experience, TypeScript",
+      "textHash": "6f7738a9f4c756f9685f67a43232ff07ec63aae9016479438af759b6c3dc54ac",
+      "tags": [
+        "TypeScript",
+        "Developer Experience"
+      ],
+      "score": 90,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:05:58.766Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-2a80dffd-2",
+      "title": "Securing Your CI/CD: Updating GitHub Actions OIDC Trust Policies",
+      "angle": "Provide a step-by-step guide on restricting OIDC token audience claims to prevent token-hijacking in AWS, GCP, and Azure pipelines.",
+      "dedupText": "Securing Your CI/CD: Updating GitHub Actions OIDC Trust Policies\nProvide a step-by-step guide on restricting OIDC token audience claims to prevent token-hijacking in AWS, GCP, and Azure pipelines.\nCI/CD, GitHub Actions, Security",
+      "textHash": "913a97c77183b5a962466284f7ac2f2ae0d1ce674476d45af8d79104fa6fb800",
+      "tags": [
+        "Security",
+        "GitHub Actions",
+        "CI/CD"
+      ],
+      "score": 95,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:05:58.766Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-2a80dffd-3",
+      "title": "Preparing for Kubernetes 1.32: Managing Sidecar Lifecycles",
+      "angle": "Explain how the stabilization of sidecar containers in Kubernetes 1.32 changes the way developers architect pod startup sequences.",
+      "dedupText": "Preparing for Kubernetes 1.32: Managing Sidecar Lifecycles\nExplain how the stabilization of sidecar containers in Kubernetes 1.32 changes the way developers architect pod startup sequences.\nDevOps, Infrastructure, Kubernetes",
+      "textHash": "9ee13df6e9d34aa74cdbcf232a0c8e28d7a6c71669fcaccb931e94a3d85f3843",
+      "tags": [
+        "Kubernetes",
+        "DevOps",
+        "Infrastructure"
+      ],
+      "score": 80,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:05:58.766Z",
+      "attempts": 0
     }
   ]
 }
