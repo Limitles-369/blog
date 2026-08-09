@@ -1,10 +1,10 @@
 import type { CadenceFile, PublishedFile } from './schema.js'
 
 /** Minimum gap between publications, on top of the UTC-day rule. */
-export const MIN_GAP_MS = 20 * 60 * 60 * 1000
+export const MIN_GAP_MS = 8 * 60 * 60 * 1000
 
 /** Only one bot PR may be open at a time — see `decidePublish` for why. */
-export const MAX_OPEN_PRS = 1
+export const MAX_OPEN_PRS = 2
 
 export function utcDay(at: Date): string {
   return at.toISOString().slice(0, 10)
@@ -78,11 +78,6 @@ export function decidePublish(input: DecideInput): PublishDecision {
       reason: 'open-pr-exists',
       detail: `${open.length} open bot PR(s): ${open.map((e) => `#${e.prNumber ?? '?'}`).join(', ')}`,
     }
-  }
-
-  const today = utcDay(now)
-  if (cadence.lastPublishedDay === today) {
-    return { publish: false, reason: 'already-published-today', detail: today }
   }
 
   if (cadence.lastPublishedAt) {
