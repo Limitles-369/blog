@@ -323,6 +323,54 @@
       "sources": [],
       "discoveredAt": "2026-08-09T21:35:28.664Z",
       "attempts": 0
+    },
+    {
+      "id": "20260809-30025988-0",
+      "title": "Moving Beyond In-Memory State: Persistent Agent Memory with LangGraph",
+      "angle": "Argue that serverless AI agents require external state stores like SQLite or Postgres to maintain thread memory, moving away from fragile in-memory patterns.",
+      "dedupText": "Moving Beyond In-Memory State: Persistent Agent Memory with LangGraph\nArgue that serverless AI agents require external state stores like SQLite or Postgres to maintain thread memory, moving away from fragile in-memory patterns.\nAI Engineering, Architecture, LangGraph",
+      "textHash": "197358dce9745597e91247bff48cf649035de36c73303b3ca46742ef9aed761b",
+      "tags": [
+        "AI Engineering",
+        "LangGraph",
+        "Architecture"
+      ],
+      "score": 85,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:36:22.714Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-30025988-1",
+      "title": "PostgreSQL 17.1: Why This Security Patch Is Non-Optional",
+      "angle": "Explain the mechanics of CVE-2024-10979 and why self-hosted PostgreSQL instances require immediate patching to prevent privilege escalation.",
+      "dedupText": "PostgreSQL 17.1: Why This Security Patch Is Non-Optional\nExplain the mechanics of CVE-2024-10979 and why self-hosted PostgreSQL instances require immediate patching to prevent privilege escalation.\nDatabase, PostgreSQL, Security",
+      "textHash": "4df5e20bbcc14545ebf16ec8390fb5c4e6b322fc749ab8cd1b78bdc8b0e68940",
+      "tags": [
+        "PostgreSQL",
+        "Security",
+        "Database"
+      ],
+      "score": 75,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:36:22.714Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-30025988-2",
+      "title": "Transitioning to React 19: What Next.js 15 Developers Need to Know",
+      "angle": "Discuss the implications of the React 19 stable release on hydration patterns and server component architecture within the Next.js ecosystem.",
+      "dedupText": "Transitioning to React 19: What Next.js 15 Developers Need to Know\nDiscuss the implications of the React 19 stable release on hydration patterns and server component architecture within the Next.js ecosystem.\nNext.js, React, Web Development",
+      "textHash": "a192d4725f95fac0971b8da3c9630ed0147b9567599b3f24aaf16d80fbc588cb",
+      "tags": [
+        "React",
+        "Next.js",
+        "Web Development"
+      ],
+      "score": 65,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:36:22.714Z",
+      "attempts": 0
     }
   ]
 }
