@@ -1,0 +1,93 @@
+---
+title: 'Node.js 23: Solving the ESM Migration Headache'
+date: '2026-08-09'
+tags: ['software development', 'full stack development']
+draft: false
+summary: 'Node.js 23 simplifies the transition from CommonJS to ESM by allowing synchronous loading of ES modules. Learn how to modernize your legacy codebase without a full-scale rewrite.'
+images: ['/static/images/twitter-card.png']
+authors: ['default']
+layout: PostLayout
+---
+
+The divide between CommonJS and ES modules has been one of the most persistent friction points in the Node.js ecosystem. For years, we have been caught in a binary choice: either stick to the legacy `require` syntax that defines the vast majority of our existing dependency trees, or commit to a full-scale migration to `import` statements, which often triggers a cascade of breaking changes across our entire project structure.
+
+This split wasn't just a matter of syntax preference. It created a "dual-package" headache where developers had to manage complex interop layers to keep codebases running. Recent improvements in Node.js now allow for the synchronous loading of ES modules from CommonJS. It’s the piece of the puzzle that allows us to move forward without a forced, all-or-nothing rewrite of our legacy applications.
+
+## The long road to module parity
+
+Node.js started with CommonJS as its foundational module system. It was simple, synchronous, and fit the server-side model perfectly. When the JavaScript specification introduced ES modules as the standard, Node.js faced a difficult integration challenge. The two systems operate on fundamentally different evaluation models.
+
+CommonJS is synchronous by design, meaning it loads and executes files immediately upon request. ES modules are asynchronous, requiring a multi-phase loading process to handle static analysis and top-level await. Because of these differences, mixing them was essentially unsupported for years.
+
+This created a massive barrier for maintainers. If you had a deep tree of legacy dependencies relying on CommonJS, you were effectively locked out of the modern ESM-only packages appearing on npm. We spent years writing "wrapper" code, using dual-package entry points, or avoiding modern libraries entirely to keep our build pipelines stable. It was a tax on productivity that slowed down the adoption of modern JavaScript features across the entire industry.
+
+## Understanding the require(esm) barrier
+
+The core technical limitation was the synchronous nature of `require()`. In Node.js, when you call `require('./module.js')`, the runtime expects the module to be ready immediately. If that module is an ES module, it might contain top-level await or other asynchronous features that cannot be resolved in a single synchronous tick.
+
+To keep the system stable, Node.js previously forced a strict boundary. You could use dynamic `import()` to load an ESM file from CommonJS, but that operation is asynchronous, returning a promise. This meant the entire call stack had to be refactored to handle that promise, which is a non-starter in a large, synchronous CommonJS codebase.
+
+This forced developers into a "walled garden" approach. If you were in a CJS file, you were stuck there. If you wanted to use an ESM package, you had to either convert your entire application to ESM or find a CJS-compatible fork of the library. This led to "dependency hell," where updating one package required updating every single upstream dependency to maintain compatibility. It wasn't just a technical hurdle; it was a maintenance burden that discouraged teams from touching their dependency trees.
+
+## How recent updates change the game
+
+The ability to use `require()` to load ES modules fundamentally changes this by allowing the `require()` function to load ES modules that do not use top-level await.
+
+When you call `require()` on an ES module, Node.js now attempts to load it synchronously. If the module is purely synchronous—meaning it doesn't contain any top-level `await`—the runtime can resolve the graph and return the exports exactly as it would with a standard CommonJS file.
+
+This bridge works because it treats the ES module as a static graph that can be traversed at startup. By removing the requirement that all ESM must be loaded asynchronously via `import()`, Node.js allows us to mix the two systems in a way that respects the existing CJS runtime model.
+
+It is important to note that this doesn't magically make asynchronous code synchronous. If an ES module uses `top-level await`, it still cannot be loaded via `require()`. It remains an asynchronous entity that must be handled with `import()`. However, for the vast majority of library code that has migrated to ESM for its static analysis and tree-shaking benefits, this update provides a seamless path forward. We can now consume modern ESM libraries directly inside our legacy `require()`-based applications without needing to change the module system of the entire app.
+
+## Benefits for legacy codebases
+
+For those of us managing large, mature applications, this is a significant win for long-term maintainability.
+
+- **Incremental migration:** You no longer need a "big bang" rewrite to adopt modern packages. You can start using ESM libraries today while keeping your existing architecture intact.
+- **Dependency flexibility:** The pressure to find CJS-only forks of popular libraries disappears. You can safely pull in the latest versions of packages that have gone ESM-only.
+- **Reduced technical debt:** We can finally stop maintaining complex interop wrappers or custom loaders that were previously necessary to bridge the module gap.
+- **Improved build performance:** ESM allows for better static analysis. By consuming ESM directly, you may find that your tooling can better optimize your bundle sizes or tree-shake unused code.
+- **Alignment with modern standards:** Our codebases can move closer to the current ECMAScript standard without sacrificing the stability of our established production environments.
+
+The most practical benefit is the removal of the "all-or-nothing" mentality. We can now treat ESM adoption as a gradual refactoring task rather than a risky, project-wide migration.
+
+## Implementation strategies for existing apps
+
+Transitioning an existing app doesn't have to be complex. You can start by simply identifying the dependencies that have been blocked by the CJS/ESM divide.
+
+1. **Audit your dependencies:** Look for packages that you’ve been avoiding or pinning to older versions because they moved to ESM. These are your first candidates for an upgrade.
+2. **Upgrade incrementally:** Start by updating one dependency at a time. Since modern Node.js versions support `require()` for these modules, the upgrade should be transparent.
+3. **Monitor for top-level await:** If a package fails to load, check if it uses top-level `await`. These are the only exceptions that still require asynchronous loading.
+4. **Refactor only where needed:** If you encounter an ESM module that must be loaded asynchronously, isolate that import to a specific location in your code rather than forcing a migration of the entire file.
+5. **Update your tooling:** Ensure your test runners, linters, and bundlers are updated to support the latest Node.js environment. Most modern tools have already integrated support for this transition.
+6. **Standardize on ESM for new features:** As you add new modules or services, default to using ESM. You can easily `require()` these new modules from your legacy CJS code as you bridge the gap.
+
+By following this approach, you turn a massive architectural hurdle into a series of small, manageable tasks that improve your codebase over time.
+
+## Avoiding common pitfalls
+
+While `require(esm)` makes life easier, it isn't a total "get out of jail free" card. You still need to be aware of how the two systems interact.
+
+The most common issue is the asynchronous boundary. If you are working in a CJS file and you need to load a module that uses top-level await, you are still required to use an asynchronous import. This creates a "sync/async" boundary that you must manage. If you forget to handle the promise returned by a dynamic `import()`, your code will fail at runtime.
+
+Another pitfall is the difference in how the two systems handle `this` and global variables. In ESM, `this` is `undefined` at the top level, whereas in CJS, it refers to the `exports` object. While most well-behaved packages won't rely on these differences, it is worth keeping in mind if you are dealing with older, less standard-compliant code.
+
+Finally, stay disciplined with your dependency tree. Just because you _can_ mix the two systems doesn't mean you should create a spaghetti architecture. Aim to eventually move your entire project to ESM, using this feature as a bridge to get there, not as a permanent excuse to keep your codebase in a hybrid state.
+
+## My practical take
+
+I see this as a necessary evolution, not a silver bullet. For a long time, the Node.js team had to balance the needs of a massive, legacy-heavy ecosystem against the desire to move toward modern, standardized ESM.
+
+Is this the end of all module-related headaches? Probably not. We will still see issues with packages that use top-level await or have complex circular dependencies. But it does represent a maturity in the runtime’s design. We are finally at a point where the platform is bending to accommodate the reality of how we write code, rather than forcing us to align with a theoretical ideal at the expense of our production stability.
+
+As someone who spends a lot of time working on long-lived projects, I appreciate that I can now focus on upgrading my dependencies without worrying about whether they support `require()`. It lowers the barrier to entry for modern libraries, which is a net positive for everyone.
+
+## Conclusion
+
+The ability to use `require()` for ESM is a quiet, highly significant milestone for the ecosystem. By removing the final major friction point between CommonJS and ES modules, Node.js has provided a viable path forward for legacy projects that were previously stalled.
+
+We no longer have to choose between keeping our codebases stable and adopting the latest tooling. We can now bridge these two worlds, allowing for a more gradual, thoughtful transition to modern JavaScript.
+
+For developers, this means less time fighting with module loaders and more time building features. It is a welcome shift that proves the platform is maturing in a way that respects the reality of production engineering. As we look ahead, I expect this change will accelerate the final, industry-wide migration to ESM, eventually making this entire debate a piece of history.
+
+<BlogNewsletterForm />
