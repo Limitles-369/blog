@@ -36,7 +36,7 @@ export const frontmatterSchema = z
     tags: z.array(z.string().trim().min(1)).min(2).max(8),
     draft: z.boolean().optional(),
     summary: z.string().trim().min(50).max(300),
-    images: z.array(z.string().startsWith('/static/')).min(1),
+    images: z.array(z.string().startsWith('/static/')).min(1).optional(),
     authors: z.array(z.string().trim().min(1)).min(1),
     layout: z.enum(LAYOUTS),
     bibliography: z.string().trim().min(1).optional(),

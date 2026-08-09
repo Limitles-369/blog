@@ -155,7 +155,7 @@ export const critique = z.object({
   issues: z.array(
     z.object({
       severity: z.enum(['blocking', 'minor']),
-      note: z.string().min(5).max(300),
+      note: z.string().min(5).max(1000),
     })
   ),
   rewriteNeeded: z.boolean(),
