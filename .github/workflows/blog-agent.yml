@@ -62,6 +62,7 @@ jobs:
           GEMINI_EMBEDDING_MODEL: ${{ vars.GEMINI_EMBEDDING_MODEL || 'gemini-embedding-2-preview' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
+          GENERATE_HERO_IMAGE: 'false'
           LOG_FORMAT: json
           DRY_RUN: ${{ inputs.dry_run && 'true' || 'false' }}
         run: |
