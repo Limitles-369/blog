@@ -20,6 +20,26 @@
       "createdAt": "2026-08-09T20:50:15.477Z",
       "updatedAt": "2026-08-09T21:05:58.766Z",
       "publishedAt": "2026-08-09T21:04:32Z"
+    },
+    {
+      "slug": "hardening-github-actions-oidc-trust-policies",
+      "title": "Hardening GitHub Actions OIDC Trust Policies",
+      "dedupText": "Hardening GitHub Actions OIDC Trust Policies\nLearn how to secure your CI/CD pipeline by moving beyond basic OIDC setups. Discover how to implement granular trust policies in AWS, GCP, and Azure to prevent unauthorized access.\nci-cd, cloud-security, devops, github-actions, oidc, security",
+      "textHash": "f3899e9e5f0040001fed73f1a98ede4d0f068d2b7cfd9d443211263dce3595f4",
+      "tags": [
+        "github-actions",
+        "ci-cd",
+        "security",
+        "oidc",
+        "devops",
+        "cloud-security"
+      ],
+      "state": "open",
+      "branch": "bot/post-hardening-github-actions-oidc-trust-policies-20260809-8ff530f7",
+      "runId": "20260809-8ff530f7",
+      "createdAt": "2026-08-09T21:08:02.225Z",
+      "updatedAt": "2026-08-09T21:08:37.669Z",
+      "prNumber": 7
     }
   ]
 }

@@ -209,22 +209,6 @@
       "attempts": 0
     },
     {
-      "id": "20260809-2a80dffd-2",
-      "title": "Securing Your CI/CD: Updating GitHub Actions OIDC Trust Policies",
-      "angle": "Provide a step-by-step guide on restricting OIDC token audience claims to prevent token-hijacking in AWS, GCP, and Azure pipelines.",
-      "dedupText": "Securing Your CI/CD: Updating GitHub Actions OIDC Trust Policies\nProvide a step-by-step guide on restricting OIDC token audience claims to prevent token-hijacking in AWS, GCP, and Azure pipelines.\nCI/CD, GitHub Actions, Security",
-      "textHash": "913a97c77183b5a962466284f7ac2f2ae0d1ce674476d45af8d79104fa6fb800",
-      "tags": [
-        "Security",
-        "GitHub Actions",
-        "CI/CD"
-      ],
-      "score": 95,
-      "sources": [],
-      "discoveredAt": "2026-08-09T21:05:58.766Z",
-      "attempts": 0
-    },
-    {
       "id": "20260809-2a80dffd-3",
       "title": "Preparing for Kubernetes 1.32: Managing Sidecar Lifecycles",
       "angle": "Explain how the stabilization of sidecar containers in Kubernetes 1.32 changes the way developers architect pod startup sequences.",
@@ -238,6 +222,74 @@
       "score": 80,
       "sources": [],
       "discoveredAt": "2026-08-09T21:05:58.766Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-8ff530f7-0",
+      "title": "Moving Beyond Selenium: Automating Legacy GUIs with Claude 3.5",
+      "angle": "Explain how Anthropic's 'Computer Use' API enables agentic workflows to interact with software lacking traditional APIs, contrasting this with script-based automation.",
+      "dedupText": "Moving Beyond Selenium: Automating Legacy GUIs with Claude 3.5\nExplain how Anthropic's 'Computer Use' API enables agentic workflows to interact with software lacking traditional APIs, contrasting this with script-based automation.\nAI, Automation, Claude, Legacy Systems",
+      "textHash": "9d68cb1c00065af844636b57547a7234f47626154d1c8199c2815bb4160b23f4",
+      "tags": [
+        "AI",
+        "Automation",
+        "Claude",
+        "Legacy Systems"
+      ],
+      "score": 92,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:08:02.225Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-8ff530f7-1",
+      "title": "PostgreSQL 17: Mastering the New SQL/JSON Standard",
+      "angle": "Provide a practical guide on using the new standardized SQL/JSON functions like JSON_TABLE to improve query portability and data manipulation.",
+      "dedupText": "PostgreSQL 17: Mastering the New SQL/JSON Standard\nProvide a practical guide on using the new standardized SQL/JSON functions like JSON_TABLE to improve query portability and data manipulation.\nData Engineering, Databases, PostgreSQL, SQL",
+      "textHash": "080a8b0c452c735bd5392a3b10561231a4af6646fac8af1bb5c61649dfb973d0",
+      "tags": [
+        "PostgreSQL",
+        "Databases",
+        "SQL",
+        "Data Engineering"
+      ],
+      "score": 88,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:08:02.225Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-8ff530f7-2",
+      "title": "Auditing Your Kubernetes Manifests for 1.32 Deprecations",
+      "angle": "Provide a checklist for identifying and replacing legacy API versions in CI/CD pipelines before the Kubernetes 1.32 transition.",
+      "dedupText": "Auditing Your Kubernetes Manifests for 1.32 Deprecations\nProvide a checklist for identifying and replacing legacy API versions in CI/CD pipelines before the Kubernetes 1.32 transition.\nCI/CD, DevOps, Infrastructure, Kubernetes",
+      "textHash": "6ece6015cb16859a46a11b5265bc1bef7eaf069b5f50d211459db5cb2dbd316a",
+      "tags": [
+        "Kubernetes",
+        "DevOps",
+        "CI/CD",
+        "Infrastructure"
+      ],
+      "score": 85,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:08:02.225Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260809-8ff530f7-3",
+      "title": "Optimizing TLS 1.3 Handshakes with OpenSSL 3.4.0",
+      "angle": "Explain the performance benefits of the new 'Key Update' mechanism in OpenSSL 3.4.0 and why it matters for high-security systems.",
+      "dedupText": "Optimizing TLS 1.3 Handshakes with OpenSSL 3.4.0\nExplain the performance benefits of the new 'Key Update' mechanism in OpenSSL 3.4.0 and why it matters for high-security systems.\nNetworking, OpenSSL, Security, Systems Programming",
+      "textHash": "4ec7e508accf1b69eca216e8f0b34d77d2d7eed6178a9a88a80721b843d41ed0",
+      "tags": [
+        "Security",
+        "OpenSSL",
+        "Networking",
+        "Systems Programming"
+      ],
+      "score": 80,
+      "sources": [],
+      "discoveredAt": "2026-08-09T21:08:02.225Z",
       "attempts": 0
     }
   ]
