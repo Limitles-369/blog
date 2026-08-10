@@ -34,12 +34,12 @@
         "devops",
         "cloud-security"
       ],
-      "state": "open",
+      "state": "rejected",
       "branch": "bot/post-hardening-github-actions-oidc-trust-policies-20260809-8ff530f7",
       "prNumber": 7,
       "runId": "20260809-8ff530f7",
       "createdAt": "2026-08-09T21:08:02.225Z",
-      "updatedAt": "2026-08-09T21:08:37.669Z"
+      "updatedAt": "2026-08-10T10:40:32.354Z"
     },
     {
       "slug": "automating-legacy-guis-claude-3-5",
@@ -71,12 +71,29 @@
         "refactoring",
         "software-architecture"
       ],
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-typescript-5-8-esm-commonjs-interop-20260809-e854e22e",
+      "prNumber": 9,
       "runId": "20260809-e854e22e",
       "createdAt": "2026-08-09T21:45:37.502Z",
-      "updatedAt": "2026-08-09T21:49:19.535Z",
-      "prNumber": 9
+      "updatedAt": "2026-08-10T10:40:32.354Z",
+      "publishedAt": "2026-08-09T21:50:15Z"
+    },
+    {
+      "slug": "streaming-deepseek-r1-reasoning-ollama",
+      "title": "Streaming DeepSeek-R1 Reasoning with Ollama",
+      "dedupText": "Streaming DeepSeek-R1 Reasoning with Ollama\nLearn how to parse DeepSeek-R1's reasoning tokens using Ollama's native support and TypeScript. Build a state-based stream parser to separate thoughts from final answers in your UI.\nsoftware-architecture, typescript",
+      "textHash": "bc381343ce1053b79b4ed74d2ee8aef00589e2b6c382b2b904380459f786f0a7",
+      "tags": [
+        "typescript",
+        "software-architecture"
+      ],
+      "state": "open",
+      "branch": "bot/post-streaming-deepseek-r1-reasoning-ollama-20260810-803681f6",
+      "runId": "20260810-803681f6",
+      "createdAt": "2026-08-10T10:40:32.354Z",
+      "updatedAt": "2026-08-10T10:44:29.616Z",
+      "prNumber": 10
     }
   ]
 }

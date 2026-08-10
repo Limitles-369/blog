@@ -507,6 +507,121 @@
       "sources": [],
       "discoveredAt": "2026-08-09T21:45:37.502Z",
       "attempts": 0
+    },
+    {
+      "id": "20260810-803681f6-0",
+      "title": "Saying Goodbye to tailwind.config.js: Embracing Tailwind v4’s CSS-First Configuration",
+      "angle": "Explain how Tailwind v4.0 replaces JavaScript-based configuration with native CSS @theme directives, simplifying design token management and removing configuration friction.",
+      "dedupText": "Saying Goodbye to tailwind.config.js: Embracing Tailwind v4’s CSS-First Configuration\nExplain how Tailwind v4.0 replaces JavaScript-based configuration with native CSS @theme directives, simplifying design token management and removing configuration friction.\nCSS, Frontend Development, Tailwind CSS, Web Design",
+      "textHash": "d6ae0a339991b4bd71a549bbb2adc29fe1abe85f253f24b314f2bd034923e446",
+      "tags": [
+        "Tailwind CSS",
+        "CSS",
+        "Frontend Development",
+        "Web Design"
+      ],
+      "score": 85,
+      "sources": [],
+      "discoveredAt": "2026-08-10T10:40:32.354Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260810-803681f6-1",
+      "title": "Decoupling Transpilation from Verification: How to Use TypeScript 5.8’s --noCheck Flag",
+      "angle": "Explain how the new --noCheck flag in TypeScript 5.8 Beta allows developers to skip type-checking while still emitting JS files, optimizing local build speeds by offloading type-checking to background processes.",
+      "dedupText": "Decoupling Transpilation from Verification: How to Use TypeScript 5.8’s --noCheck Flag\nExplain how the new --noCheck flag in TypeScript 5.8 Beta allows developers to skip type-checking while still emitting JS files, optimizing local build speeds by offloading type-checking to background processes.\nBuild Tools, Developer Experience, TypeScript",
+      "textHash": "64b7f9a71e185e39291dc0fd0b4846ab7539dbc4e26dfb8bb50c5767f85ae4e6",
+      "tags": [
+        "TypeScript",
+        "Build Tools",
+        "Developer Experience"
+      ],
+      "score": 92,
+      "sources": [],
+      "discoveredAt": "2026-08-10T10:40:32.354Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260810-803681f6-2",
+      "title": "Reducing Type Assertions: Return Type Preservation in TypeScript 5.8 Conditional Types",
+      "angle": "Explain how TypeScript 5.8 Beta improves type inference for returned conditional expressions, eliminating the need for developers to write redundant 'as' type assertions.",
+      "dedupText": "Reducing Type Assertions: Return Type Preservation in TypeScript 5.8 Conditional Types\nExplain how TypeScript 5.8 Beta improves type inference for returned conditional expressions, eliminating the need for developers to write redundant 'as' type assertions.\nType System, TypeScript, Web Development",
+      "textHash": "6a535003e087454fefaf038c286b56986cc21a8a161e5aa18db9ec8be02640a9",
+      "tags": [
+        "TypeScript",
+        "Type System",
+        "Web Development"
+      ],
+      "score": 80,
+      "sources": [],
+      "discoveredAt": "2026-08-10T10:40:32.354Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260810-803681f6-3",
+      "title": "Cross-Platform Scripting Without WSL: Running bun shell Natively on Windows",
+      "angle": "Explain how Bun v1.2's native Windows shell support allows developers to run shell scripts seamlessly across OS environments without requiring WSL or external bash environments.",
+      "dedupText": "Cross-Platform Scripting Without WSL: Running bun shell Natively on Windows\nExplain how Bun v1.2's native Windows shell support allows developers to run shell scripts seamlessly across OS environments without requiring WSL or external bash environments.\nBun, DevOps, JavaScript, Windows",
+      "textHash": "443299782ffb98580d5a30e33f273f9210ae827d9e3238f788f2f72212bf20fa",
+      "tags": [
+        "Bun",
+        "Windows",
+        "DevOps",
+        "JavaScript"
+      ],
+      "score": 83,
+      "sources": [],
+      "discoveredAt": "2026-08-10T10:40:32.354Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260810-803681f6-4",
+      "title": "Under-the-Hood Speedups: How SQLite 3.48.0 Optimizes Complex Joins and Nested Queries",
+      "angle": "Explain how SQLite 3.48.0's query planner optimizations reduce bytecode size and execution steps for nested queries, benefiting applications using ORMs like Prisma or Drizzle.",
+      "dedupText": "Under-the-Hood Speedups: How SQLite 3.48.0 Optimizes Complex Joins and Nested Queries\nExplain how SQLite 3.48.0's query planner optimizations reduce bytecode size and execution steps for nested queries, benefiting applications using ORMs like Prisma or Drizzle.\nDatabases, Performance Optimization, SQLite",
+      "textHash": "76fc57ca8628fc6c067683a4111acb47bd393c32954a679dfae9ba845d1e4261",
+      "tags": [
+        "SQLite",
+        "Databases",
+        "Performance Optimization"
+      ],
+      "score": 65,
+      "sources": [],
+      "discoveredAt": "2026-08-10T10:40:32.354Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260810-803681f6-5",
+      "title": "SQLite as a Document Store: Leveraging Enhanced JSON Functions in SQLite 3.48.0",
+      "angle": "Explain how SQLite 3.48.0 improves the performance of JSON processing functions, making it a highly efficient embedded document store for local and edge applications.",
+      "dedupText": "SQLite as a Document Store: Leveraging Enhanced JSON Functions in SQLite 3.48.0\nExplain how SQLite 3.48.0 improves the performance of JSON processing functions, making it a highly efficient embedded document store for local and edge applications.\nDatabases, Embedded Systems, JSON, SQLite",
+      "textHash": "48b7a8d2e934df1728ba9953851cdf6f20bb0f61025fc24c5d4ef1e05915faf2",
+      "tags": [
+        "SQLite",
+        "JSON",
+        "Databases",
+        "Embedded Systems"
+      ],
+      "score": 88,
+      "sources": [],
+      "discoveredAt": "2026-08-10T10:40:32.354Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260810-803681f6-6",
+      "title": "Preventing Silent Type Coercions: Strict Mode Enhancements in SQLite 3.48.0",
+      "angle": "Explain how SQLite 3.48.0 refines STRICT table definitions to enforce strict type safety and prevent silent data corruption in embedded databases.",
+      "dedupText": "Preventing Silent Type Coercions: Strict Mode Enhancements in SQLite 3.48.0\nExplain how SQLite 3.48.0 refines STRICT table definitions to enforce strict type safety and prevent silent data corruption in embedded databases.\nData Integrity, Databases, SQLite",
+      "textHash": "089a3ffa4d316b27d53e1d340b610707abafb7896a1ac0800c249cfb61b0c2a8",
+      "tags": [
+        "SQLite",
+        "Databases",
+        "Data Integrity"
+      ],
+      "score": 72,
+      "sources": [],
+      "discoveredAt": "2026-08-10T10:40:32.354Z",
+      "attempts": 0
     }
   ]
 }
