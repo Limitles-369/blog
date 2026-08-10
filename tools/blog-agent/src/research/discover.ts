@@ -146,7 +146,7 @@ export async function discoverTopics(input: DiscoverInput): Promise<DiscoverResu
 export const scoredTopic = z.object({
   title: z.string(),
   score: z.number().min(0).max(100),
-  reason: z.string().min(10).max(300),
+  reason: z.string().min(10).max(600),
 })
 
 const scoreList = z.object({ scored: z.array(scoredTopic) })
