@@ -622,6 +622,92 @@
       "sources": [],
       "discoveredAt": "2026-08-10T10:40:32.354Z",
       "attempts": 0
+    },
+    {
+      "id": "20260810-aa5a2440-0",
+      "title": "Preventing Runtime ReferenceErrors: Stricter Closure Validation in TypeScript 5.7",
+      "angle": "Explain how TypeScript 5.7's stricter validation catches variables used in closures before they are initialized, preventing a common class of runtime ReferenceError bugs.",
+      "dedupText": "Preventing Runtime ReferenceErrors: Stricter Closure Validation in TypeScript 5.7\nExplain how TypeScript 5.7's stricter validation catches variables used in closures before they are initialized, preventing a common class of runtime ReferenceError bugs.\nDebugging, JavaScript, Type Safety, TypeScript",
+      "textHash": "0e35dd5a35ad5cd85c4068e1c386327d4179cfa14c6a449efce4e6ae998aea92",
+      "tags": [
+        "TypeScript",
+        "JavaScript",
+        "Debugging",
+        "Type Safety"
+      ],
+      "score": 88,
+      "sources": [],
+      "discoveredAt": "2026-08-10T15:34:08.604Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260810-aa5a2440-1",
+      "title": "Bypassing JavaScript Drivers: Native Query Compilation with Bun.sql",
+      "angle": "Explain how Bun 1.2's embedded Bun.sql client bypasses the overhead of standard JS-based drivers like pg by natively compiling SQL queries to prepared statements.",
+      "dedupText": "Bypassing JavaScript Drivers: Native Query Compilation with Bun.sql\nExplain how Bun 1.2's embedded Bun.sql client bypasses the overhead of standard JS-based drivers like pg by natively compiling SQL queries to prepared statements.\nBun, Database, Performance, PostgreSQL",
+      "textHash": "1264a402fb9a309f83c9220cbe4ae47f8d19632b438f75419d91892a6712b512",
+      "tags": [
+        "Bun",
+        "PostgreSQL",
+        "Database",
+        "Performance"
+      ],
+      "score": 92,
+      "sources": [],
+      "discoveredAt": "2026-08-10T15:34:08.604Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260810-aa5a2440-2",
+      "title": "Running NestJS and gRPC on Bun: The Power of Native node:http2 Compatibility",
+      "angle": "Explain how Bun 1.2's full compatibility with node:http2 allows enterprise frameworks and gRPC libraries to run on Bun without modification.",
+      "dedupText": "Running NestJS and gRPC on Bun: The Power of Native node:http2 Compatibility\nExplain how Bun 1.2's full compatibility with node:http2 allows enterprise frameworks and gRPC libraries to run on Bun without modification.\nBun, HTTP2, NestJS, Node.js, gRPC",
+      "textHash": "8294de9f20d58e56e20fd96e0e76a6f49998ffc1cd16781a870c44969bcc7293",
+      "tags": [
+        "Bun",
+        "Node.js",
+        "HTTP2",
+        "NestJS",
+        "gRPC"
+      ],
+      "score": 85,
+      "sources": [],
+      "discoveredAt": "2026-08-10T15:34:08.604Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260810-aa5a2440-3",
+      "title": "Dynamic Volume Tuning: Modifying Storage Performance on the Fly in Kubernetes 1.32",
+      "angle": "Explain how the Volume Attributes Class feature (now Beta) allows platform engineers to dynamically adjust persistent volume performance (IOPS and throughput) without application downtime.",
+      "dedupText": "Dynamic Volume Tuning: Modifying Storage Performance on the Fly in Kubernetes 1.32\nExplain how the Volume Attributes Class feature (now Beta) allows platform engineers to dynamically adjust persistent volume performance (IOPS and throughput) without application downtime.\nCloud Infrastructure, DevOps, Kubernetes, Storage",
+      "textHash": "d5444e2631c014a0481b0355cde4ef6054e4e429760c6fb3bd8285cf81adb02b",
+      "tags": [
+        "Kubernetes",
+        "DevOps",
+        "Storage",
+        "Cloud Infrastructure"
+      ],
+      "score": 58,
+      "sources": [],
+      "discoveredAt": "2026-08-10T15:34:08.604Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260810-aa5a2440-4",
+      "title": "Simplifying API Server Config: Structured Authentication in Kubernetes 1.32",
+      "angle": "Explain how the Structured Authentication Configuration feature allows platform engineers to declaratively configure multiple OIDC identity providers via a structured file instead of complex command-line flags.",
+      "dedupText": "Simplifying API Server Config: Structured Authentication in Kubernetes 1.32\nExplain how the Structured Authentication Configuration feature allows platform engineers to declaratively configure multiple OIDC identity providers via a structured file instead of complex command-line flags.\nDevOps, Kubernetes, OIDC, Security",
+      "textHash": "e51385d2abb25d5e116b307247ce85a7844941dc8950311bb4d0933349d185e0",
+      "tags": [
+        "Kubernetes",
+        "Security",
+        "DevOps",
+        "OIDC"
+      ],
+      "score": 50,
+      "sources": [],
+      "discoveredAt": "2026-08-10T15:34:08.604Z",
+      "attempts": 0
     }
   ]
 }

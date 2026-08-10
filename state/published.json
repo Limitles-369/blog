@@ -88,12 +88,29 @@
         "typescript",
         "software-architecture"
       ],
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-streaming-deepseek-r1-reasoning-ollama-20260810-803681f6",
+      "prNumber": 10,
       "runId": "20260810-803681f6",
       "createdAt": "2026-08-10T10:40:32.354Z",
-      "updatedAt": "2026-08-10T10:44:29.616Z",
-      "prNumber": 10
+      "updatedAt": "2026-08-10T15:34:08.604Z",
+      "publishedAt": "2026-08-10T10:44:53Z"
+    },
+    {
+      "slug": "native-tool-calling-ollama",
+      "title": "Native Tool Calling with Ollama 0.5",
+      "dedupText": "Native Tool Calling with Ollama 0.5\nLearn how to build reliable, private AI agents using Ollama 0.5's native tool calling. This guide covers TypeScript implementation, state management, and performance optimization.\nsoftware-architecture, typescript",
+      "textHash": "90be101af690880aca0b65374be23f3ae379ef4243680e54bbaa9ff391e23ac3",
+      "tags": [
+        "typescript",
+        "software-architecture"
+      ],
+      "state": "open",
+      "branch": "bot/post-native-tool-calling-ollama-20260810-aa5a2440",
+      "runId": "20260810-aa5a2440",
+      "createdAt": "2026-08-10T15:34:08.604Z",
+      "updatedAt": "2026-08-10T15:37:28.075Z",
+      "prNumber": 11
     }
   ]
 }
