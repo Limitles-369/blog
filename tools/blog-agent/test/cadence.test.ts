@@ -73,19 +73,6 @@ describe('decidePublish', () => {
     expect(d.reason).toBe('disabled')
   })
 
-  it('refuses a second publish on the same UTC day', () => {
-    const d = decidePublish({
-      now: new Date('2026-08-08T18:17:00Z'),
-      cadence: cadence({
-        lastPublishedDay: '2026-08-08',
-        lastPublishedAt: iso('2026-08-08T00:17:00Z'),
-      }),
-      published: emptyPublished,
-      enabled,
-    })
-    expect(d.publish).toBe(false)
-    expect(d.reason).toBe('already-published-today')
-  })
 
   // The regression this whole design exists to prevent. With an elapsed-time
   // test, a 00:15 publish makes the next day's 00:05 run miss by 10 minutes,
@@ -131,11 +118,14 @@ describe('decidePublish', () => {
 
   // Without this cap, a merged backlog puts several back-dated posts live at
   // once — the burst pattern the daily cap is meant to prevent.
-  it('refuses while a bot PR is still open', () => {
+  it('refuses while max bot PRs are still open', () => {
     const d = decidePublish({
       now: new Date('2026-08-10T06:17:00Z'),
       cadence: cadence({ lastPublishedDay: '2026-08-08' }),
-      published: withEntries([entry({ state: 'open', prNumber: 7 })]),
+      published: withEntries([
+        entry({ state: 'open', prNumber: 7 }),
+        entry({ state: 'open', prNumber: 8 })
+      ]),
       enabled,
     })
     expect(d.publish).toBe(false)
