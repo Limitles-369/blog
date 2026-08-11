@@ -824,6 +824,71 @@
       "sources": [],
       "discoveredAt": "2026-08-11T17:16:25.669Z",
       "attempts": 0
+    },
+    {
+      "id": "20260811-2f5dfddb-0",
+      "title": "Architecting Multi-Runtime Apps with Vite 6’s Environment API",
+      "angle": "Explain how to leverage Vite 6's new Environment API to run and debug browser, Node.js, and edge environments simultaneously in a single dev server, eliminating the need for complex monorepo configurations.",
+      "dedupText": "Architecting Multi-Runtime Apps with Vite 6’s Environment API\nExplain how to leverage Vite 6's new Environment API to run and debug browser, Node.js, and edge environments simultaneously in a single dev server, eliminating the need for complex monorepo configurations.\nDevOps, JavaScript, Vite, Web Performance",
+      "textHash": "4797e4538991507abe579117378ac004516d7d2720b8c80c40c836639c49a6a1",
+      "tags": [
+        "Vite",
+        "Web Performance",
+        "DevOps",
+        "JavaScript"
+      ],
+      "score": 92,
+      "sources": [],
+      "discoveredAt": "2026-08-11T19:29:37.929Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260811-2f5dfddb-1",
+      "title": "Simplifying Component Signatures in React 19: Saying Goodbye to forwardRef",
+      "angle": "Explain how React 19 simplifies component refactoring by allowing refs to be passed as standard props, eliminating the boilerplate of forwardRef and reducing cognitive overhead.",
+      "dedupText": "Simplifying Component Signatures in React 19: Saying Goodbye to forwardRef\nExplain how React 19 simplifies component refactoring by allowing refs to be passed as standard props, eliminating the boilerplate of forwardRef and reducing cognitive overhead.\nFrontend, JavaScript, React",
+      "textHash": "084f84197a2409409161ce73353d4b2e7a8ac8b791e07e7f090854c9d8e9d993",
+      "tags": [
+        "React",
+        "JavaScript",
+        "Frontend"
+      ],
+      "score": 70,
+      "sources": [],
+      "discoveredAt": "2026-08-11T19:29:37.929Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260811-2f5dfddb-2",
+      "title": "Managing Async Form State with React 19’s useActionState and useOptimistic",
+      "angle": "Demonstrate how to eliminate manual loading, error, and optimistic UI state boilerplate during form submissions by adopting React 19's native async transition hooks.",
+      "dedupText": "Managing Async Form State with React 19’s useActionState and useOptimistic\nDemonstrate how to eliminate manual loading, error, and optimistic UI state boilerplate during form submissions by adopting React 19's native async transition hooks.\nFrontend, JavaScript, React",
+      "textHash": "25704b551af025bdcf6815864186aafccefd70789a0bb37dbedcc1bed52c61aa",
+      "tags": [
+        "React",
+        "JavaScript",
+        "Frontend"
+      ],
+      "score": 82,
+      "sources": [],
+      "discoveredAt": "2026-08-11T19:29:37.929Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260811-2f5dfddb-3",
+      "title": "Conditionally Reading Promises Inline with the React 19 use API",
+      "angle": "Explain how to use React 19's new 'use' API to consume promises and context inside loops and conditional statements, reducing the need for premature component splitting.",
+      "dedupText": "Conditionally Reading Promises Inline with the React 19 use API\nExplain how to use React 19's new 'use' API to consume promises and context inside loops and conditional statements, reducing the need for premature component splitting.\nFrontend, JavaScript, React",
+      "textHash": "decb5d1835879aae607db413f94387c54727b14a89173a79be4e521346b026f5",
+      "tags": [
+        "React",
+        "JavaScript",
+        "Frontend"
+      ],
+      "score": 75,
+      "sources": [],
+      "discoveredAt": "2026-08-11T19:29:37.929Z",
+      "attempts": 0
     }
   ]
 }
