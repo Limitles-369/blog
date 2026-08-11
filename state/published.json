@@ -105,12 +105,29 @@
         "typescript",
         "software-architecture"
       ],
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-native-tool-calling-ollama-20260810-aa5a2440",
+      "prNumber": 11,
       "runId": "20260810-aa5a2440",
       "createdAt": "2026-08-10T15:34:08.604Z",
-      "updatedAt": "2026-08-10T15:37:28.075Z",
-      "prNumber": 11
+      "updatedAt": "2026-08-11T16:04:40.869Z",
+      "publishedAt": "2026-08-10T15:39:04Z"
+    },
+    {
+      "slug": "native-typescript-node-v23-6-0",
+      "title": "Run TypeScript Natively in Node.js v23.6.0",
+      "dedupText": "Run TypeScript Natively in Node.js v23.6.0\nLearn how to run TypeScript files directly in Node.js v23.6.0 without external compilers. Discover how type stripping simplifies your workflow and reduces dependency bloat.\njavascript, typescript",
+      "textHash": "dc2fbe4e6dece65b6bba251449638bda9a3ec139193775da153a8a08ea76dff1",
+      "tags": [
+        "typescript",
+        "javascript"
+      ],
+      "state": "open",
+      "branch": "bot/post-native-typescript-node-v23-6-0-20260811-0d20eb2d",
+      "runId": "20260811-0d20eb2d",
+      "createdAt": "2026-08-11T16:04:40.869Z",
+      "updatedAt": "2026-08-11T16:06:59.292Z",
+      "prNumber": 13
     }
   ]
 }

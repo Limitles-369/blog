@@ -407,23 +407,6 @@
       "attempts": 0
     },
     {
-      "id": "20260809-e854e22e-3",
-      "title": "Running TypeScript Natively in Node.js v23.6.0 Without External Compilers",
-      "angle": "Explain how Node.js v23.6.0's stabilized native TS execution and improved module resolution via --experimental-strip-types allow developers to eliminate dev-dependencies like ts-node or tsx.",
-      "dedupText": "Running TypeScript Natively in Node.js v23.6.0 Without External Compilers\nExplain how Node.js v23.6.0's stabilized native TS execution and improved module resolution via --experimental-strip-types allow developers to eliminate dev-dependencies like ts-node or tsx.\nBackend, Developer Experience, Node.js, TypeScript",
-      "textHash": "60627af3d3c6a805e86ca5ef97e807c534d727d71aa2138e64fd65768ccaf0f6",
-      "tags": [
-        "Node.js",
-        "TypeScript",
-        "Backend",
-        "Developer Experience"
-      ],
-      "score": 94,
-      "sources": [],
-      "discoveredAt": "2026-08-09T21:45:37.502Z",
-      "attempts": 0
-    },
-    {
       "id": "20260809-e854e22e-4",
       "title": "Bypassing the AWS SDK: Native S3 File Operations in Bun 1.2",
       "angle": "Argue that Bun 1.2's native S3 protocol support (Bun.file) simplifies cloud architecture and reduces bundle sizes by eliminating the need for the heavy @aws-sdk/client-s3 package.",
@@ -707,6 +690,76 @@
       "score": 50,
       "sources": [],
       "discoveredAt": "2026-08-10T15:34:08.604Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260811-0d20eb2d-0",
+      "title": "How TypeScript 5.5 Eliminates Boilerplate with Inferred Type Predicates",
+      "angle": "Explains how TypeScript 5.5 automatically infers type predicates for functions performing type narrowing, eliminating the need for manual type guard boilerplate when filtering arrays.",
+      "dedupText": "How TypeScript 5.5 Eliminates Boilerplate with Inferred Type Predicates\nExplains how TypeScript 5.5 automatically infers type predicates for functions performing type narrowing, eliminating the need for manual type guard boilerplate when filtering arrays.\nType Safety, TypeScript, TypeScript 5.5, Web Development",
+      "textHash": "4c6c0dd935a8602542c1212db0d1c0a62c867e51760a26ea7abfe45a8298d883",
+      "tags": [
+        "TypeScript",
+        "TypeScript 5.5",
+        "Type Safety",
+        "Web Development"
+      ],
+      "score": 88,
+      "sources": [],
+      "discoveredAt": "2026-08-11T16:04:40.869Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260811-0d20eb2d-1",
+      "title": "Native Logical Replication Failover in PostgreSQL 17: Simplifying High Availability",
+      "angle": "Explains how PostgreSQL 17 natively preserves logical replication slots on physical standbys during failover, removing the need for complex external tooling.",
+      "dedupText": "Native Logical Replication Failover in PostgreSQL 17: Simplifying High Availability\nExplains how PostgreSQL 17 natively preserves logical replication slots on physical standbys during failover, removing the need for complex external tooling.\nDatabases, High Availability, PostgreSQL, System Architecture",
+      "textHash": "916ac0e170c39aafec1005ee0360ddc7d4decab97b74e1c914f7383fb4aa5cce",
+      "tags": [
+        "PostgreSQL",
+        "Databases",
+        "System Architecture",
+        "High Availability"
+      ],
+      "score": 75,
+      "sources": [],
+      "discoveredAt": "2026-08-11T16:04:40.869Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260811-0d20eb2d-2",
+      "title": "Unlocking Real-Time AI User Interfaces with GPT-4o's Latency Reductions",
+      "angle": "Explains how GPT-4o's 2x speedup over GPT-4 Turbo makes it feasible to deploy highly responsive, real-time conversational interfaces like autocomplete and live chat.",
+      "dedupText": "Unlocking Real-Time AI User Interfaces with GPT-4o's Latency Reductions\nExplains how GPT-4o's 2x speedup over GPT-4 Turbo makes it feasible to deploy highly responsive, real-time conversational interfaces like autocomplete and live chat.\nAI Engineering, GPT-4o, OpenAI, UX Design, Web Performance",
+      "textHash": "d2f089dc5ced291d165a7a884f42586ad7e62c657d0ec2f69c2464b8c4bb041b",
+      "tags": [
+        "AI Engineering",
+        "GPT-4o",
+        "OpenAI",
+        "Web Performance",
+        "UX Design"
+      ],
+      "score": 58,
+      "sources": [],
+      "discoveredAt": "2026-08-11T16:04:40.869Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260811-0d20eb2d-3",
+      "title": "The Economics of Scale: How GPT-4o API Pricing Enables Complex Agentic Workflows",
+      "angle": "Explains how GPT-4o's 50% cost reduction and 5x higher rate limits make multi-turn, iterative agentic and RAG architectures economically viable for production.",
+      "dedupText": "The Economics of Scale: How GPT-4o API Pricing Enables Complex Agentic Workflows\nExplains how GPT-4o's 50% cost reduction and 5x higher rate limits make multi-turn, iterative agentic and RAG architectures economically viable for production.\nAI Engineering, Cloud Costs, GPT-4o, OpenAI, Software Architecture",
+      "textHash": "3fdf293ce398c03fd8cbc5d7449ee16257c8ecd4f94c19da2594718192a03911",
+      "tags": [
+        "AI Engineering",
+        "GPT-4o",
+        "OpenAI",
+        "Software Architecture",
+        "Cloud Costs"
+      ],
+      "score": 50,
+      "sources": [],
+      "discoveredAt": "2026-08-11T16:04:40.869Z",
       "attempts": 0
     }
   ]
