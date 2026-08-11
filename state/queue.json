@@ -390,23 +390,6 @@
       "attempts": 0
     },
     {
-      "id": "20260809-e854e22e-1",
-      "title": "Future-Proofing Your Codebase with TypeScript 5.8’s --erasableSyntaxOnly Flag",
-      "angle": "Explain how the new --erasableSyntaxOnly flag acts as a compiler guardrail to ensure compatibility with zero-build runtimes by banning runtime-generating syntax like enums and namespaces.",
-      "dedupText": "Future-Proofing Your Codebase with TypeScript 5.8’s --erasableSyntaxOnly Flag\nExplain how the new --erasableSyntaxOnly flag acts as a compiler guardrail to ensure compatibility with zero-build runtimes by banning runtime-generating syntax like enums and namespaces.\nJavaScript, Node.js, Software Architecture, TypeScript",
-      "textHash": "53af1263f00001d9d1ecf05dd275d61cb78f4a1df82340d207cf6d09aff85602",
-      "tags": [
-        "TypeScript",
-        "JavaScript",
-        "Node.js",
-        "Software Architecture"
-      ],
-      "score": 93,
-      "sources": [],
-      "discoveredAt": "2026-08-09T21:45:37.502Z",
-      "attempts": 0
-    },
-    {
       "id": "20260809-e854e22e-4",
       "title": "Bypassing the AWS SDK: Native S3 File Operations in Bun 1.2",
       "angle": "Argue that Bun 1.2's native S3 protocol support (Bun.file) simplifies cloud architecture and reduces bundle sizes by eliminating the need for the heavy @aws-sdk/client-s3 package.",
@@ -760,6 +743,86 @@
       "score": 50,
       "sources": [],
       "discoveredAt": "2026-08-11T16:04:40.869Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260811-94854ba8-0",
+      "title": "Decoupling State from Components: Architectural Freedom in Svelte 5",
+      "angle": "Explain how Svelte 5's new Runes architecture ($state, $derived, $effect) frees developers from the component-root scope, allowing them to write reusable, reactive logic in standard JavaScript files without complex writable stores.",
+      "dedupText": "Decoupling State from Components: Architectural Freedom in Svelte 5\nExplain how Svelte 5's new Runes architecture ($state, $derived, $effect) frees developers from the component-root scope, allowing them to write reusable, reactive logic in standard JavaScript files without complex writable stores.\nFrontend Architecture, State Management, Svelte 5",
+      "textHash": "19e3976e06617a77fa175eb0c9b6a8ebb8b6ed39922aa393cd4d782d5508a48a",
+      "tags": [
+        "Svelte 5",
+        "Frontend Architecture",
+        "State Management"
+      ],
+      "score": 88,
+      "sources": [],
+      "discoveredAt": "2026-08-11T17:16:25.669Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260811-94854ba8-1",
+      "title": "Beyond Slots: Mastering Component Composition with Svelte 5 Snippets",
+      "angle": "Explain how Svelte 5's new Snippets syntax replaces the traditional slot mechanism, treating UI templates as first-class, passable values to simplify complex component composition.",
+      "dedupText": "Beyond Slots: Mastering Component Composition with Svelte 5 Snippets\nExplain how Svelte 5's new Snippets syntax replaces the traditional slot mechanism, treating UI templates as first-class, passable values to simplify complex component composition.\nComponent Design, Frontend, Svelte 5",
+      "textHash": "dd2fa230b8ee0f3b28e61909793d51f71a57c57f8382c0ff83685c4a44b3c6c4",
+      "tags": [
+        "Svelte 5",
+        "Component Design",
+        "Frontend"
+      ],
+      "score": 80,
+      "sources": [],
+      "discoveredAt": "2026-08-11T17:16:25.669Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260811-94854ba8-2",
+      "title": "Accelerating Local Development: Transitioning to Stable Turbopack in Next.js 15",
+      "angle": "Explain how to adopt Turbopack in Next.js 15 development mode and analyze how its Rust-based engine improves Hot Module Replacement (HMR) and startup times in large codebases.",
+      "dedupText": "Accelerating Local Development: Transitioning to Stable Turbopack in Next.js 15\nExplain how to adopt Turbopack in Next.js 15 development mode and analyze how its Rust-based engine improves Hot Module Replacement (HMR) and startup times in large codebases.\nDeveloper Experience, Next.js 15, Turbopack",
+      "textHash": "3417a30215c9da8cfd9b42309baebd03a47c450f29b53a6fecab61cfb24a7fe9",
+      "tags": [
+        "Next.js 15",
+        "Turbopack",
+        "Developer Experience"
+      ],
+      "score": 70,
+      "sources": [],
+      "discoveredAt": "2026-08-11T17:16:25.669Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260811-94854ba8-3",
+      "title": "Deno 2.0: Pragmatic Migration Strategies for Node.js and npm Projects",
+      "angle": "Explain how Deno 2.0's complete backward compatibility with package.json, node_modules, and Node.js global APIs allows teams to migrate existing projects to Deno without rewriting code.",
+      "dedupText": "Deno 2.0: Pragmatic Migration Strategies for Node.js and npm Projects\nExplain how Deno 2.0's complete backward compatibility with package.json, node_modules, and Node.js global APIs allows teams to migrate existing projects to Deno without rewriting code.\nDeno 2.0, Migration, Node.js",
+      "textHash": "9d6f971744275c64c3665deaaeed7ad3d2b5444b14fc1d79cd058df4b580bad9",
+      "tags": [
+        "Deno 2.0",
+        "Node.js",
+        "Migration"
+      ],
+      "score": 85,
+      "sources": [],
+      "discoveredAt": "2026-08-11T17:16:25.669Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260811-94854ba8-4",
+      "title": "Managing Monorepos in Deno 2.0: Leveraging First-Class Workspaces",
+      "angle": "Explain how to configure and manage multi-package monorepos using Deno 2.0's new native workspace support, bypassing the need for external monorepo tooling.",
+      "dedupText": "Managing Monorepos in Deno 2.0: Leveraging First-Class Workspaces\nExplain how to configure and manage multi-package monorepos using Deno 2.0's new native workspace support, bypassing the need for external monorepo tooling.\nDeno 2.0, Monorepos, Workspaces",
+      "textHash": "96c5dadccbba927c374acd15f1d66b9b4bd414cace52f5f63554b0ad44889785",
+      "tags": [
+        "Deno 2.0",
+        "Monorepos",
+        "Workspaces"
+      ],
+      "score": 78,
+      "sources": [],
+      "discoveredAt": "2026-08-11T17:16:25.669Z",
       "attempts": 0
     }
   ]

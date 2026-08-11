@@ -122,12 +122,31 @@
         "typescript",
         "javascript"
       ],
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-native-typescript-node-v23-6-0-20260811-0d20eb2d",
+      "prNumber": 13,
       "runId": "20260811-0d20eb2d",
       "createdAt": "2026-08-11T16:04:40.869Z",
-      "updatedAt": "2026-08-11T16:06:59.292Z",
-      "prNumber": 13
+      "updatedAt": "2026-08-11T17:16:25.669Z",
+      "publishedAt": "2026-08-11T16:07:28Z"
+    },
+    {
+      "slug": "future-proof-typescript-5-8-erasable-syntax",
+      "title": "Future-Proof with TypeScript 5.8 Erasable Syntax",
+      "dedupText": "Future-Proof with TypeScript 5.8 Erasable Syntax\nLearn how TypeScript 5.8’s --erasableSyntaxOnly flag helps you eliminate runtime-generating code, enabling faster, zero-build workflows in modern runtimes like Node.js, Bun, and Deno.\njavascript, refactoring, software-architecture, typescript",
+      "textHash": "c864e848b716411bc09169868476e628ef81750150bfa2be7d6aed2a1a5e68fa",
+      "tags": [
+        "typescript",
+        "javascript",
+        "refactoring",
+        "software-architecture"
+      ],
+      "state": "open",
+      "branch": "bot/post-future-proof-typescript-5-8-erasable-syntax-20260811-94854ba8",
+      "runId": "20260811-94854ba8",
+      "createdAt": "2026-08-11T17:16:25.669Z",
+      "updatedAt": "2026-08-11T17:21:34.419Z",
+      "prNumber": 15
     }
   ]
 }
