@@ -127,29 +127,68 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
     }
     if (finish && finish !== 'STOP') hints.push(`finishReason=${finish}`)
 
-    throw new ModelResponseError(
+    const err = new ModelResponseError(
       `${label}: model returned no text${hints.length ? ` (${hints.join('; ')})` : ''}`,
       JSON.stringify(res).slice(0, 800)
     )
+    // Attach the finishReason so callers can branch on it (e.g. MALFORMED_FUNCTION_CALL retry).
+    ;(err as unknown as Record<string, unknown>)['finishReason'] = finish ?? null
+    throw err
+  }
+
+  /**
+   * Build the config block for a plain-text generateContent call.
+   * Explicitly sets toolConfig.functionCallingConfig.mode = 'NONE' so the model
+   * never attempts a function/tool call and always returns a text completion.
+   */
+  function buildTextConfig(
+    opts: GenerateTextOptions
+  ): Record<string, unknown> {
+    return {
+      ...(opts.system ? { systemInstruction: opts.system } : {}),
+      ...(opts.grounded ? { tools: [{ googleSearch: {} }] } : {}),
+      // Disable function/tool calling for all plain-text requests so the model
+      // cannot produce a MALFORMED_FUNCTION_CALL finish reason.
+      toolConfig: { functionCallingConfig: { mode: 'NONE' } },
+      temperature: opts.temperature ?? 0.7,
+      ...(opts.maxOutputTokens ? { maxOutputTokens: opts.maxOutputTokens } : {}),
+      ...(opts.thinkingBudget === undefined
+        ? {}
+        : { thinkingConfig: { thinkingBudget: opts.thinkingBudget } }),
+    }
   }
 
   return {
     async generateText(opts: GenerateTextOptions): Promise<TextResult> {
-      const res = await call(opts.label, config.TEXT_TIMEOUT_MS, () =>
+      const doGenerate = () =>
         ai.models.generateContent({
           model: config.GEMINI_TEXT_MODEL,
           contents: opts.prompt,
-          config: {
-            ...(opts.system ? { systemInstruction: opts.system } : {}),
-            ...(opts.grounded ? { tools: [{ googleSearch: {} }] } : {}),
-            temperature: opts.temperature ?? 0.7,
-            ...(opts.maxOutputTokens ? { maxOutputTokens: opts.maxOutputTokens } : {}),
-            ...(opts.thinkingBudget === undefined
-              ? {}
-              : { thinkingConfig: { thinkingBudget: opts.thinkingBudget } }),
-          },
+          config: buildTextConfig(opts),
         })
-      )
+
+      let res: Awaited<ReturnType<typeof doGenerate>>
+      try {
+        res = await call(opts.label, config.TEXT_TIMEOUT_MS, doGenerate)
+      } catch (err) {
+        // If the model still returned a MALFORMED_FUNCTION_CALL despite the
+        // toolConfig guard (e.g. SDK version doesn't honour it yet), retry once
+        // and log a warning so the issue is visible without crashing the run.
+        const msg = String((err as Error)?.message ?? '')
+        const reason = String(
+          ((err as unknown as Record<string, unknown>)?.['finishReason'] as string) ?? ''
+        )
+        const isMalformedFunctionCall =
+          reason === 'MALFORMED_FUNCTION_CALL' || msg.includes('MALFORMED_FUNCTION_CALL')
+        if (!isMalformedFunctionCall) throw err
+
+        log.warn('generateText: MALFORMED_FUNCTION_CALL — retrying with toolConfig enforced', {
+          label: opts.label,
+          finishReason: reason,
+        })
+        res = await call(opts.label, config.TEXT_TIMEOUT_MS, doGenerate)
+      }
+
       const { sources, queries } = extractSources(res)
       const usage = track((res as unknown as Record<string, unknown>)['usageMetadata'])
       log.debug('generateText', {
