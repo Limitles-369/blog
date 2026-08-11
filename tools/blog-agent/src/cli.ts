@@ -375,6 +375,10 @@ async function cmdRun(args: RunArgs): Promise<number> {
     : await checkoutState({
         repoRoot: paths.root,
         branch: config.STATE_BRANCH,
+        // Pass the token so the scratch-dir clone can push over authenticated
+        // HTTPS. actions/checkout only installs credentials in the workspace
+        // .git/config; they don't transfer to clones in /tmp.
+        githubToken: config.GITHUB_TOKEN,
         botName: 'blog-agent[bot]',
         botEmail: 'blog-agent@users.noreply.github.com',
         logger,

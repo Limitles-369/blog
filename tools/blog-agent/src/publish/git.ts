@@ -54,6 +54,17 @@ export interface CheckoutStateOptions {
   branch: string
   /** Remote URL or name. Defaults to `origin`. */
   remote?: string
+  /**
+   * GitHub token for authenticated HTTPS pushes.
+   *
+   * The scratch-dir clone does not inherit the `http.extraheader` that
+   * `actions/checkout` installs in the workspace `.git/config`, so plain
+   * HTTPS pushes from the clone prompt for credentials and crash (no TTY).
+   * When supplied, the token is embedded as `x-access-token` in the push
+   * URL — the standard credential mechanism for GitHub HTTPS — without
+   * being written to any config file.
+   */
+  githubToken?: string
   botName: string
   botEmail: string
   logger: Logger
@@ -77,6 +88,27 @@ export interface CheckoutStateOptions {
  *     recorded as a gitlink by any `git add -A` in the publisher and deleted by
  *     any `git clean -fd`. A scratch dir sidesteps both.
  */
+/**
+ * Injects a GitHub token into a bare HTTPS remote URL.
+ *
+ * `https://github.com/owner/repo` → `https://x-access-token:TOKEN@github.com/owner/repo`
+ *
+ * This is the standard credential mechanism for authenticated GitHub HTTPS
+ * and is accepted by every git version that supports HTTPS at all.
+ * Returns the original URL unchanged if it is not HTTPS or if no token is given.
+ */
+function withToken(url: string, token: string | undefined): string {
+  if (!token || !url.startsWith('https://')) return url
+  try {
+    const u = new URL(url)
+    u.username = 'x-access-token'
+    u.password = token
+    return u.toString()
+  } catch {
+    return url
+  }
+}
+
 export async function checkoutState(opts: CheckoutStateOptions): Promise<StateCheckout> {
   const { repoRoot, branch, botName, botEmail, logger } = opts
   const log = logger.child({ component: 'git.state' })
@@ -84,7 +116,12 @@ export async function checkoutState(opts: CheckoutStateOptions): Promise<StateCh
   const dir = path.join(scratch, 'state')
 
   const repoGit = makeGit(repoRoot, logger)
-  const remote = opts.remote ?? (await repoGit(['remote', 'get-url', 'origin'], { allowFail: true }))
+  const remoteBase =
+    opts.remote ?? (await repoGit(['remote', 'get-url', 'origin'], { allowFail: true }))
+  // Authenticated URL used for push. The base URL (no token) is used for clone
+  // since actions/checkout's extraheader already covers the workspace fetch.
+  const remote = remoteBase
+  const pushRemote = withToken(remoteBase, opts.githubToken)
 
   const git = makeGit(dir, logger)
   let bootstrapped = false
@@ -103,7 +140,9 @@ export async function checkoutState(opts: CheckoutStateOptions): Promise<StateCh
     await exec('mkdir', ['-p', dir])
     await git(['init', '-q'])
     await git(['checkout', '-q', '--orphan', branch])
-    if (remote) await git(['remote', 'add', 'origin', remote])
+    // Use the authenticated URL so the very first push works without a
+    // credential prompt (no TTY in CI).
+    if (pushRemote) await git(['remote', 'add', 'origin', pushRemote])
     bootstrapped = false
   }
 
@@ -122,7 +161,7 @@ export async function checkoutState(opts: CheckoutStateOptions): Promise<StateCh
       }
       await git(['commit', '-q', '-m', message])
 
-      if (!remote) {
+      if (!pushRemote) {
         log.warn('no remote configured; state committed locally only')
         return true
       }
@@ -133,13 +172,16 @@ export async function checkoutState(opts: CheckoutStateOptions): Promise<StateCh
       // publishing — so rebase and retry rather than giving up.
       for (let attempt = 1; attempt <= 5; attempt++) {
         try {
-          await git(['push', 'origin', `HEAD:${branch}`])
+          // Push explicitly to the authenticated URL rather than to the
+          // "origin" remote name. The clone's origin may be the bare URL
+          // (no token) if the clone was done before the token was known.
+          await git(['push', pushRemote, `HEAD:${branch}`])
           return true
         } catch (cause) {
           if (attempt === 5) throw cause
           log.warn('state push rejected; rebasing', { attempt })
-          await git(['fetch', 'origin', branch], { allowFail: true })
-          const rebased = await git(['rebase', `origin/${branch}`], { allowFail: true })
+          await git(['fetch', pushRemote, branch], { allowFail: true })
+          const rebased = await git(['rebase', `FETCH_HEAD`], { allowFail: true })
           if (rebased === '') {
             await git(['rebase', '--abort'], { allowFail: true })
             // Per-run files and disjoint JSON edits normally rebase cleanly;
