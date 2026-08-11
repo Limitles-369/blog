@@ -201,44 +201,69 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
     },
 
     async generateJson<T>(opts: GenerateJsonOptions<T>): Promise<JsonResult<T>> {
-      const res = await call(opts.label, config.TEXT_TIMEOUT_MS, () =>
-        ai.models.generateContent({
-          model: config.GEMINI_TEXT_MODEL,
-          contents: opts.prompt,
-          config: {
-            ...(opts.system ? { systemInstruction: opts.system } : {}),
-            ...(opts.grounded ? { tools: [{ googleSearch: {} }] } : {}),
-            responseMimeType: 'application/json',
-            responseSchema: opts.responseSchema,
-            temperature: opts.temperature ?? 0.3,
-            ...(opts.maxOutputTokens ? { maxOutputTokens: opts.maxOutputTokens } : {}),
-            ...(opts.thinkingBudget === undefined
-              ? {}
-              : { thinkingConfig: { thinkingBudget: opts.thinkingBudget } }),
-          },
-        })
+      // Wrap the full generate+parse+validate cycle in the same retry envelope
+      // as generateText. ModelResponseError (invalid/truncated JSON) is not in
+      // the HTTP retryable set, so we catch it explicitly here and retry — a
+      // truncated JSON response is transient: the next attempt usually succeeds.
+      return withRetry(
+        () =>
+          call(opts.label, config.TEXT_TIMEOUT_MS, () =>
+            ai.models.generateContent({
+              model: config.GEMINI_TEXT_MODEL,
+              contents: opts.prompt,
+              config: {
+                ...(opts.system ? { systemInstruction: opts.system } : {}),
+                ...(opts.grounded ? { tools: [{ googleSearch: {} }] } : {}),
+                responseMimeType: 'application/json',
+                responseSchema: opts.responseSchema,
+                temperature: opts.temperature ?? 0.3,
+                ...(opts.maxOutputTokens ? { maxOutputTokens: opts.maxOutputTokens } : {}),
+                ...(opts.thinkingBudget === undefined
+                  ? {}
+                  : { thinkingConfig: { thinkingBudget: opts.thinkingBudget } }),
+              },
+            })
+          ).then((res) => {
+            const usage = track((res as unknown as Record<string, unknown>)['usageMetadata'])
+            const raw = textOf(res, opts.label, usage)
+
+            let parsed: unknown
+            try {
+              parsed = JSON.parse(raw)
+            } catch {
+              // Constrained decoding should make this unreachable; a truncated
+              // response from hitting maxOutputTokens is the realistic cause.
+              // Throwing ModelResponseError here lets the outer withRetry see it.
+              throw new ModelResponseError(
+                `${opts.label}: response was not valid JSON`,
+                raw.slice(0, 800)
+              )
+            }
+
+            const checked = opts.schema.safeParse(parsed)
+            if (!checked.success) {
+              const detail = checked.error.issues
+                .map((i) => `${i.path.join('.') || '(root)'}: ${i.message}`)
+                .join('; ')
+              throw new ModelResponseError(
+                `${opts.label}: schema mismatch — ${detail}`,
+                raw.slice(0, 800)
+              )
+            }
+            log.debug('generateJson', { label: opts.label, ...usage })
+            return { value: checked.data, usage }
+          }),
+        {
+          attempts: config.RETRY_ATTEMPTS,
+          baseMs: config.RETRY_BASE_MS,
+          capMs: config.RETRY_CAP_MS,
+          label: opts.label,
+          logger: log,
+          // ModelResponseError (invalid/truncated JSON) and TimeoutError are
+          // both worth retrying. Everything else uses isRetryable() as usual.
+          ...({} as object),
+        }
       )
-      const usage = track((res as unknown as Record<string, unknown>)['usageMetadata'])
-      const raw = textOf(res, opts.label, usage)
-
-      let parsed: unknown
-      try {
-        parsed = JSON.parse(raw)
-      } catch {
-        // Constrained decoding should make this unreachable; a truncated
-        // response from hitting maxOutputTokens is the realistic cause.
-        throw new ModelResponseError(`${opts.label}: response was not valid JSON`, raw.slice(0, 800))
-      }
-
-      const checked = opts.schema.safeParse(parsed)
-      if (!checked.success) {
-        const detail = checked.error.issues
-          .map((i) => `${i.path.join('.') || '(root)'}: ${i.message}`)
-          .join('; ')
-        throw new ModelResponseError(`${opts.label}: schema mismatch — ${detail}`, raw.slice(0, 800))
-      }
-      log.debug('generateJson', { label: opts.label, ...usage })
-      return { value: checked.data, usage }
     },
 
     async embed(opts: EmbedOptions): Promise<EmbedResult> {

@@ -62,6 +62,10 @@ export function isRetryable(err: unknown): boolean {
   // Checked before the status allowlist: an exhausted quota is a 429 that will
   // not clear within any backoff window we would reasonably wait.
   if (isExhaustedQuota(err)) return false
+  // ModelResponseError covers invalid/truncated JSON from constrained decoding
+  // and empty completions. Both are transient on thinking models when the token
+  // budget is tight — the same request usually succeeds on the next attempt.
+  if (err instanceof Error && err.name === 'ModelResponseError') return true
   const status = statusOf(err)
   if (status !== undefined && RETRYABLE_STATUS.has(status)) return true
   if (status !== undefined) return false

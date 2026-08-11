@@ -134,6 +134,11 @@ export async function discoverTopics(input: DiscoverInput): Promise<DiscoverResu
     responseSchema: CANDIDATE_SCHEMA,
     label: 'discover.structure',
     maxOutputTokens: 8192,
+    // Thinking tokens on gemini-3.5-flash are drawn from maxOutputTokens.
+    // This is a mechanical structuring call (the creative work is in the
+    // research step above), so internal reasoning adds no value and only
+    // competes with the JSON output budget — disable it.
+    thinkingBudget: 0,
   })
 
   return {
@@ -195,6 +200,9 @@ export async function scoreTopics(input: {
     responseSchema: SCORE_SCHEMA,
     label: 'discover.score',
     maxOutputTokens: 4096,
+    // Disable thinking for the same reason as discover.structure: this is a
+    // deterministic ranking call, not a reasoning task.
+    thinkingBudget: 0,
   })
 
   return new Map(res.value.scored.map((s) => [s.title, { score: s.score, reason: s.reason }]))
