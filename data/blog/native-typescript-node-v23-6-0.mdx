@@ -1,0 +1,55 @@
+---
+title: 'Run TypeScript Natively in Node.js v23.6.0'
+date: '2026-08-11'
+tags: ['typescript', 'javascript']
+draft: false
+summary: 'Learn how to run TypeScript files directly in Node.js v23.6.0 without external compilers. Discover how type stripping simplifies your workflow and reduces dependency bloat.'
+authors: ['default']
+layout: PostLayout
+---
+
+For years, spinning up a quick TypeScript script in Node.js meant adding multiple build tools to our workspace. We accepted this as a necessary cost of type safety, configuring custom loaders and managing compiler caches just to run a single utility file. We watched our development environments grow increasingly complex, all to bridge the gap between TypeScript syntax and the native JavaScript runtime. With recent updates to Node.js, this workflow changes. We can now run TypeScript files natively, stripping away the heavy transpiler wrappers that once felt like permanent fixtures of our workflow.
+
+## The Shift to Native TypeScript in Node.js
+
+The friction of managing external compilers has shaped the local development experience for nearly a decade. Every time we initialized a new project, we had to choose a runtime runner. We relied heavily on tools like ts-node to intercept our execution commands, compile our files on the fly, and feed the resulting JavaScript to Node.js. As our projects grew in size and complexity, these tools often struggled with performance, forcing us to adopt faster alternatives like tsx to keep our local feedback loops tolerable.
+
+These external runners worked, but they introduced a subtle, ongoing maintenance tax. They acted as middleware, constantly translating syntax and caching compiled modules in hidden directories. When a TypeScript configuration drifted, or when Node.js released a new major version, these runners would frequently break. We spent valuable hours debugging source map alignments, loader API deprecations, and configuration mismatches instead of writing actual features.
+
+Recent Node.js releases change this dynamic by stabilizing native support for TypeScript execution directly inside the runtime. By integrating this capability, the runtime removes the need for intermediate wrapper tools during development. We no longer have to choreograph complex pipelines just to run a single database migration script or execute a local command-line tool. The execution environment becomes unified, allowing us to treat TypeScript files as first-class targets that run instantly. This transition is a fundamental shift in how we approach the boundary between JavaScript and TypeScript, making the entire ecosystem feel significantly more cohesive.
+
+## Understanding Type Stripping and the Experimental Flag
+
+The technology driving this native execution model is type stripping, accessed via the experimental strip types flag. Instead of performing a full compilation pass—which would require analyzing the entire dependency graph, verifying type safety, and generating abstract syntax trees—Node.js uses a highly optimized, lightweight parser. The runtime walks through the target file and replaces TypeScript-specific syntax, such as type annotations, interfaces, and type imports, with equivalent whitespace characters.
+
+This design choice is remarkably practical because it preserves the original line and column numbers of the source file. If an error occurs at runtime, the stack trace points directly to the correct location in your original TypeScript file without needing complex source maps. The runtime does not verify if your types are correct; it only ensures that the remaining executable code is syntactically valid JavaScript.
+
+Because Node.js bypasses type-checking entirely during execution, the startup time is incredibly fast. Traditional compilers spend a massive amount of CPU cycles checking type constraints before they ever output executable code. By treating types as inert whitespace, Node.js can load and execute files almost as quickly as native JavaScript. This performance advantage is especially visible during local development, where we demand immediate feedback after saving a file.
+
+However, type stripping does introduce a few strict constraints. Because the runtime is not compiling the code in the traditional sense, features that require active code generation, such as namespaces or parameter properties in class constructors, are not supported. We must write standard, modern syntax. For modern codebases, this limitation is actually a healthy constraint, encouraging us to avoid non-standard language extensions and stick to clean ECMAScript patterns.
+
+## Eliminating Dev-Dependency Bloat and Build Steps
+
+Every mature Node.js project eventually suffers from dependency bloat. We install loaders, custom registers, and test runners, only to lose track of why they were introduced in the first place. These dependencies swell our lockfiles, slow down our continuous integration pipelines, and expose us to security vulnerabilities that demand constant patching.
+
+By adopting native TypeScript execution in Node.js, we can systematically prune our development configurations. We can safely uninstall packages like ts-node, tsx, and custom registration scripts. This immediately simplifies our package metadata files, leaving us with fewer moving parts to maintain. Our development scripts become straightforward, relying on standard Node.js commands rather than chain-loaded wrappers.
+
+This cleanup has architectural benefits that extend beyond mere aesthetics. A smaller dependency footprint translates directly to faster installation times in CI/CD environments and fewer potential failure points during local setup. When a new developer joins the team, they do not need to install global build tools or configure complex local transpilers. They can pull the repository and run the application immediately using the native runtime. We also reduce the cognitive load of maintaining the project, as we no longer have to worry about whether our local runner is compatible with the latest version of the TypeScript compiler.
+
+## Navigating Module Resolution and ESM Compatibility
+
+Historically, one of the most frustrating aspects of running TypeScript in Node.js was module resolution. We had to navigate a minefield of file extensions, often writing import statements that referenced nonexistent JavaScript files just to satisfy the compiler. Alternatively, we had to configure custom loaders that intercepted import paths and resolved them to the correct physical files on disk.
+
+In recent Node.js versions, module resolution has been updated to handle TypeScript files natively. The runtime can resolve TypeScript file extensions automatically without requiring custom loaders or configuration overrides. When you import a module, Node.js searches for the corresponding files and applies the type-stripping process seamlessly. This reduces the friction of managing mixed-language codebases and eliminates the need for separate resolution configurations.
+
+This improvement works hand-in-hand with the broader movement toward ESM and CommonJS interoperability. The ecosystem is moving toward a more forgiving, unified module system. Node.js aligns with this trend, allowing us to import TypeScript modules directly into ESM projects without wrestling with configuration flags.
+
+The result is a highly predictable execution environment. We no longer need to maintain separate resolution configurations for our editor, our compiler, and our runtime. The import statements we write in our editor are the exact same statements that execute in the runtime, eliminating a major source of developer confusion and tooling misalignment.
+
+## Production Readiness and the Road Ahead
+
+While native execution is a massive win for local development, we must remain realistic about how we deploy these applications to production. Type stripping is designed for speed and simplicity, not for production-grade type safety. Because the runtime ignores types entirely, running code with syntax errors or type violations will not trigger any compile-time warnings. If we rely solely on native execution, we risk shipping broken code to our users.
+
+The modern workflow resolves this tension by separating execution from verification. In this model, we use the native Node.js runtime for rapid local iteration, running our files instantly without compilation overhead. To ensure type safety, we run the TypeScript compiler as a separate, non-emitting process during our local pre-commit hooks and CI pipelines. By running the compiler with the no-emit flag, we validate our types without generating unnecessary build artifacts.
+
+This separation of concerns mirrors how we already use linters and formatters. We do not expect our runtime to format our code, and we should not expect it to type-check our code either. By letting Node.js focus entirely on fast execution and letting the TypeScript compiler focus entirely on type validation, we get the best of both worlds: instant local execution and robust compile-time guarantees. This workflow also simplifies our production deployment strategies, making our production environments look identical to our local workstations.
