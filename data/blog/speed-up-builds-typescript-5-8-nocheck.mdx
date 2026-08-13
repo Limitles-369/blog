@@ -1,0 +1,63 @@
+---
+title: 'Speed Up Builds with TypeScript 5.8 --noCheck'
+date: '2026-08-12'
+tags: ['typescript', 'web-performance', 'software-architecture']
+draft: false
+summary: "Learn how to decouple transpilation from verification using TypeScript 5.8's new --noCheck flag to dramatically speed up your local development loop and build pipelines."
+authors: ['default']
+layout: PostLayout
+---
+
+The speed of our local development loop has always been bound by the compiler. For years, we treated the TypeScript compiler as a monolithic engine that had to verify every single type constraint before it could output a single line of runnable JavaScript. This design made sense when we needed a single tool to do everything, but it created an artificial bottleneck in our day-to-day work.
+
+As our codebases grew, the feedback loop between saving a file and seeing the result in the browser slowed to a crawl. We have already started moving away from this unified model by adopting fast transpilers and native runtimes that strip types entirely. But when we still need the TypeScript compiler to emit files, we were stuck waiting for the type-checker. Decoupling these steps introduces a way to break this coupling, allowing us to generate code without waiting for validation.
+
+## The Historical Bottleneck of Unified Compilation
+
+For the longest time, running the TypeScript compiler meant executing two heavy tasks in a single, blocking sequence. The compiler had to parse your source code, build an abstract syntax tree, resolve all type relationships across your entire project dependency graph, and only then emit the compiled JavaScript. If you had a single type mismatch in a file you were not even working on, the build pipeline would stall or fail, even though the code you actually wanted to test was completely valid.
+
+This coupling turned type-checking into a tax on local iteration. During active development, you do not need absolute type safety at every single keystroke. You need to see if your UI component renders correctly or if your API route returns the right payload. When the compiler forces you to wait for a full static analysis pass just to verify a minor CSS-in-JS tweak or a console log, your development rhythm breaks.
+
+Over the years, we attempted to work around this by using third-party transpilers like Babel, esbuild, or SWC to handle the code generation while running the TypeScript compiler separately with the no-emit flag just for validation. This solved the speed issue, but it introduced a complex tooling matrix. You had to maintain separate configurations for your transpiler and your type-checker, occasionally encountering edge cases where the two tools disagreed on how to handle specific syntax patterns. The ideal solution has always been to separate these concerns cleanly in our build pipelines.
+
+## Decoupling Transpilation in the Build Pipeline
+
+We can solve this historical constraint by adopting a transpile-only approach during development. This configuration fundamentally changes how we process files during a build. When we bypass the type-checking pipeline, we instruct our build tools to skip the expensive semantic analysis phase, ignore type errors, and go straight to emitting the compiled JavaScript files.
+
+It is helpful to contrast this capability with the standard `noEmit` flag in the TypeScript ecosystem. For years, we have used `tsc --noEmit` to perform type-checking without producing any output files. This is the standard approach for continuous integration pipelines and editor integrations where you only care about verification. Transpiling without checking is the exact inverse of this behavior.
+
+By bypassing the type-checker, our build process behaves like a lightweight transpiler. It reads our files, strips out the type annotations, transforms any modern syntax according to your target settings, and writes the output files to disk. The performance difference is dramatic. Because semantic analysis and type resolution are the most CPU-intensive parts of the compilation process, skipping them allows the build to complete in a fraction of the time.
+
+Using fast transpilation tools keeps our local loop incredibly fast. Our target configurations, module formats, and path mappings remain defined in our configuration files, but the execution happens at a speed that matches modern lightweight build tools.
+
+## Decoupling Transpilation from Verification
+
+Decoupling transpilation from verification changes how we design our development pipelines. Historically, we viewed type safety as a gatekeeper that had to approve every step of our execution process. If the types did not check out, we did not run the code. By decoupling transpilation from verification, we treat type safety as an asynchronous quality assurance process rather than a synchronous execution blocker.
+
+This separation of concerns mirrors how we treat other static analysis tools like linters and formatters. We do not block our local server from reloading just because a file has an unused import or a misaligned bracket. Instead, we let the linter run in the background, surfacing warnings in our editor while we continue to iterate on the live application. Decoupling our type-checking allows us to treat TypeScript in the exact same way.
+
+When you run your local build pipeline in transpile-only mode, your application updates almost instantly. You can test experimental changes, refactor complex components, and debug runtime behaviors without being interrupted by temporary type mismatches that you intend to fix later. The editor still provides real-time feedback, highlighting type errors with red squiggles as you write code, but the build tool no longer forces you to resolve those errors before you can see your changes in action.
+
+This model also aligns perfectly with our transition toward modern runtimes. We are seeing runtimes adopt type-stripping engines to run files directly. Bypassing type-checking during compilation brings this exact mental model to environments where we still need an explicit build step. It turns our build step into a highly optimized code generator, freeing up our local loop from the overhead of synchronous type checking.
+
+## Optimizing Local Development Workflows
+
+To get the most out of this separation, you need to restructure your local development workflows to run these processes in parallel. Instead of relying on a single watch task that both checks and compiles your code, you should split your scripts into two distinct, concurrent operations.
+
+First, configure your primary development server or build script to run in transpile-only mode. This process handles the task of translating your TypeScript files into executable JavaScript and writing them to your build directory. Because this step skips type-checking, it completes almost instantly, ensuring that your local server hot-reloads the moment you save a file.
+
+Second, run a parallel background process dedicated solely to type-checking. You can accomplish this by running the compiler in watch mode with the `noEmit` flag. This background process acts as your continuous feedback loop, scanning your codebase for type errors and reporting them to your terminal without blocking the execution of your application.
+
+This parallel architecture provides the best of both worlds. You achieve the sub-second reload times of a pure JavaScript project, while maintaining the robust type safety guarantees of TypeScript. If you introduce a type error during a refactoring session, the background compiler will flag it immediately, but your local application will continue to run, allowing you to debug the runtime behavior before fixing the type definition.
+
+You can orchestrate these parallel tasks using standard process managers or npm packages designed to run commands concurrently. By defining these tasks clearly in your package configuration, you establish a clean separation of concerns that scales gracefully as your team and your codebase grow.
+
+## Architectural Implications for Large Codebases
+
+In large-scale applications and monorepos, the performance benefits of decoupling transpilation from verification scale exponentially. As a project grows, the dependency graph becomes increasingly complex, making full semantic analysis a significant bottleneck. A simple change in a shared utility library can trigger a massive type-checking cascade across dozens of dependent packages, stalling the development environment.
+
+By adopting a transpile-only build step, you isolate local code generation from these global type dependencies. Developers working on a single frontend application inside a monorepo can compile and run their local code instantly, even if a sister package in the repository currently contains type errors. This isolation prevents local development loops from being held hostage by the state of the broader codebase.
+
+This shift also redefines how we manage our continuous integration pipelines. We can optimize our build phases by running a fast, unchecked compile step to generate the production artifacts, while executing a parallel type-checking job across the entire repository. If the type-checking job fails, the build is marked as broken, but the separation allows us to maximize resource utilization and reduce overall pipeline runtimes.
+
+Ultimately, separating these concerns makes our development setups much more practical. By treating code generation and type verification as two distinct tasks with different performance profiles, we can build simpler, faster, and more resilient development environments.
