@@ -591,23 +591,6 @@
       "attempts": 0
     },
     {
-      "id": "20260810-aa5a2440-1",
-      "title": "Bypassing JavaScript Drivers: Native Query Compilation with Bun.sql",
-      "angle": "Explain how Bun 1.2's embedded Bun.sql client bypasses the overhead of standard JS-based drivers like pg by natively compiling SQL queries to prepared statements.",
-      "dedupText": "Bypassing JavaScript Drivers: Native Query Compilation with Bun.sql\nExplain how Bun 1.2's embedded Bun.sql client bypasses the overhead of standard JS-based drivers like pg by natively compiling SQL queries to prepared statements.\nBun, Database, Performance, PostgreSQL",
-      "textHash": "1264a402fb9a309f83c9220cbe4ae47f8d19632b438f75419d91892a6712b512",
-      "tags": [
-        "Bun",
-        "PostgreSQL",
-        "Database",
-        "Performance"
-      ],
-      "score": 92,
-      "sources": [],
-      "discoveredAt": "2026-08-10T15:34:08.604Z",
-      "attempts": 0
-    },
-    {
       "id": "20260810-aa5a2440-2",
       "title": "Running NestJS and gRPC on Bun: The Power of Native node:http2 Compatibility",
       "angle": "Explain how Bun 1.2's full compatibility with node:http2 allows enterprise frameworks and gRPC libraries to run on Bun without modification.",
@@ -906,6 +889,57 @@
       "score": 80,
       "sources": [],
       "discoveredAt": "2026-08-12T13:52:30.865Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260814-cd38bf3c-0",
+      "title": "Beyond the Binary: Why Bun 1.2’s Shift to Plain-Text Lockfiles Matters for Teams",
+      "angle": "Explain how Bun 1.2's transition from the binary bun.lockb format to the human-readable bun.lock format resolves critical team collaboration bottlenecks, specifically preventing unresolvable Git merge conflicts and enabling transparent dependency auditing in pull requests.",
+      "dedupText": "Beyond the Binary: Why Bun 1.2’s Shift to Plain-Text Lockfiles Matters for Teams\nExplain how Bun 1.2's transition from the binary bun.lockb format to the human-readable bun.lock format resolves critical team collaboration bottlenecks, specifically preventing unresolvable Git merge conflicts and enabling transparent dependency auditing in pull requests.\nBun, DevOps, Git, JavaScript",
+      "textHash": "3361dd9f9259265f6008f369534ee22d5b597010ac5b028a19e200f8396f44fd",
+      "tags": [
+        "Bun",
+        "DevOps",
+        "JavaScript",
+        "Git"
+      ],
+      "score": 65,
+      "sources": [],
+      "discoveredAt": "2026-08-14T13:49:02.523Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260814-cd38bf3c-1",
+      "title": "Automating Complex Refactoring with OpenAI o3-mini's Developer-Controlled Reasoning",
+      "angle": "Explain how to leverage OpenAI o3-mini's new developer-controlled reasoning effort levels (low, medium, high) to build automated, multi-step code refactoring pipelines that handle complex architectural changes.",
+      "dedupText": "Automating Complex Refactoring with OpenAI o3-mini's Developer-Controlled Reasoning\nExplain how to leverage OpenAI o3-mini's new developer-controlled reasoning effort levels (low, medium, high) to build automated, multi-step code refactoring pipelines that handle complex architectural changes.\nAI Engineering, Automation, OpenAI, Software Architecture",
+      "textHash": "84518efccee573d125c219ab88f4aeacae4e5166274a620857f1b73fd601b30f",
+      "tags": [
+        "AI Engineering",
+        "OpenAI",
+        "Automation",
+        "Software Architecture"
+      ],
+      "score": 72,
+      "sources": [],
+      "discoveredAt": "2026-08-14T13:49:02.523Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260814-cd38bf3c-2",
+      "title": "Integrating Reasoning Models into Agentic Workflows with OpenAI o3-mini Structured Outputs",
+      "angle": "Explain how to build reliable, production-grade AI agents by combining OpenAI o3-mini's deep reasoning capabilities with its newly supported native Structured Outputs (JSON schemas) and function calling.",
+      "dedupText": "Integrating Reasoning Models into Agentic Workflows with OpenAI o3-mini Structured Outputs\nExplain how to build reliable, production-grade AI agents by combining OpenAI o3-mini's deep reasoning capabilities with its newly supported native Structured Outputs (JSON schemas) and function calling.\nAI Engineering, API Design, JSON, OpenAI",
+      "textHash": "77028554592b34773872b67b3b8ae39c7a9feea0bab578161de2457958781d07",
+      "tags": [
+        "AI Engineering",
+        "OpenAI",
+        "API Design",
+        "JSON"
+      ],
+      "score": 78,
+      "sources": [],
+      "discoveredAt": "2026-08-14T13:49:02.523Z",
       "attempts": 0
     }
   ]
