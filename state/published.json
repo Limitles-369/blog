@@ -178,12 +178,30 @@
         "web-performance",
         "software-architecture"
       ],
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-bypassing-js-drivers-native-query-compilation-20260814-cd38bf3c",
+      "prNumber": 17,
       "runId": "20260814-cd38bf3c",
       "createdAt": "2026-08-14T13:49:02.523Z",
-      "updatedAt": "2026-08-14T13:51:05.764Z",
-      "prNumber": 17
+      "updatedAt": "2026-08-15T07:01:46.664Z",
+      "publishedAt": "2026-08-14T16:20:34Z"
+    },
+    {
+      "slug": "multi-runtime-app-architecture-vite-6",
+      "title": "Multi-Runtime App Architecture with Vite 6",
+      "dedupText": "Multi-Runtime App Architecture with Vite 6\nLearn how Vite 6's Environment API simplifies full-stack development by coordinating multiple runtimes like Node, edge, and browser under a single, high-performance dev server.\njavascript, software-architecture, typescript",
+      "textHash": "6d0c3d37197f064e2d08c85774f1d463749229b4ac37ce85ad5f42e83ab39d6e",
+      "tags": [
+        "software-architecture",
+        "javascript",
+        "typescript"
+      ],
+      "state": "open",
+      "branch": "bot/post-multi-runtime-app-architecture-vite-6-20260815-b799d513",
+      "runId": "20260815-b799d513",
+      "createdAt": "2026-08-15T07:01:46.664Z",
+      "updatedAt": "2026-08-15T07:05:07.083Z",
+      "prNumber": 18
     }
   ]
 }

@@ -793,23 +793,6 @@
       "attempts": 0
     },
     {
-      "id": "20260811-2f5dfddb-0",
-      "title": "Architecting Multi-Runtime Apps with Vite 6’s Environment API",
-      "angle": "Explain how to leverage Vite 6's new Environment API to run and debug browser, Node.js, and edge environments simultaneously in a single dev server, eliminating the need for complex monorepo configurations.",
-      "dedupText": "Architecting Multi-Runtime Apps with Vite 6’s Environment API\nExplain how to leverage Vite 6's new Environment API to run and debug browser, Node.js, and edge environments simultaneously in a single dev server, eliminating the need for complex monorepo configurations.\nDevOps, JavaScript, Vite, Web Performance",
-      "textHash": "4797e4538991507abe579117378ac004516d7d2720b8c80c40c836639c49a6a1",
-      "tags": [
-        "Vite",
-        "Web Performance",
-        "DevOps",
-        "JavaScript"
-      ],
-      "score": 92,
-      "sources": [],
-      "discoveredAt": "2026-08-11T19:29:37.929Z",
-      "attempts": 0
-    },
-    {
       "id": "20260811-2f5dfddb-1",
       "title": "Simplifying Component Signatures in React 19: Saying Goodbye to forwardRef",
       "angle": "Explain how React 19 simplifies component refactoring by allowing refs to be passed as standard props, eliminating the boilerplate of forwardRef and reducing cognitive overhead.",
