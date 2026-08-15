@@ -924,6 +924,23 @@
       "sources": [],
       "discoveredAt": "2026-08-14T13:49:02.523Z",
       "attempts": 0
+    },
+    {
+      "id": "20260815-460244db-0",
+      "title": "Understanding Node.js Native Type Stripping via the Amaro Parser",
+      "angle": "Explain how Node.js uses the internal Amaro parser (based on SWC) to strip type annotations under the hood when running with the --experimental-strip-types flag.",
+      "dedupText": "Understanding Node.js Native Type Stripping via the Amaro Parser\nExplain how Node.js uses the internal Amaro parser (based on SWC) to strip type annotations under the hood when running with the --experimental-strip-types flag.\nJavaScript Runtimes, Node.js, SWC, TypeScript",
+      "textHash": "c7fa49a40ef5c8314a5d7945405e545d81b8cfafd8b2c2676d959536aa82b6a6",
+      "tags": [
+        "Node.js",
+        "TypeScript",
+        "JavaScript Runtimes",
+        "SWC"
+      ],
+      "score": 78,
+      "sources": [],
+      "discoveredAt": "2026-08-15T13:02:30.807Z",
+      "attempts": 0
     }
   ]
 }
