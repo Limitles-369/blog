@@ -194,21 +194,6 @@
       "attempts": 0
     },
     {
-      "id": "20260809-2a80dffd-1",
-      "title": "Preventing Import Errors with TypeScript 5.7 Checked Changes",
-      "angle": "Demonstrate how the new 'Checked Changes' feature in TypeScript 5.7 catches relative path typos during development, reducing build-time failures.",
-      "dedupText": "Preventing Import Errors with TypeScript 5.7 Checked Changes\nDemonstrate how the new 'Checked Changes' feature in TypeScript 5.7 catches relative path typos during development, reducing build-time failures.\nDeveloper Experience, TypeScript",
-      "textHash": "6f7738a9f4c756f9685f67a43232ff07ec63aae9016479438af759b6c3dc54ac",
-      "tags": [
-        "TypeScript",
-        "Developer Experience"
-      ],
-      "score": 90,
-      "sources": [],
-      "discoveredAt": "2026-08-09T21:05:58.766Z",
-      "attempts": 0
-    },
-    {
       "id": "20260809-2a80dffd-3",
       "title": "Preparing for Kubernetes 1.32: Managing Sidecar Lifecycles",
       "angle": "Explain how the stabilization of sidecar containers in Kubernetes 1.32 changes the way developers architect pod startup sequences.",
@@ -940,6 +925,72 @@
       "score": 78,
       "sources": [],
       "discoveredAt": "2026-08-15T13:02:30.807Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260816-ee1768b0-0",
+      "title": "Catching Regex Typos at Compile-Time with TypeScript 5.5",
+      "angle": "Explain how TypeScript 5.5's new compile-time regular expression syntax checking parses and validates regex literals, catching syntax errors before the code runs.",
+      "dedupText": "Catching Regex Typos at Compile-Time with TypeScript 5.5\nExplain how TypeScript 5.5's new compile-time regular expression syntax checking parses and validates regex literals, catching syntax errors before the code runs.\njavascript, regex, typescript",
+      "textHash": "6fdbb60a347025ef615497010df60798a821f6d75e62cd76f11c00e4a041f920",
+      "tags": [
+        "typescript",
+        "javascript",
+        "regex"
+      ],
+      "score": 82,
+      "sources": [],
+      "discoveredAt": "2026-08-16T07:03:31.279Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260816-ee1768b0-1",
+      "title": "How TypeScript 5.5 Narrows Types Using Constant Indexed Accesses",
+      "angle": "Explain how TypeScript 5.5's control flow analysis can now narrow types when an object is indexed by a constant key, reducing manual type assertions in dynamic object lookups.",
+      "dedupText": "How TypeScript 5.5 Narrows Types Using Constant Indexed Accesses\nExplain how TypeScript 5.5's control flow analysis can now narrow types when an object is indexed by a constant key, reducing manual type assertions in dynamic object lookups.\njavascript, type-safety, typescript",
+      "textHash": "ca4e3ab7970d8eb775fe7eb0176ea7845add375708cb94e4131f3c0128610e29",
+      "tags": [
+        "typescript",
+        "javascript",
+        "type-safety"
+      ],
+      "score": 85,
+      "sources": [],
+      "discoveredAt": "2026-08-16T07:03:31.279Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260816-ee1768b0-2",
+      "title": "Unlocking Enterprise Deno Adoption with Private npm Registry Support",
+      "angle": "Explain how Deno 1.44's native support for private npm registries via standard .npmrc configuration files removes a major blocker for enterprise teams working behind corporate firewalls.",
+      "dedupText": "Unlocking Enterprise Deno Adoption with Private npm Registry Support\nExplain how Deno 1.44's native support for private npm registries via standard .npmrc configuration files removes a major blocker for enterprise teams working behind corporate firewalls.\ndeno, devops, javascript, npm",
+      "textHash": "16c150ddcd28f8e094953fa542d922208e947a31ed6c0e185a68cb58c658b6f8",
+      "tags": [
+        "deno",
+        "javascript",
+        "npm",
+        "devops"
+      ],
+      "score": 60,
+      "sources": [],
+      "discoveredAt": "2026-08-16T07:03:31.279Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260816-ee1768b0-3",
+      "title": "Building with Node's Experimental SQLite Module in Deno 1.44",
+      "angle": "Explain how Deno 1.44's out-of-the-box support for Node's experimental built-in node:sqlite module facilitates cross-runtime compatibility and simplifies local data storage.",
+      "dedupText": "Building with Node's Experimental SQLite Module in Deno 1.44\nExplain how Deno 1.44's out-of-the-box support for Node's experimental built-in node:sqlite module facilitates cross-runtime compatibility and simplifies local data storage.\ndeno, javascript, node-js, sqlite",
+      "textHash": "1b03f4c6b3cf0369033cfa461058d8bd810abbaa2fb154b0a4c35a31f33cfc5f",
+      "tags": [
+        "deno",
+        "sqlite",
+        "node-js",
+        "javascript"
+      ],
+      "score": 75,
+      "sources": [],
+      "discoveredAt": "2026-08-16T07:03:31.279Z",
       "attempts": 0
     }
   ]

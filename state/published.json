@@ -196,12 +196,30 @@
         "javascript",
         "typescript"
       ],
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-multi-runtime-app-architecture-vite-6-20260815-b799d513",
+      "prNumber": 18,
       "runId": "20260815-b799d513",
       "createdAt": "2026-08-15T07:01:46.664Z",
-      "updatedAt": "2026-08-15T07:05:07.083Z",
-      "prNumber": 18
+      "updatedAt": "2026-08-16T07:03:31.279Z",
+      "publishedAt": "2026-08-15T20:15:09Z"
+    },
+    {
+      "slug": "prevent-broken-imports-typescript-watch-mode",
+      "title": "Prevent Broken Imports with TypeScript Watch Mode",
+      "dedupText": "Prevent Broken Imports with TypeScript Watch Mode\nLearn how to use TypeScript's watch mode and incremental type-checking to catch broken relative imports and path typos instantly, saving CI time and keeping your main branch green.\nrefactoring, software-architecture, typescript",
+      "textHash": "f90a2deddfb0ac26bca3b5e690b4833628933ffa896e2f6baaf189b84b9b5658",
+      "tags": [
+        "typescript",
+        "refactoring",
+        "software-architecture"
+      ],
+      "state": "open",
+      "branch": "bot/post-prevent-broken-imports-typescript-watch-mode-20260816-ee1768b0",
+      "runId": "20260816-ee1768b0",
+      "createdAt": "2026-08-16T07:03:31.279Z",
+      "updatedAt": "2026-08-16T07:07:11.277Z",
+      "prNumber": 19
     }
   ]
 }
