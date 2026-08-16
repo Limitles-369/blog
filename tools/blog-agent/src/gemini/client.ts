@@ -45,6 +45,25 @@ import {
 
 const IMAGE_VIA_GENERATE_CONTENT = /(?:^|[^a-z])gemini/i
 
+const RATE_LIMIT_DELAY_MS = 15000 // 15s delay ensures max 4 requests per minute (< 5)
+let lastCallTime = 0
+let rateLimitQueue: Promise<void> = Promise.resolve()
+
+async function waitRateLimit(): Promise<void> {
+  const now = Date.now()
+  const timeSinceLast = now - lastCallTime
+  if (timeSinceLast < RATE_LIMIT_DELAY_MS) {
+    const delay = RATE_LIMIT_DELAY_MS - timeSinceLast
+    await new Promise((resolve) => setTimeout(resolve, delay))
+  }
+  lastCallTime = Date.now()
+}
+
+async function enqueueRateLimit(): Promise<void> {
+  rateLimitQueue = rateLimitQueue.then(waitRateLimit).catch(() => {})
+  await rateLimitQueue
+}
+
 export function createGeminiClient(config: Config, logger: Logger): GeminiClient {
   const ai = new GoogleGenAI({ apiKey: config.GEMINI_API_KEY })
   let running: TokenUsage = zeroUsage()
@@ -65,7 +84,10 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
 
   /** Wrap every API call in the same timeout + retry + logging envelope. */
   async function call<T>(label: string, timeoutMs: number, fn: () => Promise<T>): Promise<T> {
-    return withRetry(() => withTimeout(() => fn(), timeoutMs, label), {
+    return withRetry(async () => {
+      await enqueueRateLimit()
+      return withTimeout(() => fn(), timeoutMs, label)
+    }, {
       attempts: config.RETRY_ATTEMPTS,
       baseMs: config.RETRY_BASE_MS,
       capMs: config.RETRY_CAP_MS,
