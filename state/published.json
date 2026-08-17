@@ -214,12 +214,30 @@
         "refactoring",
         "software-architecture"
       ],
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-prevent-broken-imports-typescript-watch-mode-20260816-ee1768b0",
+      "prNumber": 19,
       "runId": "20260816-ee1768b0",
       "createdAt": "2026-08-16T07:03:31.279Z",
-      "updatedAt": "2026-08-16T07:07:11.277Z",
-      "prNumber": 19
+      "updatedAt": "2026-08-17T07:20:14.443Z",
+      "publishedAt": "2026-08-16T15:24:05Z"
+    },
+    {
+      "slug": "prisma-6-type-safe-raw-sql",
+      "title": "Mastering Prisma 6's Type-Safe Raw SQL",
+      "dedupText": "Mastering Prisma 6's Type-Safe Raw SQL\nLearn how to use Prisma 6's stabilized typedSql feature to compile raw SQL queries into fully typed TypeScript functions, combining native performance with compile-time safety.\nsoftware-architecture, typescript, web-performance",
+      "textHash": "a3dec9cd46ac561fae57f0d18ef417e8def8196c7e167788af770d4cbbd5d209",
+      "tags": [
+        "typescript",
+        "web-performance",
+        "software-architecture"
+      ],
+      "state": "open",
+      "branch": "bot/post-prisma-6-type-safe-raw-sql-20260817-da94f521",
+      "runId": "20260817-da94f521",
+      "createdAt": "2026-08-17T07:20:14.443Z",
+      "updatedAt": "2026-08-17T07:25:02.967Z",
+      "prNumber": 20
     }
   ]
 }
