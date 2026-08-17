@@ -1007,6 +1007,40 @@
       "sources": [],
       "discoveredAt": "2026-08-17T07:20:14.443Z",
       "attempts": 0
+    },
+    {
+      "id": "20260817-c2f2ca1a-0",
+      "title": "Boosting CLI and Server Startup Performance with Node.js 22's Maglev Compiler",
+      "angle": "Explain how the newly enabled-by-default Maglev compiler in Node.js 22 optimizes short-running scripts and initial server startup times.",
+      "dedupText": "Boosting CLI and Server Startup Performance with Node.js 22's Maglev Compiler\nExplain how the newly enabled-by-default Maglev compiler in Node.js 22 optimizes short-running scripts and initial server startup times.\nBackend, Node.js, Performance, V8",
+      "textHash": "1b9b2d52712d3e3589fa4f6fc61d1d6e4003297a7fa0f5b59fffe1814450bd01",
+      "tags": [
+        "Node.js",
+        "V8",
+        "Performance",
+        "Backend"
+      ],
+      "score": 65,
+      "sources": [],
+      "discoveredAt": "2026-08-17T13:10:06.985Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260817-c2f2ca1a-1",
+      "title": "Native Multimodal Workflows: Architecting Real-Time Apps with the GPT-4o API",
+      "angle": "Explain how GPT-4o's end-to-end multimodal training eliminates the latency and context loss of stitched-together model pipelines for text and vision.",
+      "dedupText": "Native Multimodal Workflows: Architecting Real-Time Apps with the GPT-4o API\nExplain how GPT-4o's end-to-end multimodal training eliminates the latency and context loss of stitched-together model pipelines for text and vision.\nAI, API, GPT-4o, Web Development",
+      "textHash": "8c8f987fbecaca49ea2bd24ba053d781ff92ca3518de87b9778b09eb76f7c0ec",
+      "tags": [
+        "AI",
+        "GPT-4o",
+        "API",
+        "Web Development"
+      ],
+      "score": 78,
+      "sources": [],
+      "discoveredAt": "2026-08-17T13:10:06.985Z",
+      "attempts": 0
     }
   ]
 }
