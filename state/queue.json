@@ -1041,6 +1041,22 @@
       "sources": [],
       "discoveredAt": "2026-08-17T13:10:06.985Z",
       "attempts": 0
+    },
+    {
+      "id": "20260818-592dd103-1",
+      "title": "Running Open-Weights Reasoning Models Locally with DeepSeek-R1",
+      "angle": "Explain how to run DeepSeek-R1's distilled models locally on consumer hardware to perform complex code-generation and reasoning tasks without relying on expensive, proprietary cloud APIs.",
+      "dedupText": "Running Open-Weights Reasoning Models Locally with DeepSeek-R1\nExplain how to run DeepSeek-R1's distilled models locally on consumer hardware to perform complex code-generation and reasoning tasks without relying on expensive, proprietary cloud APIs.\nAI Engineering, DeepSeek-R1, Local LLM",
+      "textHash": "404f7451a82d29586b24c5d70db79cc892d6d3abd38b047514fe0ebfe79218e6",
+      "tags": [
+        "DeepSeek-R1",
+        "AI Engineering",
+        "Local LLM"
+      ],
+      "score": 78,
+      "sources": [],
+      "discoveredAt": "2026-08-18T07:52:46.018Z",
+      "attempts": 0
     }
   ]
 }

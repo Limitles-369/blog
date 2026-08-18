@@ -239,6 +239,23 @@
       "createdAt": "2026-08-17T07:20:14.443Z",
       "updatedAt": "2026-08-17T13:10:06.985Z",
       "publishedAt": "2026-08-17T10:57:31Z"
+    },
+    {
+      "slug": "zero-dependency-postgres-bun",
+      "title": "Zero-Dependency Postgres Backends with Bun",
+      "dedupText": "Zero-Dependency Postgres Backends with Bun\nLearn how to eliminate database driver bloat and build ultra-fast, type-safe PostgreSQL backends using Bun's native SQL client to improve performance and simplify deployments.\nsoftware-architecture, typescript, web-performance",
+      "textHash": "f5798cefd31ecdc36b6d24c03ec3f4f99ba44bee4e3d47bcaa94c8a11c5ce772",
+      "tags": [
+        "typescript",
+        "software-architecture",
+        "web-performance"
+      ],
+      "state": "open",
+      "branch": "bot/post-zero-dependency-postgres-bun-20260818-592dd103",
+      "runId": "20260818-592dd103",
+      "createdAt": "2026-08-18T07:52:46.018Z",
+      "updatedAt": "2026-08-18T08:00:33.534Z",
+      "prNumber": 21
     }
   ]
 }
