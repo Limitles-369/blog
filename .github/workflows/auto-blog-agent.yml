@@ -26,7 +26,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Configure Git identity
         run: |
@@ -44,7 +44,11 @@ jobs:
       - name: Generate Style-Anchored Post Draft & Run Quality Gates
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_TEXT_MODEL: ${{ vars.GEMINI_TEXT_MODEL || 'gemini-2.5-flash' }}
+          GEMINI_IMAGE_MODEL: ${{ vars.GEMINI_IMAGE_MODEL || 'imagen-3.0-generate-002' }}
+          GEMINI_EMBEDDING_MODEL: ${{ vars.GEMINI_EMBEDDING_MODEL || 'text-embedding-004' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
           GENERATE_HERO_IMAGE: 'true'
           LOG_FORMAT: json
         run: npx tsx src/cli.ts generate
@@ -66,6 +70,6 @@ jobs:
             ## APEX TECHNICAL Automation Engine Digest
             - **Status:** Quality Gates Checked (`compileGate`, `assetsExistGate`, `secretScanGate`, `frontmatterGate`)
             - **Author:** blog-agent[bot]
-            - **Engine:** Gemini 3.5 / Style Brief Anchored
+            - **Engine:** Gemini / Style Brief Anchored
           commit-message: "feat(blog): add automated post draft"
           delete-branch: true
