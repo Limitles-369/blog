@@ -267,12 +267,13 @@
         "software-architecture",
         "web-performance"
       ],
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-debugging-minimal-containers-image-bloat-20260819-1a968639",
+      "prNumber": 22,
       "runId": "20260819-1a968639",
       "createdAt": "2026-08-19T07:09:33.595Z",
-      "updatedAt": "2026-08-19T07:14:21.778Z",
-      "prNumber": 22
+      "updatedAt": "2026-08-19T13:13:47.595Z",
+      "publishedAt": "2026-08-19T08:16:04Z"
     }
   ]
 }

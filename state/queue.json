@@ -1058,6 +1058,40 @@
       "sources": [],
       "discoveredAt": "2026-08-19T07:09:33.595Z",
       "attempts": 0
+    },
+    {
+      "id": "20260819-0f98a06d-0",
+      "title": "Dynamic Latency Control: Tuning OpenAI o3-mini with the reasoning_effort Parameter",
+      "angle": "Explain how to programmatically adjust the new `reasoning_effort` parameter (low, medium, high) in OpenAI's o3-mini API to balance cost, speed, and accuracy for different agentic tasks.",
+      "dedupText": "Dynamic Latency Control: Tuning OpenAI o3-mini with the reasoning_effort Parameter\nExplain how to programmatically adjust the new `reasoning_effort` parameter (low, medium, high) in OpenAI's o3-mini API to balance cost, speed, and accuracy for different agentic tasks.\nAI Engineering, API Design, OpenAI, o3-mini",
+      "textHash": "81abdda966bc3b864da371b5038740644cf0e2f08949792dc4e5035583bade0a",
+      "tags": [
+        "OpenAI",
+        "o3-mini",
+        "AI Engineering",
+        "API Design"
+      ],
+      "score": 75,
+      "sources": [],
+      "discoveredAt": "2026-08-19T13:13:47.595Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260819-0f98a06d-1",
+      "title": "Local IaC Testing: Mocking Providers Natively in OpenTofu 1.9",
+      "angle": "Explain how to use the enhanced provider mocking features in OpenTofu 1.9's native `tofu test` command to run fast, cost-effective infrastructure unit tests in CI/CD without hitting cloud APIs.",
+      "dedupText": "Local IaC Testing: Mocking Providers Natively in OpenTofu 1.9\nExplain how to use the enhanced provider mocking features in OpenTofu 1.9's native `tofu test` command to run fast, cost-effective infrastructure unit tests in CI/CD without hitting cloud APIs.\nDevOps, IaC, OpenTofu, Testing",
+      "textHash": "3fbd45a5f54351dff3db8b01b5fd91e4c0b3c6919d7c0750640bc2a084dd7521",
+      "tags": [
+        "OpenTofu",
+        "IaC",
+        "DevOps",
+        "Testing"
+      ],
+      "score": 85,
+      "sources": [],
+      "discoveredAt": "2026-08-19T13:13:47.595Z",
+      "attempts": 0
     }
   ]
 }
