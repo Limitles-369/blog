@@ -250,12 +250,29 @@
         "software-architecture",
         "web-performance"
       ],
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-zero-dependency-postgres-bun-20260818-592dd103",
+      "prNumber": 21,
       "runId": "20260818-592dd103",
       "createdAt": "2026-08-18T07:52:46.018Z",
-      "updatedAt": "2026-08-18T08:00:33.534Z",
-      "prNumber": 21
+      "updatedAt": "2026-08-19T07:09:33.595Z",
+      "publishedAt": "2026-08-18T08:00:54Z"
+    },
+    {
+      "slug": "debugging-minimal-containers-image-bloat",
+      "title": "Debugging Minimal Containers Without Image Bloat",
+      "dedupText": "Debugging Minimal Containers Without Image Bloat\nLearn how to debug hardened production containers without bloating your images. Discover how ephemeral debug containers leverage Linux namespaces to troubleshoot secure, minimal runtimes.\nsoftware-architecture, web-performance",
+      "textHash": "e5ed24633a8f90d1829808a5551af798994ae02f6143fa11154fd89779d34d0b",
+      "tags": [
+        "software-architecture",
+        "web-performance"
+      ],
+      "state": "open",
+      "branch": "bot/post-debugging-minimal-containers-image-bloat-20260819-1a968639",
+      "runId": "20260819-1a968639",
+      "createdAt": "2026-08-19T07:09:33.595Z",
+      "updatedAt": "2026-08-19T07:14:21.778Z",
+      "prNumber": 22
     }
   ]
 }

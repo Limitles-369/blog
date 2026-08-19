@@ -34,22 +34,6 @@
       "attempts": 0
     },
     {
-      "id": "20260809-a04a23e1-3",
-      "title": "Debugging Containers Without Bloating Images",
-      "angle": "Show how Docker Desktop 4.35's unified debugging tools allow developers to troubleshoot production-like environments without installing language-specific debuggers in the final image.",
-      "dedupText": "Debugging Containers Without Bloating Images\nShow how Docker Desktop 4.35's unified debugging tools allow developers to troubleshoot production-like environments without installing language-specific debuggers in the final image.\nDebugging, DevOps, Docker",
-      "textHash": "b398330548e93abe8478c66d1cab9640dfbc3a2b24e2fff00bc47ae63203590c",
-      "tags": [
-        "Docker",
-        "DevOps",
-        "Debugging"
-      ],
-      "score": 88,
-      "sources": [],
-      "discoveredAt": "2026-08-09T20:50:15.477Z",
-      "attempts": 0
-    },
-    {
       "id": "20260809-a04a23e1-4",
       "title": "Is Your Supply Chain Secure? Understanding OpenSSF Scorecard v5",
       "angle": "Explain the updated criteria for 'Binary-Artifacts' and 'Dangerous-Workflow' checks and why developers need to re-evaluate their CI/CD security gates.",
@@ -1056,6 +1040,23 @@
       "score": 78,
       "sources": [],
       "discoveredAt": "2026-08-18T07:52:46.018Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260819-1a968639-0",
+      "title": "Atomic Upserts in PostgreSQL 17: Leveraging MERGE with the RETURNING Clause",
+      "angle": "Explain how to write cleaner, atomic upsert-and-return logic in application code by utilizing PostgreSQL 17's enhanced MERGE statement with the newly supported RETURNING clause.",
+      "dedupText": "Atomic Upserts in PostgreSQL 17: Leveraging MERGE with the RETURNING Clause\nExplain how to write cleaner, atomic upsert-and-return logic in application code by utilizing PostgreSQL 17's enhanced MERGE statement with the newly supported RETURNING clause.\nbackend, databases, postgres, sql",
+      "textHash": "9ca3be8f68cf01bb11d4b4e1f940e4c462b65ceae18d35fa1a680c6e536ff32a",
+      "tags": [
+        "postgres",
+        "sql",
+        "databases",
+        "backend"
+      ],
+      "score": 85,
+      "sources": [],
+      "discoveredAt": "2026-08-19T07:09:33.595Z",
       "attempts": 0
     }
   ]
