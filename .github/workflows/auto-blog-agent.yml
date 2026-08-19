@@ -37,6 +37,7 @@ jobs:
         run: |
           corepack enable
           yarn install --immutable || yarn install
+          npm ci --prefix tools/blog-agent
 
       - name: Automated Topic Discovery
         run: yarn discover

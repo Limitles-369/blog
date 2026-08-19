@@ -15,6 +15,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@google/genai": "^1.0.0",
     "@headlessui/react": "2.2.9",
     "@next/bundle-analyzer": "15.2.4",
     "@tailwindcss/forms": "^0.5.11",
@@ -49,7 +50,8 @@
     "resend": "^6.20.0",
     "rss-parser": "^3.13.0",
     "tailwindcss": "^4.1.18",
-    "unist-util-visit": "^5.1.0"
+    "unist-util-visit": "^5.1.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.3",
