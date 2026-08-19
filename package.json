@@ -9,6 +9,9 @@
     "serve": "next start",
     "analyze": "cross-env ANALYZE=true next build",
     "lint": "next lint --fix --dir pages --dir app --dir components --dir lib --dir layouts --dir scripts",
+    "discover": "tsx tools/discover.ts",
+    "hero": "tsx tools/generate-hero.ts",
+    "newsletter": "tsx tools/send-newsletter.ts",
     "prepare": "husky"
   },
   "dependencies": {
@@ -43,6 +46,8 @@
     "remark-gfm": "^4.0.1",
     "remark-github-blockquote-alert": "^2.0.1",
     "remark-math": "^6.0.0",
+    "resend": "^6.20.0",
+    "rss-parser": "^3.13.0",
     "tailwindcss": "^4.1.18",
     "unist-util-visit": "^5.1.0"
   },
@@ -64,6 +69,7 @@
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
     "prettier-plugin-tailwindcss": "^0.7.2",
+    "tsx": "^4.19.2",
     "typescript": "^5.9.3"
   },
   "lint-staged": {

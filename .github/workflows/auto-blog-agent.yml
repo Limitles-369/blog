@@ -1,0 +1,71 @@
+name: Scheduled Blog Agent Pipeline
+
+on:
+  schedule:
+    - cron: '37 4,16 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: auto-blog-agent
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  generate-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Configure Git identity
+        run: |
+          git config user.name "blog-agent[bot]"
+          git config user.email "blog-agent[bot]@users.noreply.github.com"
+
+      - name: Install dependencies
+        run: |
+          corepack enable
+          yarn install --immutable || yarn install
+
+      - name: Automated Topic Discovery
+        run: yarn discover
+
+      - name: Generate Style-Anchored Post Draft & Run Quality Gates
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GENERATE_HERO_IMAGE: 'true'
+          LOG_FORMAT: json
+        run: npx tsx src/cli.ts generate
+
+      - name: Commit State Updates to blog-agent-state Branch
+        run: |
+          git checkout -b blog-agent-state || git checkout blog-agent-state || true
+          git add src/state/queue.json tools/blog-agent/.artifacts/state/ || true
+          git diff-index --quiet HEAD || git commit -m "chore(state): update queue and publication state [skip ci]" || true
+          git push origin blog-agent-state || true
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: blog-agent/auto-draft
+          title: "feat(blog): Automated MDX Draft Post"
+          body: |
+            ## APEX TECHNICAL Automation Engine Digest
+            - **Status:** Quality Gates Checked (`compileGate`, `assetsExistGate`, `secretScanGate`, `frontmatterGate`)
+            - **Author:** blog-agent[bot]
+            - **Engine:** Gemini 3.5 / Style Brief Anchored
+          commit-message: "feat(blog): add automated post draft"
+          delete-branch: true

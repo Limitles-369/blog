@@ -28,7 +28,7 @@ import { createStateStore } from './state/store.js'
  *   corpus  — list what the agent sees on disk; no API calls
  */
 
-const SUBCOMMANDS = ['run', 'doctor', 'style', 'corpus'] as const
+const SUBCOMMANDS = ['run', 'generate', 'doctor', 'style', 'corpus'] as const
 type Subcommand = (typeof SUBCOMMANDS)[number]
 
 /** Minimal .env loader — avoids a dependency for one well-understood format. */
@@ -60,6 +60,7 @@ function usage(): string {
     '',
     'Commands:',
     '  run       Research, and publish at most one post per day',
+    '  generate  Generate a style-anchored blog draft through quality gates',
     '  doctor    Validate env, verify model IDs, probe SDK capabilities',
     '  style     Print the style brief derived from data/blog/*.mdx',
     '  corpus    Summarise the posts currently on disk',
@@ -451,6 +452,10 @@ async function main(): Promise<number> {
 
   if (command === 'run') {
     return cmdRun({ config, logger, dryRun, researchOnly, forcePublish, json })
+  }
+
+  if (command === 'generate') {
+    return cmdRun({ config, logger, dryRun, researchOnly, forcePublish: true, json })
   }
 
   process.stdout.write(usage() + '\n')

@@ -1,0 +1,41 @@
+name: Post-Merge Newsletter Dispatch Engine
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'data/blog/*.mdx'
+      - 'data/blog/*.md'
+  workflow_dispatch:
+
+concurrency:
+  group: newsletter-dispatch
+  cancel-in-progress: false
+
+jobs:
+  dispatch-newsletter:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          corepack enable
+          yarn install --immutable || yarn install
+
+      - name: Send Newsletter Digest
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          NEWSLETTER_SUBSCRIBERS: ${{ secrets.NEWSLETTER_SUBSCRIBERS }}
+          NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'https://blog.akashsamui.dev' }}
+        run: yarn newsletter
