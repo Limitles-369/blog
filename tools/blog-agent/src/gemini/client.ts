@@ -211,15 +211,38 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
         res = await call(opts.label, config.TEXT_TIMEOUT_MS, doGenerate)
       }
 
-      const { sources, queries } = extractSources(res)
-      const usage = track((res as unknown as Record<string, unknown>)['usageMetadata'])
-      log.debug('generateText', {
-        label: opts.label,
-        grounded: Boolean(opts.grounded),
-        sources: sources.length,
-        ...usage,
-      })
-      return { text: textOf(res, opts.label, usage), sources, queries, usage }
+      try {
+        const { sources, queries } = extractSources(res)
+        const usage = track((res as unknown as Record<string, unknown>)['usageMetadata'])
+        log.debug('generateText', {
+          label: opts.label,
+          grounded: Boolean(opts.grounded),
+          sources: sources.length,
+          ...usage,
+        })
+        return { text: textOf(res, opts.label, usage), sources, queries, usage }
+      } catch (err) {
+        const finishReason = (err as unknown as Record<string, unknown>)?.['finishReason'] as string | undefined
+        const msg = String((err as Error)?.message ?? '')
+        const isMalformedFunctionCall =
+          finishReason === 'MALFORMED_FUNCTION_CALL' || msg.includes('MALFORMED_FUNCTION_CALL')
+        if (!isMalformedFunctionCall) throw err
+
+        log.warn('generateText: textOf() detected MALFORMED_FUNCTION_CALL — retrying', {
+          label: opts.label,
+          finishReason,
+        })
+        const res2 = await call(opts.label, config.TEXT_TIMEOUT_MS, doGenerate)
+        const { sources: sources2, queries: queries2 } = extractSources(res2)
+        const usage2 = track((res2 as unknown as Record<string, unknown>)['usageMetadata'])
+        log.debug('generateText', {
+          label: opts.label,
+          grounded: Boolean(opts.grounded),
+          sources: sources2.length,
+          ...usage2,
+        })
+        return { text: textOf(res2, opts.label, usage2), sources: sources2, queries: queries2, usage: usage2 }
+      }
     },
 
     async generateJson<T>(opts: GenerateJsonOptions<T>): Promise<JsonResult<T>> {
