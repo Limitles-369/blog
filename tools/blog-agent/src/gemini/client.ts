@@ -164,14 +164,13 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
    * never attempts a function/tool call and always returns a text completion.
    */
   function buildTextConfig(
-    opts: GenerateTextOptions
+    opts: GenerateTextOptions,
+    disableGrounding = false
   ): Record<string, unknown> {
+    const isGrounded = Boolean(opts.grounded && !disableGrounding)
     return {
       ...(opts.system ? { systemInstruction: opts.system } : {}),
-      ...(opts.grounded ? { tools: [{ googleSearch: {} }] } : {}),
-      // Disable function/tool calling for all plain-text requests so the model
-      // cannot produce a MALFORMED_FUNCTION_CALL finish reason.
-      toolConfig: { functionCallingConfig: { mode: 'NONE' } },
+      ...(isGrounded ? { tools: [{ googleSearch: {} }] } : {}),
       temperature: opts.temperature ?? 0.7,
       ...(opts.maxOutputTokens ? { maxOutputTokens: opts.maxOutputTokens } : {}),
       ...(opts.thinkingBudget === undefined
@@ -182,20 +181,17 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
 
   return {
     async generateText(opts: GenerateTextOptions): Promise<TextResult> {
-      const doGenerate = () =>
+      const doGenerate = (disableGrounding = false) =>
         ai.models.generateContent({
           model: config.GEMINI_TEXT_MODEL,
           contents: opts.prompt,
-          config: buildTextConfig(opts),
+          config: buildTextConfig(opts, disableGrounding),
         })
 
       let res: Awaited<ReturnType<typeof doGenerate>>
       try {
-        res = await call(opts.label, config.TEXT_TIMEOUT_MS, doGenerate)
+        res = await call(opts.label, config.TEXT_TIMEOUT_MS, () => doGenerate(false))
       } catch (err) {
-        // If the model still returned a MALFORMED_FUNCTION_CALL despite the
-        // toolConfig guard (e.g. SDK version doesn't honour it yet), retry once
-        // and log a warning so the issue is visible without crashing the run.
         const msg = String((err as Error)?.message ?? '')
         const reason = String(
           ((err as unknown as Record<string, unknown>)?.['finishReason'] as string) ?? ''
@@ -204,11 +200,11 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
           reason === 'MALFORMED_FUNCTION_CALL' || msg.includes('MALFORMED_FUNCTION_CALL')
         if (!isMalformedFunctionCall) throw err
 
-        log.warn('generateText: MALFORMED_FUNCTION_CALL — retrying with toolConfig enforced', {
+        log.warn('generateText: MALFORMED_FUNCTION_CALL — retrying without grounding', {
           label: opts.label,
           finishReason: reason,
         })
-        res = await call(opts.label, config.TEXT_TIMEOUT_MS, doGenerate)
+        res = await call(opts.label, config.TEXT_TIMEOUT_MS, () => doGenerate(true))
       }
 
       try {
@@ -228,11 +224,11 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
           finishReason === 'MALFORMED_FUNCTION_CALL' || msg.includes('MALFORMED_FUNCTION_CALL')
         if (!isMalformedFunctionCall) throw err
 
-        log.warn('generateText: textOf() detected MALFORMED_FUNCTION_CALL — retrying', {
+        log.warn('generateText: textOf() detected MALFORMED_FUNCTION_CALL — retrying without grounding', {
           label: opts.label,
           finishReason,
         })
-        const res2 = await call(opts.label, config.TEXT_TIMEOUT_MS, doGenerate)
+        const res2 = await call(opts.label, config.TEXT_TIMEOUT_MS, () => doGenerate(true))
         const { sources: sources2, queries: queries2 } = extractSources(res2)
         const usage2 = track((res2 as unknown as Record<string, unknown>)['usageMetadata'])
         log.debug('generateText', {
