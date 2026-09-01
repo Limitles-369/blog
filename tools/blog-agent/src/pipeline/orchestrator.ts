@@ -111,11 +111,35 @@ export async function runPipeline(opts: RunOptions): Promise<RunOutcomeShape> {
   // ---- Phase 2: research and queue (every run) --------------------------
   const corpus = await readCorpus()
   const knownTags = [...tagFrequency(corpus).keys()]
-  const queued = await refreshQueue({ ...opts, state, corpus, knownTags, now, log, runId })
+  const utcToday = utcDay(now)
+  const usageDay =
+    state.cadence.usageDay === utcToday
+      ? state.cadence
+      : { ...state.cadence, requestCount: 0, tokenCount: 0, usageDay: utcToday }
+  const hasBudget = (usageDay.requestCount ?? 0) < config.MAX_GEMINI_REQUESTS_PER_DAY
+  const shouldResearch =
+    opts.mode === 'research-only' ||
+    (state.queue.entries.length < config.MIN_TOPIC_QUEUE_DEPTH &&
+      hasBudget &&
+      state.cadence.lastDiscoveryDay !== utcToday)
+  const queued = shouldResearch
+    ? await refreshQueue({ ...opts, state, corpus, knownTags, now, log, runId })
+    : { queue: state.queue, added: 0 }
   if (queued.added > 0) {
     state = { ...state, queue: queued.queue }
     if (!opts.dryRun) await store.saveQueue(queued.queue)
   }
+
+  const usage = client.totalUsage()
+  const updatedCadence = {
+    ...usageDay,
+    requestCount: (usageDay.requestCount ?? 0) + client.requestCount(),
+    tokenCount: (usageDay.tokenCount ?? 0) + usage.total,
+    ...(shouldResearch ? { lastDiscoveryDay: utcToday } : {}),
+  }
+  state = { ...state, cadence: updatedCadence }
+  if (!opts.dryRun && (client.requestCount() > 0 || shouldResearch))
+    await store.saveCadence(updatedCadence)
 
   if (opts.mode === 'research-only') {
     return outcome({ reason: 'research-only mode', queued: state.queue.entries.length })
@@ -155,12 +179,17 @@ export async function runPipeline(opts: RunOptions): Promise<RunOutcomeShape> {
   }
   const recentCategory = [...state.published.entries]
     .sort((a, b) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt))
-    .find((entry) => entry.category !== 'uncategorized')?.category
+    .find((entry) => entry.category && entry.category !== 'uncategorized')?.category
   const next = state.queue.entries
     .map((entry) => ({
       entry,
       selectionScore:
-        entry.score -
+        entry.score +
+        entry.priority * 0.15 +
+        Math.min(
+          10,
+          Math.max(0, Math.floor((now.getTime() - Date.parse(entry.discoveredAt)) / 86_400_000))
+        ) -
         (categoryCounts.get(entry.category) ?? 0) * 8 -
         (entry.category === recentCategory ? 15 : 0),
     }))
@@ -169,6 +198,18 @@ export async function runPipeline(opts: RunOptions): Promise<RunOutcomeShape> {
     log.warn('nothing in the queue to write')
     return outcome({ reason: 'empty-queue' })
   }
+  const validCategories = [
+    'software-architecture',
+    'system-design',
+    'programming',
+    'ai-engineering',
+    'developer-tools',
+    'cloud-infrastructure',
+    'engineering-culture',
+  ] as const
+  const nextCategory = (validCategories as readonly string[]).includes(next.category)
+    ? (next.category as (typeof validCategories)[number])
+    : 'developer-tools'
 
   // ---- Phase 4: generate -------------------------------------------------
   const metrics = computeStyleMetrics(corpus)
@@ -178,7 +219,7 @@ export async function runPipeline(opts: RunOptions): Promise<RunOutcomeShape> {
     angle: next.angle,
     tags: next.tags,
     rationale: '',
-    category: next.category,
+    category: nextCategory,
   }
 
   const ctx = {
@@ -209,6 +250,7 @@ export async function runPipeline(opts: RunOptions): Promise<RunOutcomeShape> {
       body,
       workingTitle: plan.workingTitle,
       knownTags,
+      category: nextCategory,
       logger: log,
     })
   )
@@ -218,6 +260,7 @@ export async function runPipeline(opts: RunOptions): Promise<RunOutcomeShape> {
     title: meta.title,
     date: utcDay(now),
     tags: meta.tags,
+    category: nextCategory,
     draft: false,
     summary: meta.summary,
     authors: [config.POST_AUTHOR],
@@ -242,6 +285,17 @@ export async function runPipeline(opts: RunOptions): Promise<RunOutcomeShape> {
       logger: log,
     })
   )
+
+  // Persist the complete request/token ledger, including drafting and gates,
+  // before any early return or publication write can occur.
+  const finalUsageCadence = {
+    ...state.cadence,
+    requestCount: (usageDay.requestCount ?? 0) + client.requestCount(),
+    tokenCount: (usageDay.tokenCount ?? 0) + client.totalUsage().total,
+    usageDay: utcToday,
+  }
+  state = { ...state, cadence: finalUsageCadence }
+  if (!opts.dryRun) await store.saveCadence(finalUsageCadence)
 
   if (!report.passed) {
     for (const f of report.errors) log.error('gate failed', { gate: f.gate, message: f.message })
@@ -362,23 +416,35 @@ async function refreshQueue(input: {
     failures: collected.failures.length,
   })
 
-  const discovered = await log.timed('discover', () =>
-    discoverTopics({
-      client: input.client,
-      knownTags: input.knownTags,
-      avoidTitles,
-      rejectedTitles,
-      logger: log,
-      sourceItems,
-      sourceFailures: collected.failures,
-    })
-  )
+  let discovered
+  try {
+    discovered = await log.timed('discover', () =>
+      discoverTopics({
+        client: input.client,
+        knownTags: input.knownTags,
+        avoidTitles,
+        rejectedTitles,
+        logger: log,
+        sourceItems,
+        sourceFailures: collected.failures,
+      })
+    )
+  } catch (cause) {
+    log.warn('topic discovery unavailable; preserving existing queue', { error: String(cause) })
+    return { queue: state.queue, added: 0 }
+  }
 
-  const scores = await scoreTopics({
-    client: input.client,
-    candidates: discovered.candidates,
-    logger: log,
-  })
+  let scores: Awaited<ReturnType<typeof scoreTopics>>
+  try {
+    scores = await scoreTopics({
+      client: input.client,
+      candidates: discovered.candidates,
+      logger: log,
+    })
+  } catch (cause) {
+    log.warn('topic scoring unavailable; preserving existing queue', { error: String(cause) })
+    return { queue: state.queue, added: 0 }
+  }
 
   const fresh: QueueEntry[] = []
   for (const candidate of discovered.candidates) {
@@ -411,6 +477,7 @@ async function refreshQueue(input: {
       category: candidate.category,
       sourceNames: [...new Set(supportingItems.map((item) => item.sourceName))],
       score: scores.get(candidate.title)?.score ?? 50,
+      priority: Math.round(scores.get(candidate.title)?.score ?? 50),
       sources:
         supportingItems.length > 0 ? supportingItems.map((item) => item.url) : discovered.sources,
       discoveredAt: input.now.toISOString(),

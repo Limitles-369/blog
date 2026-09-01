@@ -57,7 +57,7 @@ export const publishedEntry = z.object({
   /** sha256 of dedupText, the embedding cache key component. */
   textHash: z.string().length(64),
   tags: z.array(z.string()),
-  category: z.string().min(1).default('uncategorized'),
+  category: z.string().min(1).default('developer-tools'),
   state: publishState,
   /** Branch name, run-id-suffixed so a retry can never collide with a live PR. */
   branch: z.string().optional(),
@@ -93,6 +93,16 @@ export const cadenceFile = z.object({
   /** Consecutive runs that produced no PR; drives stall detection. */
   idleRuns: z.number().int().nonnegative().default(0),
   lastPrOpenedAt: z.string().datetime().optional(),
+  usageDay: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .optional(),
+  requestCount: z.number().int().nonnegative().default(0),
+  tokenCount: z.number().int().nonnegative().default(0),
+  lastDiscoveryDay: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .optional(),
 })
 export type CadenceFile = z.infer<typeof cadenceFile>
 
@@ -113,7 +123,7 @@ export const queueEntry = z.object({
   dedupText: z.string().min(1),
   textHash: z.string().length(64),
   tags: z.array(z.string()),
-  category: z.string().min(1).default('uncategorized'),
+  category: z.string().min(1).default('developer-tools'),
   sourceNames: z.array(z.string()).default([]),
   publishedAt: z.string().datetime().optional(),
   scheduledDate: z
@@ -121,6 +131,7 @@ export const queueEntry = z.object({
     .regex(/^\d{4}-\d{2}-\d{2}$/)
     .optional(),
   score: z.number(),
+  priority: z.number().int().min(1).max(100).default(50),
   sources: z.array(z.string().url()),
   discoveredAt: z.string().datetime(),
   /** Times this candidate was passed over; ages entries out of the queue. */
@@ -136,5 +147,10 @@ export type QueueFile = z.infer<typeof queueFile>
 
 export const emptyPublished: PublishedFile = { version: STATE_VERSION, entries: [] }
 export const emptyQueue: QueueFile = { version: STATE_VERSION, entries: [] }
-export const emptyCadence: CadenceFile = { version: STATE_VERSION, idleRuns: 0 }
+export const emptyCadence: CadenceFile = {
+  version: STATE_VERSION,
+  idleRuns: 0,
+  requestCount: 0,
+  tokenCount: 0,
+}
 export const defaultControl: ControlFile = { version: STATE_VERSION, enabled: true }

@@ -14,7 +14,7 @@ import { createLogger, type Logger } from './lib/logger.js'
 import { isExhaustedQuota } from './lib/retry.js'
 import { runPipeline, type RunMode } from './pipeline/orchestrator.js'
 import { checkoutState } from './publish/git.js'
-import { createStateStore } from './state/store.js'
+import { createStateStore, dedupHash, dedupText } from './state/store.js'
 
 /**
  * CLI entrypoint.
@@ -435,7 +435,9 @@ async function withTopicState<T>(
     logger,
   })
   try {
-    return await action(createStateStore(checkout.dir, logger))
+    const result = await action(createStateStore(checkout.dir, logger))
+    await checkout.push('agent: update topic queue')
+    return result
   } finally {
     await checkout.cleanup()
   }
@@ -480,6 +482,34 @@ async function cmdTopics(args: {
             )
           })
       }
+      return 0
+    }
+
+    if (action === 'add') {
+      const title = args.id?.trim()
+      if (!title) {
+        process.stderr.write('topics add requires a topic title\n')
+        return 1
+      }
+      const now = new Date().toISOString()
+      const text = dedupText({ title, summary: title, tags: ['developer-tools'] })
+      const entry = {
+        id: `manual-${Date.now()}`,
+        title,
+        angle: `A practical guide to ${title}.`,
+        dedupText: text,
+        textHash: dedupHash(text),
+        tags: ['developer-tools'],
+        category: 'developer-tools' as const,
+        sourceNames: ['manual'],
+        score: 70,
+        priority: 80,
+        sources: [],
+        discoveredAt: now,
+        attempts: 0,
+      }
+      await store.saveQueue({ ...state.queue, entries: [...state.queue.entries, entry] })
+      process.stdout.write(`Added ${entry.id}\n`)
       return 0
     }
 

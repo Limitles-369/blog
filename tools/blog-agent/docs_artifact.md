@@ -25,9 +25,8 @@ The `blog-agent` is designed to be an autonomous pipeline, running either via a 
    **Critical values to set**:
    - `GEMINI_API_KEY`: Your GenAI API key.
    - `GITHUB_TOKEN`: The PAT (Ensure it has `workflow` scope so it can push branches).
-   - `GEMINI_TEXT_MODEL`: e.g., `gemini-1.5-pro` or `gemini-2.5-flash`.
-   - `GEMINI_IMAGE_MODEL`: e.g., `imagen-3.0-generate-001`.
-   - `GEMINI_EMBEDDING_MODEL`: e.g., `text-embedding-004`.
+   - `GEMINI_TEXT_MODEL`: defaults to `gemini-3.5-flash-lite`.
+   - `GEMINI_EMBEDDING_MODEL`: the separate embedding model used for deduplication.
 
 3. **Verify Environment**:
    Run the doctor command to ensure your keys are valid and quotas aren't exhausted:

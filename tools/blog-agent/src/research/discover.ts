@@ -23,7 +23,17 @@ export const topicCandidate = z.object({
   angle: z.string().min(20).max(400),
   tags: z.array(z.string().min(1)).min(2).max(8),
   rationale: z.string().min(20).max(400),
-  category: z.string().min(2).max(40).default('uncategorized'),
+  category: z
+    .enum([
+      'software-architecture',
+      'system-design',
+      'programming',
+      'ai-engineering',
+      'developer-tools',
+      'cloud-infrastructure',
+      'engineering-culture',
+    ])
+    .default('developer-tools'),
 })
 export type TopicCandidate = z.infer<typeof topicCandidate>
 
@@ -61,14 +71,14 @@ function inferCategory(
   candidate: Pick<TopicCandidate, 'title' | 'angle' | 'tags'>,
   sourceItems: readonly CollectedTopic[]
 ): string {
-  if (sourceItems.length === 0) return 'uncategorized'
+  if (sourceItems.length === 0) return 'developer-tools'
   const candidateWords = new Set(
     `${candidate.title} ${candidate.angle} ${candidate.tags.join(' ')}`
       .toLowerCase()
       .split(/[^a-z0-9]+/)
       .filter((word) => word.length > 2)
   )
-  let best = sourceItems[0]?.category ?? 'uncategorized'
+  let best = sourceItems[0]?.category ?? 'developer-tools'
   let bestScore = 0
   for (const item of sourceItems) {
     const overlap = item.title
@@ -178,7 +188,7 @@ export async function discoverTopics(input: DiscoverInput): Promise<DiscoverResu
   return {
     candidates: structured.value.candidates.map((candidate) => ({
       ...candidate,
-      category: inferCategory(candidate, sourceItems),
+      category: inferCategory(candidate, sourceItems) as z.infer<typeof topicCandidate>['category'],
     })),
     sources: [
       ...new Set([...sourceItems.map((item) => item.url), ...research.sources.map((s) => s.uri)]),

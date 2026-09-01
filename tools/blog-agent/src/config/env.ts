@@ -42,7 +42,7 @@ const num = (fallback: number, min: number, max: number) =>
 export const envSchema = z.object({
   GEMINI_API_KEY: nonEmpty.describe('Gemini API key'),
 
-  GEMINI_TEXT_MODEL: nonEmpty.describe('Text model ID, e.g. gemini-2.5-flash'),
+  GEMINI_TEXT_MODEL: nonEmpty.default('gemini-3.5-flash-lite').describe('Text model ID'),
   GEMINI_EMBEDDING_MODEL: nonEmpty.describe('Embedding model ID'),
 
   /** Embedding descriptor. Part of the cache key — see queue/dedup. */
@@ -64,6 +64,8 @@ export const envSchema = z.object({
   /** Publishing cadence. Enforced in the agent so it stays unit-testable. */
   MIN_HOURS_BETWEEN_POSTS: num(20, 0, 168),
   MAX_OPEN_BOT_PRS: num(1, 1, 10),
+  MAX_GEMINI_REQUESTS_PER_DAY: num(18, 1, 100),
+  MIN_TOPIC_QUEUE_DEPTH: num(5, 1, 100),
 
   RETRY_ATTEMPTS: num(5, 1, 10),
   RETRY_BASE_MS: num(1000, 100, 30_000),

@@ -39,38 +39,14 @@ jobs:
           yarn install --immutable || yarn install
           npm ci --prefix tools/blog-agent
 
-      - name: Automated Topic Discovery
-        run: yarn discover
-
-      - name: Generate Style-Anchored Post Draft & Run Quality Gates
+      - name: Run Blog Agent
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_TEXT_MODEL: ${{ vars.GEMINI_TEXT_MODEL || 'gemini-3.6-flash' }}
-          GEMINI_IMAGE_MODEL: ${{ vars.GEMINI_IMAGE_MODEL || 'imagen-3.0-generate-002' }}
-          GEMINI_EMBEDDING_MODEL: ${{ vars.GEMINI_EMBEDDING_MODEL || 'text-embedding-004' }}
+          GEMINI_TEXT_MODEL: ${{ vars.GEMINI_TEXT_MODEL || 'gemini-3.5-flash-lite' }}
+          GEMINI_EMBEDDING_MODEL: ${{ vars.GEMINI_EMBEDDING_MODEL || 'gemini-embedding-2-preview' }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}
-          GENERATE_HERO_IMAGE: 'true'
+          MAX_GEMINI_REQUESTS_PER_DAY: '18'
+          MIN_TOPIC_QUEUE_DEPTH: '5'
           LOG_FORMAT: json
-        run: npx tsx src/cli.ts generate
-
-      - name: Commit State Updates to blog-agent-state Branch
-        run: |
-          git checkout -b blog-agent-state || git checkout blog-agent-state || true
-          git add src/state/queue.json tools/blog-agent/.artifacts/state/ || true
-          git diff-index --quiet HEAD || git commit -m "chore(state): update queue and publication state [skip ci]" || true
-          git push origin blog-agent-state || true
-
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          branch: blog-agent/auto-draft
-          title: "feat(blog): Automated MDX Draft Post"
-          body: |
-            ## APEX TECHNICAL Automation Engine Digest
-            - **Status:** Quality Gates Checked (`compileGate`, `assetsExistGate`, `secretScanGate`, `frontmatterGate`)
-            - **Author:** blog-agent[bot]
-            - **Engine:** Gemini / Style Brief Anchored
-          commit-message: "feat(blog): add automated post draft"
-          delete-branch: true
+        run: npx tsx tools/blog-agent/src/cli.ts run

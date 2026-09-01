@@ -206,30 +206,47 @@ export async function collectTopics(
   const failures: string[] = []
   const dedup = new Map<string, CollectedTopic>()
   let succeeded = 0
-  for (const source of enabled) {
-    try {
-      const items = await collectSource(source, now, fetchImpl)
-      succeeded++
-      for (const item of items) {
-        const key = item.url.toLowerCase()
-        const titleKey = item.title
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, ' ')
-          .trim()
-        if (
-          !dedup.has(key) &&
-          ![...dedup.values()].some(
-            (existing) =>
-              existing.title
-                .toLowerCase()
-                .replace(/[^a-z0-9]+/g, ' ')
-                .trim() === titleKey
-          )
+  const results: Array<{ source: TopicSourceConfig; items?: CollectedTopic[]; error?: unknown }> =
+    []
+  for (let i = 0; i < enabled.length; i += 4) {
+    const batch = enabled.slice(i, i + 4)
+    results.push(
+      ...(await Promise.all(
+        batch.map(async (source) => {
+          try {
+            return { source, items: await collectSource(source, now, fetchImpl) }
+          } catch (error) {
+            return { source, error }
+          }
+        })
+      ))
+    )
+  }
+  for (const result of results) {
+    if (result.error) {
+      failures.push(
+        `${result.source.name}: ${result.error instanceof Error ? result.error.message : String(result.error)}`
+      )
+      continue
+    }
+    succeeded++
+    for (const item of result.items ?? []) {
+      const key = item.url.toLowerCase()
+      const titleKey = item.title
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, ' ')
+        .trim()
+      if (
+        !dedup.has(key) &&
+        ![...dedup.values()].some(
+          (existing) =>
+            existing.title
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, ' ')
+              .trim() === titleKey
         )
-          dedup.set(key, item)
-      }
-    } catch (cause) {
-      failures.push(`${source.name}: ${cause instanceof Error ? cause.message : String(cause)}`)
+      )
+        dedup.set(key, item)
     }
   }
   return {

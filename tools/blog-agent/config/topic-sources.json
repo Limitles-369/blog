@@ -12,7 +12,7 @@
     "name": "TypeScript Releases",
     "url": "https://github.com/microsoft/TypeScript/releases.atom",
     "type": "rss",
-    "category": "typescript-javascript",
+    "category": "programming",
     "trustWeight": 1,
     "enabled": true,
     "maxItems": 12
@@ -21,7 +21,7 @@
     "name": "Vite Releases",
     "url": "https://github.com/vitejs/vite/releases.atom",
     "type": "rss",
-    "category": "typescript-javascript",
+    "category": "developer-tools",
     "trustWeight": 0.95,
     "enabled": true,
     "maxItems": 10
@@ -39,7 +39,7 @@
     "name": "OWASP Security News",
     "url": "https://owasp.org/feed.xml",
     "type": "rss",
-    "category": "security",
+    "category": "software-architecture",
     "trustWeight": 0.95,
     "enabled": true,
     "maxItems": 10
@@ -57,7 +57,7 @@
     "name": "PostgreSQL Releases",
     "url": "https://www.postgresql.org/versions.rss",
     "type": "rss",
-    "category": "backend-databases",
+    "category": "system-design",
     "trustWeight": 1,
     "enabled": true,
     "maxItems": 10

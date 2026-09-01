@@ -60,6 +60,7 @@ async function enqueueRateLimit(): Promise<void> {
 export function createGeminiClient(config: Config, logger: Logger): GeminiClient {
   const ai = new GoogleGenAI({ apiKey: config.GEMINI_API_KEY })
   let running: TokenUsage = zeroUsage()
+  let requests = 0
 
   const log = logger.child({ component: 'gemini' })
 
@@ -79,6 +80,7 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
   async function call<T>(label: string, timeoutMs: number, fn: () => Promise<T>): Promise<T> {
     return withRetry(
       async () => {
+        requests++
         await enqueueRateLimit()
         return withTimeout(() => fn(), timeoutMs, label)
       },
@@ -373,5 +375,6 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
     },
 
     totalUsage: () => running,
+    requestCount: () => requests,
   }
 }

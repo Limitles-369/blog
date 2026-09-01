@@ -93,6 +93,8 @@ export interface GeminiClient {
   listModels(): Promise<string[]>
   /** Cumulative usage across every call, for the per-run budget ledger. */
   totalUsage(): TokenUsage
+  /** Number of provider requests, including retries and fallback calls. */
+  requestCount(): number
 }
 
 export class ModelResponseError extends Error {
