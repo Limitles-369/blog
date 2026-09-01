@@ -4,7 +4,6 @@ import type { Blog, Authors } from 'contentlayer/generated'
 import Comments from '@/components/Comments'
 import Link from '@/components/Link'
 import PageTitle from '@/components/PageTitle'
-import Image from '@/components/Image'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
@@ -29,43 +28,54 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
-  const { filePath, path, slug, date, title, tags, images, readingTime } = content
+  const { filePath, path, slug, date, title, tags, readingTime, summary } = content
   const basePath = path.split('/')[0]
-  const heroImage = Array.isArray(images) ? images[0] : images
 
   return (
     <>
       <ScrollTopAndComment />
       <article>
         <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
-          <header className="pt-6 xl:pb-6">
-            <div className="space-y-3 text-center">
-              <dl className="space-y-10">
+          <header className="border-b border-gray-200 py-10 xl:py-16 dark:border-gray-700">
+            <div className="mx-auto max-w-4xl text-center">
+              <p className="text-accent-strong dark:text-accent mb-5 text-xs font-bold tracking-[0.18em] uppercase">
+                {tags?.[0] || 'Engineering'} // Field note
+              </p>
+              <PageTitle>{title}</PageTitle>
+              {summary && (
+                <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-gray-600 dark:text-gray-400">
+                  {summary}
+                </p>
+              )}
+              <dl className="mt-7 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs font-medium tracking-[0.12em] text-gray-500 uppercase dark:text-gray-400">
                 <div>
                   <dt className="sr-only">Published on</dt>
-                  <dd className="text-base leading-6 font-medium text-gray-600 dark:text-gray-400">
+                  <dd>
                     <time dateTime={date}>
                       {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
                     </time>
-                    {readingTime?.text && (
-                      <>
-                        <span aria-hidden="true"> · </span>
-                        <span>{readingTime.text}</span>
-                      </>
-                    )}
                   </dd>
                 </div>
+                {readingTime?.text && (
+                  <>
+                    <span aria-hidden="true">/</span>
+                    <div>
+                      <dt className="sr-only">Reading time</dt>
+                      <dd>{readingTime.text}</dd>
+                    </div>
+                  </>
+                )}
+                {authorDetails.length > 0 && (
+                  <>
+                    <span aria-hidden="true">/</span>
+                    <div>
+                      <dt className="sr-only">Author</dt>
+                      <dd>{authorDetails.map((author) => author.name).join(', ')}</dd>
+                    </div>
+                  </>
+                )}
               </dl>
-              <div>
-                <PageTitle>{title}</PageTitle>
-              </div>
             </div>
-
-            {heroImage && (
-              <div className="relative mt-8 aspect-2/1 w-full overflow-hidden rounded-2xl">
-                <Image src={heroImage} alt="" fill priority className="object-cover" />
-              </div>
-            )}
           </header>
           <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:grid xl:grid-cols-4 xl:gap-x-6 xl:divide-y-0 dark:divide-gray-700">
             <dl className="pt-6 pb-10 xl:border-b xl:border-gray-200 xl:pt-11 xl:dark:border-gray-700">
@@ -74,15 +84,6 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                 <ul className="flex flex-wrap justify-center gap-4 sm:space-x-12 xl:block xl:space-y-8 xl:space-x-0">
                   {authorDetails.map((author) => (
                     <li className="flex items-center space-x-2" key={author.name}>
-                      {author.avatar && (
-                        <Image
-                          src={author.avatar}
-                          width={38}
-                          height={38}
-                          alt=""
-                          className="h-10 w-10 rounded-full"
-                        />
-                      )}
                       <dl className="text-sm leading-5 font-medium whitespace-nowrap">
                         <dt className="sr-only">Name</dt>
                         <dd className="text-gray-900 dark:text-gray-100">{author.name}</dd>
@@ -106,7 +107,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               </dd>
             </dl>
             <div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
-              <div className="prose dark:prose-invert mx-auto max-w-[68ch] pt-10 pb-8">
+              <div className="prose dark:prose-invert mx-auto max-w-[68ch] pt-10 pb-8 xl:pt-12">
                 {children}
               </div>
               <div className="pt-6 pb-6 text-sm text-gray-700 dark:text-gray-300">

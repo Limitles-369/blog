@@ -128,36 +128,35 @@ export default function ListLayoutWithTags({
               </ul>
             </div>
           </div>
-          <div>
-            <ul>
+          <div className="min-w-0 flex-1">
+            <ul className="grid gap-5 md:grid-cols-2">
               {displayPosts.map((post) => {
-                const { path, date, title, summary, tags } = post
+                const { path, date, title, summary, tags, readingTime } = post
                 return (
-                  <li key={path} className="py-5">
-                    <article className="flex flex-col space-y-2 xl:space-y-0">
-                      <dl>
-                        <dt className="sr-only">Published on</dt>
-                        <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
+                  <li
+                    key={path}
+                    className="group border-edge dark:bg-surface-dark relative overflow-hidden rounded-xl border bg-white transition hover:-translate-y-1 hover:shadow-lg dark:border-white/10"
+                  >
+                    <article className="flex h-full flex-col">
+                      <div className="flex flex-1 flex-col p-5">
+                        <div className="flex items-center justify-between gap-3 text-[11px] font-medium tracking-[0.12em] text-gray-500 uppercase dark:text-gray-400">
                           <time dateTime={date} suppressHydrationWarning>
                             {formatDate(date, siteMetadata.locale)}
                           </time>
-                        </dd>
-                      </dl>
-                      <div className="space-y-3">
-                        <div>
-                          <h2 className="text-2xl leading-8 font-bold tracking-tight">
-                            <Link href={`/${path}`} className="text-gray-900 dark:text-gray-100">
-                              {title}
-                            </Link>
-                          </h2>
-                          <div className="flex flex-wrap">
-                            {tags?.map((tag) => (
-                              <Tag key={tag} text={tag} />
-                            ))}
-                          </div>
+                          {readingTime?.text && <span>{readingTime.text}</span>}
                         </div>
-                        <div className="prose max-w-none text-gray-500 dark:text-gray-400">
+                        <h2 className="group-hover:text-accent-strong dark:group-hover:text-accent mt-3 line-clamp-3 text-xl leading-tight font-semibold tracking-tight text-gray-900 transition-colors dark:text-gray-100">
+                          <Link href={`/${path}`} className="after:absolute after:inset-0">
+                            {title}
+                          </Link>
+                        </h2>
+                        <p className="mt-3 line-clamp-3 flex-1 text-sm leading-relaxed text-gray-500 dark:text-gray-400">
                           {summary}
+                        </p>
+                        <div className="mt-4 flex flex-wrap gap-1">
+                          {tags?.slice(0, 2).map((tag) => (
+                            <Tag key={tag} text={tag} />
+                          ))}
                         </div>
                       </div>
                     </article>

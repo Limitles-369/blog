@@ -9,16 +9,6 @@ import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import siteMetadata from '@/data/siteMetadata'
 import tagData from 'app/tag-data.json'
-import Image from 'next/image'
-
-// Rotating editorial thumbnail images for cards
-const CARD_IMAGES = [
-  '/static/images/blog-cards/card-1.png',
-  '/static/images/blog-cards/card-2.png',
-  '/static/images/blog-cards/card-3.png',
-  '/static/images/blog-cards/card-4.png',
-  '/static/images/blog-cards/card-5.png',
-]
 
 // ─── Types ──────────────────────────────────────────────────────────────────
 
@@ -93,74 +83,36 @@ function BlogCard({
   index: number
   featured?: boolean
 }) {
-  const { path, slug: postSlug, date, title, summary, tags } = post
-  const ownImage = post.images?.[0]
-  const img = ownImage ?? CARD_IMAGES[index % CARD_IMAGES.length]
+  const { path, date, title, summary, tags, readingTime } = post
   const tag = tags?.[0] ?? 'Article'
-  const stagger = `stagger-${Math.min((index % 6) + 1, 6)}`
 
   return (
-    <article
-      className={`group animate-fade-in-up border-edge dark:bg-surface-dark relative flex flex-col overflow-hidden rounded-2xl border bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/8 focus-within:-translate-y-1 dark:border-white/10 ${stagger}`}
-    >
-      {/* Thumbnail */}
-      <div className="relative aspect-[16/9] w-full overflow-hidden bg-gray-100 dark:bg-gray-800">
-        <Image
-          src={img}
-          alt={ownImage ? `Cover image for ${title}` : ''}
-          fill
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-          sizes={
-            featured
-              ? '(max-width: 640px) 100vw, 50vw'
-              : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
-          }
-        />
-        <span className="bg-accent text-accent-ink absolute top-3 left-3 rounded-full px-2.5 py-0.5 text-xs font-semibold tracking-wide uppercase">
-          {tag}
-        </span>
+    <article className="group border-edge relative grid grid-cols-[3.25rem_1fr] gap-4 border-b py-6 first:border-t dark:border-white/10">
+      <div className="group-hover:text-accent dark:group-hover:text-accent pt-1 font-mono text-2xl font-light tracking-[-0.08em] text-gray-300 transition-colors dark:text-white/20">
+        {String(index + 1).padStart(2, '0')}
       </div>
-
-      {/* Content */}
-      <div className={`flex flex-1 flex-col gap-3 ${featured ? 'p-6' : 'p-5'}`}>
-        <time
-          dateTime={date}
-          className="text-xs font-medium text-gray-500 dark:text-gray-400"
-          suppressHydrationWarning
-        >
-          {formatDate(date, siteMetadata.locale)}
-        </time>
-
+      <div className="min-w-0">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] font-bold tracking-[0.14em] uppercase">
+          <span className="text-accent-strong dark:text-accent">{tag}</span>
+          <span className="text-gray-400">{formatDate(date, siteMetadata.locale)}</span>
+          {readingTime?.text && <span className="text-gray-400">{readingTime.text}</span>}
+        </div>
         <h2
-          className={`group-hover:text-accent-strong dark:group-hover:text-accent line-clamp-2 leading-snug font-semibold tracking-tight text-gray-900 transition-colors dark:text-white ${featured ? 'text-xl' : 'text-lg'}`}
+          className={`group-hover:text-accent-strong dark:group-hover:text-accent mt-2 line-clamp-2 leading-tight font-semibold tracking-tight text-gray-900 transition-colors dark:text-white ${featured ? 'text-2xl' : 'text-xl'}`}
         >
           <Link href={`/${path}`} className="after:absolute after:inset-0">
             {title}
           </Link>
         </h2>
-
         {summary && (
           <p
-            className={`flex-1 text-sm leading-relaxed text-gray-600 dark:text-gray-400 ${featured ? 'line-clamp-4' : 'line-clamp-3'}`}
+            className={`mt-2 line-clamp-2 max-w-2xl text-sm leading-relaxed text-gray-600 dark:text-gray-400 ${featured ? 'md:line-clamp-3' : ''}`}
           >
             {summary}
           </p>
         )}
-
-        <span
-          className="text-accent-strong dark:text-accent mt-2 inline-flex items-center gap-1.5 text-sm font-semibold"
-          aria-hidden="true"
-        >
-          Learn More
-          <svg
-            className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2.5}
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
+        <span className="text-accent-strong dark:text-accent mt-3 inline-flex items-center gap-1 text-[11px] font-bold tracking-[0.12em] uppercase">
+          Open dispatch <span className="transition-transform group-hover:translate-x-1">→</span>
         </span>
       </div>
     </article>
@@ -324,7 +276,7 @@ export default function StackBlogLayout({
           <>
             {/* Featured top row — 2 large cards */}
             {displayPosts.slice(0, 2).length > 0 && (
-              <div className="mb-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
+              <div className="mb-10 grid grid-cols-1 gap-x-10 sm:grid-cols-2">
                 {displayPosts.slice(0, 2).map((post, i) => (
                   <BlogCard key={post.path} post={post} index={i} featured={true} />
                 ))}
@@ -332,7 +284,7 @@ export default function StackBlogLayout({
             )}
             {/* Regular 3-col grid */}
             {displayPosts.slice(2).length > 0 && (
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="grid grid-cols-1 gap-x-10 sm:grid-cols-2">
                 {displayPosts.slice(2).map((post, i) => (
                   <BlogCard key={post.path} post={post} index={i + 2} featured={false} />
                 ))}
