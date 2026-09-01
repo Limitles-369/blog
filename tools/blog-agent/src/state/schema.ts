@@ -57,6 +57,7 @@ export const publishedEntry = z.object({
   /** sha256 of dedupText, the embedding cache key component. */
   textHash: z.string().length(64),
   tags: z.array(z.string()),
+  category: z.string().min(1).default('uncategorized'),
   state: publishState,
   /** Branch name, run-id-suffixed so a retry can never collide with a live PR. */
   branch: z.string().optional(),
@@ -84,7 +85,10 @@ export type PublishedFile = z.infer<typeof publishedFile>
  */
 export const cadenceFile = z.object({
   version: z.literal(STATE_VERSION),
-  lastPublishedDay: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  lastPublishedDay: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .optional(),
   lastPublishedAt: z.string().datetime().optional(),
   /** Consecutive runs that produced no PR; drives stall detection. */
   idleRuns: z.number().int().nonnegative().default(0),
@@ -109,6 +113,13 @@ export const queueEntry = z.object({
   dedupText: z.string().min(1),
   textHash: z.string().length(64),
   tags: z.array(z.string()),
+  category: z.string().min(1).default('uncategorized'),
+  sourceNames: z.array(z.string()).default([]),
+  publishedAt: z.string().datetime().optional(),
+  scheduledDate: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .optional(),
   score: z.number(),
   sources: z.array(z.string().url()),
   discoveredAt: z.string().datetime(),

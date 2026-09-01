@@ -14,36 +14,51 @@ import {
  * retry.ts exists at all.
  */
 const quotaExhausted = () =>
-  Object.assign(new Error(JSON.stringify({
-    error: {
-      code: 429,
-      message:
-        'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.',
-      status: 'RESOURCE_EXHAUSTED',
-      details: [
-        {
-          '@type': 'type.googleapis.com/google.rpc.Help',
-          links: [{ description: 'Learn more about Gemini API quotas', url: 'https://x' }],
+  Object.assign(
+    new Error(
+      JSON.stringify({
+        error: {
+          code: 429,
+          message:
+            'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.',
+          status: 'RESOURCE_EXHAUSTED',
+          details: [
+            {
+              '@type': 'type.googleapis.com/google.rpc.Help',
+              links: [{ description: 'Learn more about Gemini API quotas', url: 'https://x' }],
+            },
+          ],
         },
-      ],
-    },
-  })), { name: 'ApiError' })
+      })
+    ),
+    { name: 'ApiError' }
+  )
 
 /** A per-minute limit, which Google annotates with RetryInfo. */
 const rateLimited = (delay = '51s') =>
-  Object.assign(new Error(JSON.stringify({
-    error: {
-      code: 429,
-      message: 'Resource has been exhausted (e.g. check quota).',
-      status: 'RESOURCE_EXHAUSTED',
-      details: [{ '@type': 'type.googleapis.com/google.rpc.RetryInfo', retryDelay: delay }],
-    },
-  })), { name: 'ApiError' })
+  Object.assign(
+    new Error(
+      JSON.stringify({
+        error: {
+          code: 429,
+          message: 'Resource has been exhausted (e.g. check quota).',
+          status: 'RESOURCE_EXHAUSTED',
+          details: [{ '@type': 'type.googleapis.com/google.rpc.RetryInfo', retryDelay: delay }],
+        },
+      })
+    ),
+    { name: 'ApiError' }
+  )
 
 const overloaded = () =>
-  Object.assign(new Error(JSON.stringify({
-    error: { code: 503, message: 'The model is overloaded.', status: 'UNAVAILABLE' },
-  })), { name: 'ApiError' })
+  Object.assign(
+    new Error(
+      JSON.stringify({
+        error: { code: 503, message: 'The model is overloaded.', status: 'UNAVAILABLE' },
+      })
+    ),
+    { name: 'ApiError' }
+  )
 
 describe('isExhaustedQuota', () => {
   it('recognises a daily quota exhaustion with no retry guidance', () => {
@@ -78,7 +93,9 @@ describe('isRetryable', () => {
   })
 
   it('retries transient socket errors', () => {
-    expect(isRetryable(Object.assign(new Error('read ECONNRESET'), { code: 'ECONNRESET' }))).toBe(true)
+    expect(isRetryable(Object.assign(new Error('read ECONNRESET'), { code: 'ECONNRESET' }))).toBe(
+      true
+    )
   })
 
   it('does not retry a client error', () => {
@@ -126,9 +143,9 @@ describe('withRetry', () => {
       throw overloaded()
     })
     // random() fixed at 1 so the jitter window's upper bound is observable.
-    await expect(
-      withRetry(fn, { ...base, sleep, random: () => 0.999999 })
-    ).rejects.toBeInstanceOf(RetryExhaustedError)
+    await expect(withRetry(fn, { ...base, sleep, random: () => 0.999999 })).rejects.toBeInstanceOf(
+      RetryExhaustedError
+    )
     expect(fn).toHaveBeenCalledTimes(5)
     expect(delays).toHaveLength(4)
     // 1000, 2000, 4000, 8000 — each step doubles.

@@ -4,21 +4,21 @@
 
 ## 📚 Documentation Index
 
-| Document | Description |
-|----------|-------------|
-| [README.md](README.md) | This file — project overview and documentation index |
-| [ARCHITECTURE.md](ARCHITECTURE.md) | Pipeline flow, state machine, data flow diagrams |
-| [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) | Directory layout and module responsibilities |
-| [SETUP.md](SETUP.md) | Installation, environment setup, first-run guide |
-| [CONFIGURATION.md](CONFIGURATION.md) | All environment variables and tuning knobs |
-| [FEATURES.md](FEATURES.md) | Detailed feature documentation with data flows |
-| [INTEGRATIONS.md](INTEGRATIONS.md) | Google Gemini AI and GitHub API integration details |
-| [SECURITY.md](SECURITY.md) | Security analysis, implemented controls, and recommendations |
-| [TESTING.md](TESTING.md) | Test suite, coverage, and testing strategy |
-| [DEPLOYMENT.md](DEPLOYMENT.md) | GitHub Actions workflow and CI/CD configuration |
-| [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md) | Contributing guide for developers joining the project |
-| [TROUBLESHOOTING.md](TROUBLESHOOTING.md) | Common issues and resolution steps |
-| [CODEBASE_AUDIT.md](CODEBASE_AUDIT.md) | Technical debt, risks, and improvement recommendations |
+| Document                                     | Description                                                  |
+| -------------------------------------------- | ------------------------------------------------------------ |
+| [README.md](README.md)                       | This file — project overview and documentation index         |
+| [ARCHITECTURE.md](ARCHITECTURE.md)           | Pipeline flow, state machine, data flow diagrams             |
+| [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) | Directory layout and module responsibilities                 |
+| [SETUP.md](SETUP.md)                         | Installation, environment setup, first-run guide             |
+| [CONFIGURATION.md](CONFIGURATION.md)         | All environment variables and tuning knobs                   |
+| [FEATURES.md](FEATURES.md)                   | Detailed feature documentation with data flows               |
+| [INTEGRATIONS.md](INTEGRATIONS.md)           | Google Gemini AI and GitHub API integration details          |
+| [SECURITY.md](SECURITY.md)                   | Security analysis, implemented controls, and recommendations |
+| [TESTING.md](TESTING.md)                     | Test suite, coverage, and testing strategy                   |
+| [DEPLOYMENT.md](DEPLOYMENT.md)               | GitHub Actions workflow and CI/CD configuration              |
+| [DEVELOPMENT_GUIDE.md](DEVELOPMENT_GUIDE.md) | Contributing guide for developers joining the project        |
+| [TROUBLESHOOTING.md](TROUBLESHOOTING.md)     | Common issues and resolution steps                           |
+| [CODEBASE_AUDIT.md](CODEBASE_AUDIT.md)       | Technical debt, risks, and improvement recommendations       |
 
 ---
 
@@ -37,7 +37,7 @@ Maintains a consistent publishing cadence on a personal developer blog ([akashsa
 - **Style-Aware Drafting** — Analyses existing posts to derive measurable style metrics (word counts, heading structure, paragraph length) and generates content matching the blog's voice
 - **Self-Critique Loop** — Reviews its own draft for hallucinated claims, invented URLs, and filler phrasing before refinement
 - **Multi-Gate Validation** — 8+ validation gates including frontmatter schema, heading hierarchy, component allowlists, secret scanning, link checking, and a full Contentlayer compile
-- **Hero Image Generation** — Generates consistent-style hero images using Imagen/Gemini image models
+- **Media-Free Output** — Generates typography-first MDX without image or video dependencies
 - **Write-Ahead State** — Crash-safe publish protocol that prevents duplicate posts even if a CI runner dies mid-operation
 - **GitHub-Authoritative Reconciliation** — Syncs local state against GitHub PRs on every run to recover from partial failures
 
@@ -49,17 +49,17 @@ Maintains a consistent publishing cadence on a personal developer blog ([akashsa
 
 ## Technology Stack
 
-| Layer | Technology | Version |
-|-------|-----------|---------|
-| Runtime | Node.js | ≥20.11 |
-| Language | TypeScript | 5.7.2 |
-| Execution | tsx (direct TS execution) | 4.19.2 |
-| AI Provider | Google Gemini (`@google/genai`) | ^1.0.0 |
-| Validation | Zod | 3.23.8 |
-| MDX Parsing | gray-matter | 4.0.3 |
-| Testing | Vitest | 2.1.8 |
-| CI/CD | GitHub Actions | — |
-| Blog Framework | Next.js + Contentlayer (parent repo) | — |
+| Layer          | Technology                           | Version |
+| -------------- | ------------------------------------ | ------- |
+| Runtime        | Node.js                              | ≥20.11  |
+| Language       | TypeScript                           | 5.7.2   |
+| Execution      | tsx (direct TS execution)            | 4.19.2  |
+| AI Provider    | Google Gemini (`@google/genai`)      | ^1.0.0  |
+| Validation     | Zod                                  | 3.23.8  |
+| MDX Parsing    | gray-matter                          | 4.0.3   |
+| Testing        | Vitest                               | 2.1.8   |
+| CI/CD          | GitHub Actions                       | —       |
+| Blog Framework | Next.js + Contentlayer (parent repo) | —       |
 
 ---
 

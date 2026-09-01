@@ -3,24 +3,31 @@
 ## Architecture Strengths
 
 ### 1. Deliberate Phase Ordering
+
 The pipeline's phase ordering (research → cadence → draft) is the single most important design decision and it's correct. Running research on every invocation while gating only writing ensures the topic queue builds up organically. This is well-documented both in code comments and in `ARCHITECTURE.md`.
 
 ### 2. Write-Ahead State Protocol
+
 The crash-safety protocol is genuinely well-designed. The `inflight` state written before any git operations, combined with GitHub-authoritative reconciliation, prevents the most dangerous failure mode: duplicate publication after a crash. This pattern is more sophisticated than what most production content systems implement.
 
 ### 3. Interface Isolation
+
 The `GeminiClient` interface in `src/gemini/types.ts` cleanly separates the SDK's exact shape from business logic. Every stage depends on this interface, making them testable with plain objects. This isolation explicitly acknowledges that the SDK was written from recall and may need correction — a refreshingly honest design approach.
 
 ### 4. Fail-Loud State Management
+
 The `StateCorruptError` pattern — where a malformed state file throws rather than silently resetting — directly prevents the most dangerous business logic bug (republishing all previous topics). This is well-reasoned and well-documented.
 
 ### 5. Multi-Tier Deduplication
+
 The three-tier dedup system (normalised title → Jaccard → semantic cosine with LLM judge escalation) is cost-efficient: the common case costs zero API calls, and only genuinely ambiguous pairs reach an embedding. The int8 quantisation for storage is a thoughtful optimisation.
 
 ### 6. Measured Style Metrics
+
 Deriving style constraints from measurements of existing posts rather than hand-written descriptions is a genuinely good idea. Hand-written style guides drift silently; measured metrics track whatever is on disk.
 
 ### 7. Gate System Design
+
 The two-severity model (error blocks, warn informs), cost-ordered execution, and the compile gate's belt-and-braces verification (exit code 0 is insufficient) all reflect experience with real-world content pipeline failures.
 
 ---
@@ -157,31 +164,31 @@ The two-severity model (error blocks, warn informs), cost-ordered execution, and
 
 ## Missing Tests (Prioritised)
 
-| Priority | Module | Why |
-|----------|--------|-----|
-| 🔴 Critical | `src/pipeline/orchestrator.ts` | Core business logic, most dangerous to break |
-| 🔴 Critical | `src/gates/*.ts` | Safety net against broken content |
-| 🟠 High | `src/research/dedup.ts` | Silent failure mode (duplicate publications) |
-| 🟡 Medium | `src/stages/draft.ts` | Prompt construction and `stripAccidentalWrapper` |
-| 🟡 Medium | `src/config/env.ts` | Cross-field validation, edge cases |
-| 🟡 Medium | `src/corpus/reader.ts` | Frontmatter parsing edge cases |
-| 🟢 Low | `src/mdx/serialize.ts` | YAML serialisation edge cases |
+| Priority    | Module                         | Why                                              |
+| ----------- | ------------------------------ | ------------------------------------------------ |
+| 🔴 Critical | `src/pipeline/orchestrator.ts` | Core business logic, most dangerous to break     |
+| 🔴 Critical | `src/gates/*.ts`               | Safety net against broken content                |
+| 🟠 High     | `src/research/dedup.ts`        | Silent failure mode (duplicate publications)     |
+| 🟡 Medium   | `src/stages/draft.ts`          | Prompt construction and `stripAccidentalWrapper` |
+| 🟡 Medium   | `src/config/env.ts`            | Cross-field validation, edge cases               |
+| 🟡 Medium   | `src/corpus/reader.ts`         | Frontmatter parsing edge cases                   |
+| 🟢 Low      | `src/mdx/serialize.ts`         | YAML serialisation edge cases                    |
 
 ---
 
 ## Recommended Improvements (Prioritised)
 
-| Priority | Improvement | Effort |
-|----------|------------|--------|
-| 🔴 Critical | Add orchestrator unit/integration tests | High |
-| 🔴 Critical | Add gate unit tests | Medium |
-| 🟠 High | Re-enable Google Search grounding | Low |
-| 🟠 High | Add dedup integration tests | Medium |
-| 🟡 Medium | Implement or remove `RUN_CEILING_MS` | Low |
-| 🟡 Medium | Enforce `MAX_EXTERNAL_LINKS` and `EXTERNAL_LINK_DENYLIST` in gates | Low |
-| 🟡 Medium | Batch embedding calls in dedup | Medium |
-| 🟡 Medium | Add concurrency limiter to external link checker | Low |
-| 🟡 Medium | Expand secret scanning patterns | Low |
-| 🟢 Low | Adopt conventional commit messages | Low |
-| 🟢 Low | Add local ESLint configuration | Low |
-| 🟢 Low | Add a `calibrate` subcommand (referenced in `.env.example` but not implemented) | Medium |
+| Priority    | Improvement                                                                     | Effort |
+| ----------- | ------------------------------------------------------------------------------- | ------ |
+| 🔴 Critical | Add orchestrator unit/integration tests                                         | High   |
+| 🔴 Critical | Add gate unit tests                                                             | Medium |
+| 🟠 High     | Re-enable Google Search grounding                                               | Low    |
+| 🟠 High     | Add dedup integration tests                                                     | Medium |
+| 🟡 Medium   | Implement or remove `RUN_CEILING_MS`                                            | Low    |
+| 🟡 Medium   | Enforce `MAX_EXTERNAL_LINKS` and `EXTERNAL_LINK_DENYLIST` in gates              | Low    |
+| 🟡 Medium   | Batch embedding calls in dedup                                                  | Medium |
+| 🟡 Medium   | Add concurrency limiter to external link checker                                | Low    |
+| 🟡 Medium   | Expand secret scanning patterns                                                 | Low    |
+| 🟢 Low      | Adopt conventional commit messages                                              | Low    |
+| 🟢 Low      | Add local ESLint configuration                                                  | Low    |
+| 🟢 Low      | Add a `calibrate` subcommand (referenced in `.env.example` but not implemented) | Medium |

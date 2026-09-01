@@ -29,12 +29,12 @@ tools/blog-agent/
 
 ### `src/cli.ts` — Entry Point
 
-| Responsibility | Detail |
-|---------------|--------|
-| `.env` loading | Custom minimal parser; no `dotenv` dependency |
-| Subcommand dispatch | `run`, `doctor`, `style`, `corpus` |
-| Flag parsing | `--dry-run`, `--research-only`, `--force-publish`, `--json` |
-| Dirty-tree guard | Refuses to run if `data/blog/` or `public/static/images/blog/` have uncommitted changes |
+| Responsibility      | Detail                                                                                  |
+| ------------------- | --------------------------------------------------------------------------------------- |
+| `.env` loading      | Custom minimal parser; no `dotenv` dependency                                           |
+| Subcommand dispatch | `run`, `doctor`, `style`, `corpus`                                                      |
+| Flag parsing        | `--dry-run`, `--research-only`, `--force-publish`, `--json`                             |
+| Dirty-tree guard    | Refuses to run if `data/blog/` or `public/static/images/blog/` have uncommitted changes |
 
 ### `src/config/env.ts` — Environment Configuration
 
@@ -45,9 +45,10 @@ The **only module that reads `process.env`**. Everything downstream receives a v
 Resolves every filesystem path the agent touches from the repo root. Walks upward from the agent package looking for `contentlayer.config.ts` as the root marker. This keeps working when invoked through a symlink or git worktree.
 
 **Key paths:**
+
 - `root` — Blog repo root (parent of `tools/`)
 - `blog` — `data/blog/` (MDX post sources)
-- `blogImages` — `public/static/images/blog/` (hero images)
+- `publicDir` — `public/` (reserved for site assets; generated posts are media-free)
 - `artifacts` — `.artifacts/` (per-run debug output, gitignored)
 
 ### `src/corpus/reader.ts` — Corpus Reader
@@ -64,34 +65,34 @@ Derives a measurable style profile from existing posts rather than hand-written 
 
 ### `src/gemini/client.ts` — Gemini SDK Wrapper
 
-The concrete `GeminiClient` implementation. Wraps every API call in a **timeout → retry → logging** envelope. Handles two image generation paths (Gemini native via `generateContent` with `responseModalities` vs Imagen via dedicated `generateImages` endpoint).
+The concrete `GeminiClient` implementation. Wraps every API call in a **timeout → retry → logging** envelope. The publication pipeline uses text and embeddings only; the legacy image API remains guarded and is not called.
 
 ### `src/gemini/types.ts` — Client Interface
 
 Defines the `GeminiClient` interface that every stage depends on. The SDK's exact shape is confined to `client.ts`, making every stage unit-testable with a plain object.
 
-**Exports:** `GeminiClient`, `TokenUsage`, `TextResult`, `JsonResult`, `EmbedResult`, `ImageResult`, `ModelResponseError`
+**Exports:** `GeminiClient`, `TokenUsage`, `TextResult`, `JsonResult`, `EmbedResult`, `ModelResponseError`
 
 ### `src/gates/` — Validation Gate System
 
-| File | Gates | Type |
-|------|-------|------|
-| `types.ts` | Gate framework, `GateContext`, `GateFinding`, severity model | Framework |
-| `content.ts` | `frontmatterGate`, `makeDateGate`, `makeContentQualityGate` | Cheap |
-| `structure.ts` | `headingHierarchyGate`, `componentAllowlistGate`, `secretScanGate` | Cheap |
-| `assets.ts` | `assetsExistGate`, `internalLinksGate`, `externalLinksGate` | Cheap + Network |
-| `compile.ts` | `runCompileGate` — full Contentlayer build in an isolated git worktree | Expensive |
-| `run.ts` | `runGates` — orchestrates all gates in cost order | Orchestrator |
+| File           | Gates                                                                  | Type            |
+| -------------- | ---------------------------------------------------------------------- | --------------- |
+| `types.ts`     | Gate framework, `GateContext`, `GateFinding`, severity model           | Framework       |
+| `content.ts`   | `frontmatterGate`, `makeDateGate`, `makeContentQualityGate`            | Cheap           |
+| `structure.ts` | `headingHierarchyGate`, `componentAllowlistGate`, `secretScanGate`     | Cheap           |
+| `assets.ts`    | `assetsExistGate`, `internalLinksGate`, `externalLinksGate`            | Cheap + Network |
+| `compile.ts`   | `runCompileGate` — full Contentlayer build in an isolated git worktree | Expensive       |
+| `run.ts`       | `runGates` — orchestrates all gates in cost order                      | Orchestrator    |
 
 ### `src/lib/` — Shared Utilities
 
-| File | Purpose |
-|------|---------|
-| `logger.ts` | Structured logger with JSON/pretty modes, secret redaction, `timed()` helper |
-| `retry.ts` | Exponential backoff with full jitter, `Retry-After` / `RetryInfo` parsing, quota detection |
-| `vector.ts` | Cosine similarity, L2 normalisation, int8 quantisation/dequantisation |
-| `slugify.ts` | Filename-safe slug generation, bounded slugs, Jaccard similarity, stopword removal |
-| `hash.ts` | SHA-256 content hashing for embedding cache keys |
+| File         | Purpose                                                                                    |
+| ------------ | ------------------------------------------------------------------------------------------ |
+| `logger.ts`  | Structured logger with JSON/pretty modes, secret redaction, `timed()` helper               |
+| `retry.ts`   | Exponential backoff with full jitter, `Retry-After` / `RetryInfo` parsing, quota detection |
+| `vector.ts`  | Cosine similarity, L2 normalisation, int8 quantisation/dequantisation                      |
+| `slugify.ts` | Filename-safe slug generation, bounded slugs, Jaccard similarity, stopword removal         |
+| `hash.ts`    | SHA-256 content hashing for embedding cache keys                                           |
 
 ### `src/mdx/frontmatter.ts` — Frontmatter Schema
 
@@ -132,6 +133,7 @@ Versioned Zod schemas for all four state files plus the embedding descriptor. De
 ### `src/state/store.ts` — State Store
 
 Reads and writes state files with two invariants:
+
 1. **Corruption fails loudly** — a malformed file throws, never silently resets
 2. **Writes are atomic** — write-then-rename pattern
 
@@ -153,11 +155,11 @@ test/
 
 ## Configuration Files
 
-| File | Purpose |
-|------|---------|
-| `package.json` | ESM package, Node ≥20.11, 3 runtime + 4 dev dependencies |
-| `tsconfig.json` | ES2022 target, strict, `noEmit` (tsx executes directly) |
-| `vitest.config.ts` | Node environment, 30s timeout (gates shell out to git) |
-| `.env.example` | All 30+ variables with documentation |
-| `.gitignore` | Ignores node_modules, .env, .artifacts, dist |
-| `.gitattributes` | Git LFS and merge strategies |
+| File               | Purpose                                                  |
+| ------------------ | -------------------------------------------------------- |
+| `package.json`     | ESM package, Node ≥20.11, 3 runtime + 4 dev dependencies |
+| `tsconfig.json`    | ES2022 target, strict, `noEmit` (tsx executes directly)  |
+| `vitest.config.ts` | Node environment, 30s timeout (gates shell out to git)   |
+| `.env.example`     | All 30+ variables with documentation                     |
+| `.gitignore`       | Ignores node_modules, .env, .artifacts, dist             |
+| `.gitattributes`   | Git LFS and merge strategies                             |

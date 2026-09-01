@@ -44,13 +44,6 @@ export interface EmbedResult {
   usage: TokenUsage
 }
 
-export interface ImageResult {
-  /** Raw bytes, already base64-decoded. */
-  bytes: Buffer
-  mimeType: string
-  usage: TokenUsage
-}
-
 export interface GenerateTextOptions {
   prompt: string
   system?: string
@@ -58,13 +51,6 @@ export interface GenerateTextOptions {
   grounded?: boolean
   temperature?: number
   maxOutputTokens?: number
-  /**
-   * Reasoning-token budget. 0 disables thinking entirely, which is right for
-   * mechanical stages. Omit to let the model decide. Because thinking tokens
-   * are drawn from maxOutputTokens, a small cap plus unbounded thinking is the
-   * documented way to get an empty response.
-   */
-  thinkingBudget?: number
   label: string
 }
 
@@ -89,7 +75,6 @@ export interface GenerateJsonOptions<T> {
   responseSchema: Record<string, unknown>
   temperature?: number
   maxOutputTokens?: number
-  thinkingBudget?: number
   label: string
 }
 
@@ -100,17 +85,10 @@ export interface EmbedOptions {
   label: string
 }
 
-export interface GenerateImageOptions {
-  prompt: string
-  aspectRatio: string
-  label: string
-}
-
 export interface GeminiClient {
   generateText(opts: GenerateTextOptions): Promise<TextResult>
   generateJson<T>(opts: GenerateJsonOptions<T>): Promise<JsonResult<T>>
   embed(opts: EmbedOptions): Promise<EmbedResult>
-  generateImage(opts: GenerateImageOptions): Promise<ImageResult>
   /** Used by `doctor` to verify configured model IDs exist. */
   listModels(): Promise<string[]>
   /** Cumulative usage across every call, for the per-run budget ledger. */

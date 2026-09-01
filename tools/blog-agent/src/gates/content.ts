@@ -31,7 +31,9 @@ export const frontmatterGate: Gate = {
       findings.push(err(this.name, `Slug "${ctx.slug}" is not lowercase kebab-case`))
     }
     if (ctx.slug.length > 70) {
-      findings.push(warn(this.name, `Slug is ${ctx.slug.length} chars; under 70 reads better in SERPs`))
+      findings.push(
+        warn(this.name, `Slug is ${ctx.slug.length} chars; under 70 reads better in SERPs`)
+      )
     }
 
     const authors = ctx.frontmatter['authors']
@@ -51,7 +53,9 @@ export const frontmatterGate: Gate = {
     }
 
     if (ctx.frontmatter['draft'] === true) {
-      findings.push(err(this.name, 'draft: true would publish nothing; the pipeline must emit draft: false'))
+      findings.push(
+        err(this.name, 'draft: true would publish nothing; the pipeline must emit draft: false')
+      )
     }
     return findings
   },
@@ -118,7 +122,11 @@ export function makeContentQualityGate(opts: ContentBandOptions): Gate {
         for (const re of TELLS) {
           if (re.test(line)) {
             findings.push(
-              warn(this.name, `Formulaic phrasing: "${(re.exec(line) ?? [''])[0]}"`, i + 1 + ctx.bodyLineOffset)
+              warn(
+                this.name,
+                `Formulaic phrasing: "${(re.exec(line) ?? [''])[0]}"`,
+                i + 1 + ctx.bodyLineOffset
+              )
             )
           }
         }
@@ -127,7 +135,13 @@ export function makeContentQualityGate(opts: ContentBandOptions): Gate {
       // A leaked instruction or scaffolding marker is a hard fail.
       for (const [i, line] of ctx.body.split('\n').entries()) {
         if (/\b(TODO|FIXME|TBD|XXX|LOREM IPSUM|\[insert[^\]]*\]|\{\{[^}]*\}\})/i.test(line)) {
-          findings.push(err(this.name, 'Placeholder or scaffolding text left in the body', i + 1 + ctx.bodyLineOffset))
+          findings.push(
+            err(
+              this.name,
+              'Placeholder or scaffolding text left in the body',
+              i + 1 + ctx.bodyLineOffset
+            )
+          )
         }
       }
       return findings

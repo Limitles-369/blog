@@ -81,9 +81,11 @@ export async function runCompileGate(input: CompileGateInput): Promise<CompileGa
         // would put draft-only tags on /tags and into the sitemap, pointing at
         // pages that render zero posts.
         env: {
-          ...Object.fromEntries(Object.entries(process.env).filter(([k]) => !k.startsWith('npm_') && k !== 'PWD')),
+          ...Object.fromEntries(
+            Object.entries(process.env).filter(([k]) => !k.startsWith('npm_') && k !== 'PWD')
+          ),
           NODE_ENV: 'production',
-          INIT_CWD: undefined
+          INIT_CWD: undefined,
         } as NodeJS.ProcessEnv,
         maxBuffer: 32 * 1024 * 1024,
       })
@@ -152,7 +154,9 @@ export async function runCompileGate(input: CompileGateInput): Promise<CompileGa
     logger.debug('compile gate finished', { slug, findings: findings.length })
     return tagData === undefined ? { findings } : { findings, tagData }
   } finally {
-    await run('git', ['worktree', 'remove', '--force', worktree], { cwd: paths.root }).catch(() => {})
+    await run('git', ['worktree', 'remove', '--force', worktree], { cwd: paths.root }).catch(
+      () => {}
+    )
     await rm(scratch, { recursive: true, force: true }).catch(() => {})
   }
 }

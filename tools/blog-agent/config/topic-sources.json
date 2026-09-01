@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Node.js Releases",
+    "url": "https://github.com/nodejs/node/releases.atom",
+    "type": "rss",
+    "category": "developer-tools",
+    "trustWeight": 1,
+    "enabled": true,
+    "maxItems": 12
+  },
+  {
+    "name": "TypeScript Releases",
+    "url": "https://github.com/microsoft/TypeScript/releases.atom",
+    "type": "rss",
+    "category": "typescript-javascript",
+    "trustWeight": 1,
+    "enabled": true,
+    "maxItems": 12
+  },
+  {
+    "name": "Vite Releases",
+    "url": "https://github.com/vitejs/vite/releases.atom",
+    "type": "rss",
+    "category": "typescript-javascript",
+    "trustWeight": 0.95,
+    "enabled": true,
+    "maxItems": 10
+  },
+  {
+    "name": "Kubernetes Releases",
+    "url": "https://github.com/kubernetes/kubernetes/releases.atom",
+    "type": "rss",
+    "category": "cloud-infrastructure",
+    "trustWeight": 1,
+    "enabled": true,
+    "maxItems": 10
+  },
+  {
+    "name": "OWASP Security News",
+    "url": "https://owasp.org/feed.xml",
+    "type": "rss",
+    "category": "security",
+    "trustWeight": 0.95,
+    "enabled": true,
+    "maxItems": 10
+  },
+  {
+    "name": "Cloudflare Blog",
+    "url": "https://blog.cloudflare.com/rss/",
+    "type": "rss",
+    "category": "cloud-infrastructure",
+    "trustWeight": 0.9,
+    "enabled": true,
+    "maxItems": 10
+  },
+  {
+    "name": "PostgreSQL Releases",
+    "url": "https://www.postgresql.org/versions.rss",
+    "type": "rss",
+    "category": "backend-databases",
+    "trustWeight": 1,
+    "enabled": true,
+    "maxItems": 10
+  },
+  {
+    "name": "Ollama Releases",
+    "url": "https://github.com/ollama/ollama/releases.atom",
+    "type": "rss",
+    "category": "ai-engineering",
+    "trustWeight": 0.95,
+    "enabled": true,
+    "maxItems": 10
+  }
+]

@@ -43,9 +43,7 @@ export const envSchema = z.object({
   GEMINI_API_KEY: nonEmpty.describe('Gemini API key'),
 
   GEMINI_TEXT_MODEL: nonEmpty.describe('Text model ID, e.g. gemini-2.5-flash'),
-  GEMINI_IMAGE_MODEL: nonEmpty.describe('Image model ID'),
   GEMINI_EMBEDDING_MODEL: nonEmpty.describe('Embedding model ID'),
-  GENERATE_HERO_IMAGE: bool(true).describe('Whether to generate hero images'),
 
   /** Embedding descriptor. Part of the cache key — see queue/dedup. */
   GEMINI_EMBEDDING_TASK_TYPE: z.string().trim().default('SEMANTIC_SIMILARITY'),
@@ -71,7 +69,6 @@ export const envSchema = z.object({
   RETRY_BASE_MS: num(1000, 100, 30_000),
   RETRY_CAP_MS: num(60_000, 1000, 300_000),
   TEXT_TIMEOUT_MS: num(120_000, 5000, 600_000),
-  IMAGE_TIMEOUT_MS: num(180_000, 5000, 600_000),
   RUN_CEILING_MS: num(1_200_000, 60_000, 3_600_000),
 
   MAX_EXTERNAL_LINKS: num(8, 0, 50),

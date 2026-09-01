@@ -1,10 +1,20 @@
 import type { CadenceFile, PublishedFile } from './schema.js'
 
 /** Minimum gap between publications, on top of the UTC-day rule. */
-export const MIN_GAP_MS = 8 * 60 * 60 * 1000
+export const MIN_GAP_MS = 20 * 60 * 60 * 1000
 
 /** Only one bot PR may be open at a time — see `decidePublish` for why. */
-export const MAX_OPEN_PRS = 2
+export const MAX_OPEN_PRS = 1
+
+export interface CadencePolicy {
+  minGapMs: number
+  maxOpenPrs: number
+}
+
+const DEFAULT_POLICY: CadencePolicy = {
+  minGapMs: MIN_GAP_MS,
+  maxOpenPrs: MAX_OPEN_PRS,
+}
 
 export function utcDay(at: Date): string {
   return at.toISOString().slice(0, 10)
@@ -29,6 +39,7 @@ export interface DecideInput {
   cadence: CadenceFile
   published: PublishedFile
   enabled: boolean
+  policy?: CadencePolicy
 }
 
 /**
@@ -57,6 +68,7 @@ export interface DecideInput {
  */
 export function decidePublish(input: DecideInput): PublishDecision {
   const { now, cadence, published, enabled } = input
+  const policy = input.policy ?? DEFAULT_POLICY
 
   if (!enabled) {
     return { publish: false, reason: 'disabled', detail: 'control.json has enabled: false' }
@@ -72,7 +84,7 @@ export function decidePublish(input: DecideInput): PublishDecision {
   }
 
   const open = published.entries.filter((e) => e.state === 'open')
-  if (open.length >= MAX_OPEN_PRS) {
+  if (open.length >= policy.maxOpenPrs) {
     return {
       publish: false,
       reason: 'open-pr-exists',
@@ -100,11 +112,11 @@ export function decidePublish(input: DecideInput): PublishDecision {
       }
     }
     const elapsed = now.getTime() - last
-    if (elapsed < MIN_GAP_MS) {
+    if (elapsed < policy.minGapMs) {
       return {
         publish: false,
         reason: 'min-gap',
-        detail: `${Math.round(elapsed / 3_600_000)}h since last publish, need 20h`,
+        detail: `${Math.round(elapsed / 3_600_000)}h since last publish, need ${Math.round(policy.minGapMs / 3_600_000)}h`,
       }
     }
   }

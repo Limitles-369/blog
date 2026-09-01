@@ -14,19 +14,19 @@ The architecture is deliberately simple: the entire system is a single TypeScrip
 flowchart TD
     CLI["CLI Entry Point<br/>(src/cli.ts)"] --> LoadEnv["Load .env<br/>Parse Config"]
     LoadEnv --> SubCmd{Subcommand?}
-    
+
     SubCmd -->|doctor| Doctor["Verify models<br/>Probe capabilities"]
     SubCmd -->|style| Style["Compute & print<br/>style metrics"]
     SubCmd -->|corpus| Corpus["List posts<br/>on disk"]
     SubCmd -->|run| Pipeline["Run Pipeline<br/>(orchestrator.ts)"]
-    
+
     Pipeline --> P1["Phase 1: Reconcile"]
     P1 --> P2["Phase 2: Research & Queue"]
     P2 --> P3{Phase 3: Cadence Gate}
-    
+
     P3 -->|"blocked"| Exit1["Exit (normal)"]
     P3 -->|"allowed"| P4["Phase 4: Generate"]
-    
+
     P4 --> P5{Phase 5: Gates}
     P5 -->|"failed"| Exit2["Exit (error)"]
     P5 -->|"passed"| P6["Phase 6: Publish"]
@@ -70,7 +70,7 @@ flowchart LR
     B --> C["Score Candidates<br/>(0-100)"]
     C --> D["Three-Tier Dedup"]
     D --> E["Append to Queue"]
-    
+
     subgraph "Dedup Tiers"
         D1["T1: Normalised<br/>Title Match"] --> D2["T2: Jaccard<br/>Token Overlap"]
         D2 --> D3["T3: Cosine<br/>Similarity"]
@@ -101,8 +101,7 @@ flowchart TD
     NeedFix -->|yes| Refine["Refine Draft"]
     NeedFix -->|no| Meta["Generate Metadata<br/>(title, slug, summary, tags)"]
     Refine --> Meta
-    Meta --> Hero["Generate Hero Image<br/>(optional)"]
-    Hero --> Format["Prettier Format"]
+    Meta --> Format["Prettier Format"]
 ```
 
 **Key design decision:** The article body is generated as raw markdown, not JSON. Wrapping an 1,800-word MDX document — with backticks, quotes, and possible JSX — inside a JSON string field is a reliable source of escaping corruption and silent truncation. Metadata is produced by a separate structured call over the finished body.
@@ -121,15 +120,15 @@ flowchart TD
         G7["Internal Links"]
         G8["Content Quality"]
     end
-    
+
     subgraph "Network Gates"
         G9["External Link Check"]
     end
-    
+
     subgraph "Compile Gate (seconds)"
         G10["Contentlayer Build<br/>in git worktree"]
     end
-    
+
     G1 & G2 & G3 & G4 & G5 & G6 & G7 & G8 --> Check1{Any errors?}
     Check1 -->|yes| Abort["Abort: skip compile"]
     Check1 -->|no| G9 --> G10
@@ -146,7 +145,7 @@ sequenceDiagram
     participant S as State Store
     participant G as Git
     participant GH as GitHub API
-    
+
     O->>S: Write inflight record + push state
     Note over S: Write-ahead: if we crash here,<br/>next run reconciles
     O->>G: Create branch from HEAD
@@ -180,7 +179,7 @@ erDiagram
         int maxTokensPerDay
         string note
     }
-    
+
     QUEUE_ENTRY {
         string id
         string title
@@ -192,7 +191,7 @@ erDiagram
         string[] sources
         int attempts
     }
-    
+
     PUBLISHED_ENTRY {
         string slug
         string title
@@ -207,13 +206,13 @@ erDiagram
 
 ### State Files
 
-| File | Purpose | Corruption Behaviour |
-|------|---------|---------------------|
+| File                   | Purpose                                   | Corruption Behaviour                                        |
+| ---------------------- | ----------------------------------------- | ----------------------------------------------------------- |
 | `state/published.json` | Ledger of all posts the agent has created | **Fails loudly.** Silent reset would republish every topic. |
-| `state/queue.json` | Scored candidates waiting to be written | **Fails loudly.** |
-| `state/cadence.json` | Timestamps tracking last run/publish/PR | **Fails loudly.** |
-| `state/control.json` | Kill-switch and budget ceiling | Falls back to `{enabled: true}` on absence |
-| `state/embeddings/` | Quantised int8 vectors keyed by text hash | Cache miss → re-embed. Descriptor mismatch → discard. |
+| `state/queue.json`     | Scored candidates waiting to be written   | **Fails loudly.**                                           |
+| `state/cadence.json`   | Timestamps tracking last run/publish/PR   | **Fails loudly.**                                           |
+| `state/control.json`   | Kill-switch and budget ceiling            | Falls back to `{enabled: true}` on absence                  |
+| `state/embeddings/`    | Quantised int8 vectors keyed by text hash | Cache miss → re-embed. Descriptor mismatch → discard.       |
 
 ### Write Atomicity
 
@@ -231,7 +230,7 @@ flowchart TD
     CLI --> Style["corpus/style"]
     CLI --> Store["state/store"]
     CLI --> Git["publish/git"]
-    
+
     Pipeline --> Gemini
     Pipeline --> Corpus
     Pipeline --> Style
@@ -244,22 +243,22 @@ flowchart TD
     Pipeline --> Dedup["research/dedup"]
     Pipeline --> Discover["research/discover"]
     Pipeline --> Cadence["state/cadence"]
-    
+
     Gemini --> Retry["lib/retry"]
     Gemini --> Types["gemini/types"]
-    
+
     Store --> Schema["state/schema"]
     Store --> Hash["lib/hash"]
     Store --> Vector["lib/vector"]
-    
+
     Gates --> Content["gates/content"]
     Gates --> Structure["gates/structure"]
     Gates --> Assets["gates/assets"]
     Gates --> Compile["gates/compile"]
-    
+
     Dedup --> Vector
     Dedup --> Slugify["lib/slugify"]
-    
+
     style CLI fill:#2563eb,color:#fff
     style Pipeline fill:#7c3aed,color:#fff
     style Gemini fill:#059669,color:#fff
@@ -278,7 +277,6 @@ interface GeminiClient {
   generateText(opts: GenerateTextOptions): Promise<TextResult>
   generateJson<T>(opts: GenerateJsonOptions<T>): Promise<JsonResult<T>>
   embed(opts: EmbedOptions): Promise<EmbedResult>
-  generateImage(opts: GenerateImageOptions): Promise<ImageResult>
   listModels(): Promise<string[]>
   totalUsage(): TokenUsage
 }
@@ -294,7 +292,11 @@ interface StateStore {
   saveQueue(v: QueueFile): Promise<void>
   saveCadence(v: CadenceFile): Promise<void>
   getEmbedding(textHash: string, descriptor: EmbeddingDescriptor): Promise<number[] | null>
-  putEmbedding(textHash: string, descriptor: EmbeddingDescriptor, vector: readonly number[]): Promise<void>
+  putEmbedding(
+    textHash: string,
+    descriptor: EmbeddingDescriptor,
+    vector: readonly number[]
+  ): Promise<void>
   archiveRejected(slug: string, source: string): Promise<void>
   appendRun(runId: string, record: unknown): Promise<void>
   pruneStaleEmbeddings(descriptor: EmbeddingDescriptor): Promise<number>

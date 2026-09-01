@@ -3,6 +3,7 @@
 ## 1. Topic Discovery
 
 ### Purpose
+
 Automatically discovers fresh, relevant software engineering topics by surveying recent developments using Google Search grounding through the Gemini API.
 
 ### Flow
@@ -47,6 +48,7 @@ Dedup filter → surviving candidates → queue
 ## 2. Three-Tier Duplicate Detection
 
 ### Purpose
+
 Prevents the agent from proposing topics that substantially overlap with existing posts, published/PR'd topics, or already-queued candidates.
 
 ### Flow
@@ -75,6 +77,7 @@ Prevents the agent from proposing topics that substantially overlap with existin
 ## 3. Style-Aware Content Generation
 
 ### Purpose
+
 Generates blog posts that match the measurable style characteristics of existing posts on the blog, rather than relying on hand-written style descriptions that drift over time.
 
 ### Flow
@@ -84,15 +87,15 @@ Generates blog posts that match the measurable style characteristics of existing
 3. **Draft writing** — Free-text call with style brief, few-shot exemplars (2 recent posts), internal link candidates, and source URLs
 4. **Self-critique** — Structured JSON call reviewing the draft for: unsupported claims, invented data, unknown URLs, H1s, unknown components, filler phrasing, and documentation restatement
 5. **Refinement** — If blocking issues or a rewrite flag are raised, a refinement pass fixes only the cited issues
-6. **Metadata generation** — Structured JSON call deriving title, slug, summary, tags, and image prompt from the finished body
+6. **Metadata generation** — Structured JSON call deriving title, slug, summary, and tags from the finished body
 
 ### Implementation
 
 - **Source files:** `src/corpus/style.ts`, `src/stages/draft.ts`, `src/stages/metadata.ts`
 - **System prompt rules:**
   - Never emit an H1 (PostLayout renders the title from frontmatter)
-  - Only `<Image>`, `<TOCInline>`, and `<BlogNewsletterForm>` components allowed
-  - No markdown images or `<video>` tags
+  - Only `<TOCInline>` and `<BlogNewsletterForm>` components allowed
+  - No markdown images, image JSX, or `<video>` tags
   - No invented statistics, benchmarks, version numbers, dates, or quotes
   - Links only from supplied research notes
   - First person, developer voice, no marketing language
@@ -108,22 +111,23 @@ Generates blog posts that match the measurable style characteristics of existing
 ## 4. Multi-Gate Validation
 
 ### Purpose
+
 Validates generated content through 8+ gates before any commit, catching structural defects, security issues, broken links, and build-breaking content.
 
 ### Gates
 
-| Gate | Type | Severity | What It Catches |
-|------|------|----------|----------------|
-| `frontmatter` | Cheap | Error | Schema violations, duplicate slugs, unknown authors, invalid layouts, `draft: true` |
-| `date-sanity` | Cheap | Error | Date mismatch (not today's UTC date) |
-| `heading-hierarchy` | Cheap | Error/Warn | H1 presence, skipped heading levels, duplicate headings, low H2 count |
-| `component-allowlist` | Cheap | Error | Unknown JSX components that would break the production build |
-| `secret-scan` | Cheap | Error | Google API keys, GitHub tokens, AWS keys, private keys, Slack tokens, bearer tokens |
-| `assets-exist` | Cheap | Error | Missing frontmatter images, missing referenced local assets |
-| `internal-links` | Cheap | Error/Warn | Links to non-existent posts, missing trailing slashes |
-| `content-quality` | Cheap | Error/Warn | Truncated generation (< 400 words), word count outside target range, long paragraphs, formulaic phrasing, placeholder text |
-| `external-links` | Network | Warn | Broken external URLs (HEAD → GET fallback for 405/403/501) |
-| `mdx-compiles` | Expensive | Error | Full Contentlayer build in isolated git worktree. Asserts slug is in generated output with non-empty body, readingTime, TOC, and structuredData. |
+| Gate                  | Type      | Severity   | What It Catches                                                                                                                                  |
+| --------------------- | --------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `frontmatter`         | Cheap     | Error      | Schema violations, duplicate slugs, unknown authors, invalid layouts, `draft: true`                                                              |
+| `date-sanity`         | Cheap     | Error      | Date mismatch (not today's UTC date)                                                                                                             |
+| `heading-hierarchy`   | Cheap     | Error/Warn | H1 presence, skipped heading levels, duplicate headings, low H2 count                                                                            |
+| `component-allowlist` | Cheap     | Error      | Unknown JSX components that would break the production build                                                                                     |
+| `secret-scan`         | Cheap     | Error      | Google API keys, GitHub tokens, AWS keys, private keys, Slack tokens, bearer tokens                                                              |
+| `assets-exist`        | Cheap     | Error      | Missing frontmatter images, missing referenced local assets                                                                                      |
+| `internal-links`      | Cheap     | Error/Warn | Links to non-existent posts, missing trailing slashes                                                                                            |
+| `content-quality`     | Cheap     | Error/Warn | Truncated generation (< 400 words), word count outside target range, long paragraphs, formulaic phrasing, placeholder text                       |
+| `external-links`      | Network   | Warn       | Broken external URLs (HEAD → GET fallback for 405/403/501)                                                                                       |
+| `mdx-compiles`        | Expensive | Error      | Full Contentlayer build in isolated git worktree. Asserts slug is in generated output with non-empty body, readingTime, TOC, and structuredData. |
 
 ### Implementation
 
@@ -139,41 +143,24 @@ Validates generated content through 8+ gates before any commit, catching structu
 
 ---
 
-## 5. Hero Image Generation
+## 5. Image-free Editorial Output
 
 ### Purpose
-Generates visually consistent hero images for each blog post, maintaining a unified design language across all agent-generated content.
+
+Generated posts intentionally contain no image or video assets. The site uses CSS-only editorial presentation, reducing generation cost and layout failures.
 
 ### Style Protocol
 
-All heroes share a fixed visual signature:
-- Dark navy and near-black background
-- Neon cyan and emerald green accents with occasional warm amber highlights
-- Isometric 3D abstract technical shapes
-- Subtle circuit traces and connection nodes
-- No text, letters, numbers, logos, watermarks, people, faces, or hands
-
-Only the **subject matter** varies per post; the style prefix is constant.
+The site shares a typography-first visual signature: strong hierarchy, compact metadata, readable prose, and CSS-only editorial accents.
 
 ### Implementation
 
-- **Source files:** `src/stages/metadata.ts` (hero generation), `src/pipeline/orchestrator.ts` (image placement)
-- **Aspect ratio:** 16:9 (PostLayout renders into `aspect-2/1` container; square defaults get badly centre-cropped)
-- **Two generation paths:**
-  - Gemini-native models → `generateContent` with `responseModalities: ['IMAGE', 'TEXT']`
-  - Imagen models → dedicated `generateImages` endpoint
-- **Detection:** Regex `/(?:^|[^a-z])gemini/i` on the model name determines the path
+- **Source files:** `src/stages/draft.ts`, `src/gates/structure.ts`
 
 ### Data Flow
 
 ```
-Metadata stage → imagePrompt (subject only)
-↓
-HERO_STYLE_PREFIX + imagePrompt → full prompt
-↓
-Gemini Image API → base64 bytes
-↓
-Written to .artifacts/<runId>/hero.png (dry-run) or committed to public/static/images/blog/<key>/hero.png
+Draft stage → media-free MDX → media-free gate → PR
 ```
 
 ---
@@ -181,6 +168,7 @@ Written to .artifacts/<runId>/hero.png (dry-run) or committed to public/static/i
 ## 6. Write-Ahead Publish Protocol
 
 ### Purpose
+
 Ensures crash-safety during the publish operation. A CI runner dying mid-publish must not result in a duplicate post on the next run.
 
 ### Protocol
@@ -193,18 +181,19 @@ Ensures crash-safety during the publish operation. A CI runner dying mid-publish
 
 ### Recovery Cases
 
-| Crash Point | Next Run Behaviour |
-|------------|-------------------|
-| After step 1, before step 2 | Reconcile sees `inflight` with no branch → releases the topic |
-| After step 2, before step 3 | Reconcile sees `inflight` with branch but no PR → keeps claim |
+| Crash Point                 | Next Run Behaviour                                                |
+| --------------------------- | ----------------------------------------------------------------- |
+| After step 1, before step 2 | Reconcile sees `inflight` with no branch → releases the topic     |
+| After step 2, before step 3 | Reconcile sees `inflight` with branch but no PR → keeps claim     |
 | After step 3, before step 4 | Reconcile sees `inflight`, finds matching PR → promotes to `open` |
-| After step 4 | Normal: PR is open, state is consistent |
+| After step 4                | Normal: PR is open, state is consistent                           |
 
 ---
 
 ## 7. Cadence Control
 
 ### Purpose
+
 Limits the agent to at most one published post per day, preventing content bursts and maintaining a natural publishing rhythm.
 
 ### Three Independent Conditions

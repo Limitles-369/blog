@@ -1,0 +1,9 @@
+{
+  "typescript-javascript": ["typescript", "javascript", "node.js", "nodejs", "vite", "react", "runtime", "compiler", "bundler"],
+  "backend-databases": ["postgresql", "postgres", "mysql", "database", "sql", "redis", "query", "storage", "backend"],
+  "software-architecture": ["architecture", "distributed systems", "microservices", "event-driven", "api", "caching", "scaling"],
+  "cloud-infrastructure": ["kubernetes", "docker", "cloud", "deployment", "observability", "serverless", "infrastructure", "k8s"],
+  "security": ["security", "vulnerability", "cve", "authentication", "authorization", "supply chain", "exploit"],
+  "ai-engineering": ["llm", "ai", "inference", "embedding", "rag", "model", "agents", "gpu", "ollama"],
+  "developer-tools": ["git", "rust", "go", "python", "debugging", "profiling", "testing", "developer tools"]
+}

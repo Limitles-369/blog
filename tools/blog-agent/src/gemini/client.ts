@@ -10,11 +10,9 @@ import {
   type EmbedOptions,
   type EmbedResult,
   type GeminiClient,
-  type GenerateImageOptions,
   type GenerateJsonOptions,
   type GenerateTextOptions,
   type GroundingSource,
-  type ImageResult,
   type JsonResult,
   type TextResult,
   type TokenUsage,
@@ -38,12 +36,7 @@ import {
  *      structures it. If the restriction has lifted, the two can be merged,
  *      but the split is correct either way.
  *   4. `ai.models.embedContent` shape and `res.embeddings[].values`.
- *   5. Image generation: whether the configured model wants
- *      `generateImages()` or `generateContent()` with responseModalities.
- *      Both paths are implemented; `IMAGE_VIA_GENERATE_CONTENT` selects.
  */
-
-const IMAGE_VIA_GENERATE_CONTENT = /(?:^|[^a-z])gemini/i
 
 const RATE_LIMIT_DELAY_MS = 15000 // 15s delay ensures max 4 requests per minute (< 5)
 let lastCallTime = 0
@@ -84,16 +77,19 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
 
   /** Wrap every API call in the same timeout + retry + logging envelope. */
   async function call<T>(label: string, timeoutMs: number, fn: () => Promise<T>): Promise<T> {
-    return withRetry(async () => {
-      await enqueueRateLimit()
-      return withTimeout(() => fn(), timeoutMs, label)
-    }, {
-      attempts: config.RETRY_ATTEMPTS,
-      baseMs: config.RETRY_BASE_MS,
-      capMs: config.RETRY_CAP_MS,
-      label,
-      logger: log,
-    })
+    return withRetry(
+      async () => {
+        await enqueueRateLimit()
+        return withTimeout(() => fn(), timeoutMs, label)
+      },
+      {
+        attempts: config.RETRY_ATTEMPTS,
+        baseMs: config.RETRY_BASE_MS,
+        capMs: config.RETRY_CAP_MS,
+        label,
+        logger: log,
+      }
+    )
   }
 
   function extractSources(res: unknown): { sources: GroundingSource[]; queries: string[] } {
@@ -107,9 +103,7 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
     const seen = new Set<string>()
     const sources: GroundingSource[] = []
     for (const chunk of chunks) {
-      const web = (chunk as Record<string, unknown>)?.['web'] as
-        | Record<string, string>
-        | undefined
+      const web = (chunk as Record<string, unknown>)?.['web'] as Record<string, string> | undefined
       const uri = web?.['uri']
       if (typeof uri === 'string' && !seen.has(uri)) {
         seen.add(uri)
@@ -127,9 +121,8 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
     if (typeof direct === 'string' && direct.length > 0) return direct
 
     // Fall back to walking parts, in case `.text` is absent or a method.
-    const parts =
-      ((res as { candidates?: { content?: { parts?: unknown[] } }[] })?.candidates?.[0]?.content
-        ?.parts ?? []) as Record<string, unknown>[]
+    const parts = ((res as { candidates?: { content?: { parts?: unknown[] } }[] })?.candidates?.[0]
+      ?.content?.parts ?? []) as Record<string, unknown>[]
     const joined = parts
       .map((p) => (typeof p['text'] === 'string' ? (p['text'] as string) : ''))
       .join('')
@@ -144,7 +137,7 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
     if (usage.thoughts > 0 && usage.output === 0) {
       hints.push(
         `the model used ${usage.thoughts} reasoning token(s) and produced no visible output — ` +
-          `raise maxOutputTokens or set thinkingBudget: 0`
+          `raise maxOutputTokens or verify the configured model's output limits`
       )
     }
     if (finish && finish !== 'STOP') hints.push(`finishReason=${finish}`)
@@ -173,9 +166,6 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
       ...(isGrounded ? { tools: [{ googleSearch: {} }] } : {}),
       temperature: opts.temperature ?? 0.7,
       ...(opts.maxOutputTokens ? { maxOutputTokens: opts.maxOutputTokens } : {}),
-      ...(opts.thinkingBudget === undefined
-        ? {}
-        : { thinkingConfig: { thinkingBudget: opts.thinkingBudget } }),
     }
   }
 
@@ -218,16 +208,21 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
         })
         return { text: textOf(res, opts.label, usage), sources, queries, usage }
       } catch (err) {
-        const finishReason = (err as unknown as Record<string, unknown>)?.['finishReason'] as string | undefined
+        const finishReason = (err as unknown as Record<string, unknown>)?.['finishReason'] as
+          | string
+          | undefined
         const msg = String((err as Error)?.message ?? '')
         const isMalformedFunctionCall =
           finishReason === 'MALFORMED_FUNCTION_CALL' || msg.includes('MALFORMED_FUNCTION_CALL')
         if (!isMalformedFunctionCall) throw err
 
-        log.warn('generateText: textOf() detected MALFORMED_FUNCTION_CALL — retrying without grounding', {
-          label: opts.label,
-          finishReason,
-        })
+        log.warn(
+          'generateText: textOf() detected MALFORMED_FUNCTION_CALL — retrying without grounding',
+          {
+            label: opts.label,
+            finishReason,
+          }
+        )
         const res2 = await call(opts.label, config.TEXT_TIMEOUT_MS, () => doGenerate(true))
         const { sources: sources2, queries: queries2 } = extractSources(res2)
         const usage2 = track((res2 as unknown as Record<string, unknown>)['usageMetadata'])
@@ -237,7 +232,12 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
           sources: sources2.length,
           ...usage2,
         })
-        return { text: textOf(res2, opts.label, usage2), sources: sources2, queries: queries2, usage: usage2 }
+        return {
+          text: textOf(res2, opts.label, usage2),
+          sources: sources2,
+          queries: queries2,
+          usage: usage2,
+        }
       }
     },
 
@@ -247,26 +247,46 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
       // the HTTP retryable set, so we catch it explicitly here and retry — a
       // truncated JSON response is transient: the next attempt usually succeeds.
       return withRetry(
-        () =>
-          call(opts.label, config.TEXT_TIMEOUT_MS, () =>
-            ai.models.generateContent({
+        async () => {
+          const configFor = (constrained: boolean): Record<string, unknown> => ({
+            ...(opts.system ? { systemInstruction: opts.system } : {}),
+            ...(opts.grounded ? { tools: [{ googleSearch: {} }] } : {}),
+            ...(constrained
+              ? { responseMimeType: 'application/json', responseSchema: opts.responseSchema }
+              : {}),
+            temperature: opts.temperature ?? 0.3,
+            ...(opts.maxOutputTokens ? { maxOutputTokens: opts.maxOutputTokens } : {}),
+          })
+          let res: unknown
+          try {
+            res = await call(opts.label, config.TEXT_TIMEOUT_MS, () =>
+              ai.models.generateContent({
+                model: config.GEMINI_TEXT_MODEL,
+                contents: opts.prompt,
+                config: configFor(true),
+              })
+            )
+          } catch (cause) {
+            const message = cause instanceof Error ? cause.message : String(cause)
+            if (!/invalid argument/i.test(message)) throw cause
+            log.warn('structured JSON unsupported; retrying with plain JSON text', {
+              label: opts.label,
               model: config.GEMINI_TEXT_MODEL,
-              contents: opts.prompt,
-              config: {
-                ...(opts.system ? { systemInstruction: opts.system } : {}),
-                ...(opts.grounded ? { tools: [{ googleSearch: {} }] } : {}),
-                responseMimeType: 'application/json',
-                responseSchema: opts.responseSchema,
-                temperature: opts.temperature ?? 0.3,
-                ...(opts.maxOutputTokens ? { maxOutputTokens: opts.maxOutputTokens } : {}),
-                ...(opts.thinkingBudget === undefined
-                  ? {}
-                  : { thinkingConfig: { thinkingBudget: opts.thinkingBudget } }),
-              },
             })
-          ).then((res) => {
+            res = await call(opts.label, config.TEXT_TIMEOUT_MS, () =>
+              ai.models.generateContent({
+                model: config.GEMINI_TEXT_MODEL,
+                contents: `${opts.prompt}\n\nReturn only valid JSON. Do not use markdown fences.`,
+                config: configFor(false),
+              })
+            )
+          }
+          return (() => {
             const usage = track((res as unknown as Record<string, unknown>)['usageMetadata'])
             const raw = textOf(res, opts.label, usage)
+              .replace(/^```(?:json)?\s*/i, '')
+              .replace(/\s*```$/i, '')
+              .trim()
 
             let parsed: unknown
             try {
@@ -281,7 +301,15 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
               )
             }
 
-            const checked = opts.schema.safeParse(parsed)
+            // Some Gemini models ignore the requested wrapper in plain-text
+            // fallback mode and return the array directly. Normalize that
+            // harmless shape difference before applying the caller schema.
+            const properties = opts.responseSchema['properties']
+            const wrapperKey =
+              properties && typeof properties === 'object' ? Object.keys(properties)[0] : undefined
+            const normalized =
+              Array.isArray(parsed) && wrapperKey ? { [wrapperKey]: parsed } : parsed
+            const checked = opts.schema.safeParse(normalized)
             if (!checked.success) {
               const detail = checked.error.issues
                 .map((i) => `${i.path.join('.') || '(root)'}: ${i.message}`)
@@ -293,7 +321,8 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
             }
             log.debug('generateJson', { label: opts.label, ...usage })
             return { value: checked.data, usage }
-          }),
+          })()
+        },
         {
           attempts: config.RETRY_ATTEMPTS,
           baseMs: config.RETRY_BASE_MS,
@@ -332,52 +361,6 @@ export function createGeminiClient(config: Config, logger: Logger): GeminiClient
       }
       const usage = track((res as Record<string, unknown>)['usageMetadata'])
       return { vectors, usage }
-    },
-
-    async generateImage(opts: GenerateImageOptions): Promise<ImageResult> {
-      const model = config.GEMINI_IMAGE_MODEL
-
-      // Gemini-native image models emit images through generateContent;
-      // Imagen models use the dedicated generateImages endpoint.
-      if (IMAGE_VIA_GENERATE_CONTENT.test(model)) {
-        const res = await call(opts.label, config.IMAGE_TIMEOUT_MS, () =>
-          ai.models.generateContent({
-            model,
-            contents: opts.prompt,
-            config: { responseModalities: ['IMAGE', 'TEXT'] },
-          })
-        )
-        const parts =
-          ((res as { candidates?: { content?: { parts?: unknown[] } }[] })?.candidates?.[0]
-            ?.content?.parts ?? []) as Record<string, unknown>[]
-        for (const part of parts) {
-          const inline = part['inlineData'] as { data?: string; mimeType?: string } | undefined
-          if (inline?.data) {
-            const usage = track((res as unknown as Record<string, unknown>)['usageMetadata'])
-            return {
-              bytes: Buffer.from(inline.data, 'base64'),
-              mimeType: inline.mimeType ?? 'image/png',
-              usage,
-            }
-          }
-        }
-        throw new ModelResponseError(`${opts.label}: no inline image data in response`)
-      }
-
-      const res = await call(opts.label, config.IMAGE_TIMEOUT_MS, () =>
-        ai.models.generateImages({
-          model,
-          prompt: opts.prompt,
-          config: { numberOfImages: 1, aspectRatio: opts.aspectRatio },
-        })
-      )
-      const first = (
-        (res as { generatedImages?: { image?: { imageBytes?: string } }[] })?.generatedImages ?? []
-      )[0]
-      const data = first?.image?.imageBytes
-      if (!data) throw new ModelResponseError(`${opts.label}: no image bytes in response`)
-      const usage = track((res as Record<string, unknown>)['usageMetadata'])
-      return { bytes: Buffer.from(data, 'base64'), mimeType: 'image/png', usage }
     },
 
     async listModels(): Promise<string[]> {

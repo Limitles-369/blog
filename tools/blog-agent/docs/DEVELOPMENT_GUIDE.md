@@ -88,6 +88,7 @@ npm run start -- run --force-publish --dry-run
 ### Dependencies
 
 The project has **3 runtime dependencies**:
+
 - `@google/genai` — Gemini SDK
 - `gray-matter` — YAML frontmatter parsing
 - `zod` — Runtime validation
@@ -171,7 +172,7 @@ cat /tmp/agent-state/state/published.json | jq .
 
 ### Inspect Artifacts
 
-After a `--dry-run`, generated posts and hero images are in `.artifacts/<runId>/`:
+After a `--dry-run`, generated MDX and debug output are in `.artifacts/<runId>/`:
 
 ```bash
 ls -la .artifacts/
@@ -194,9 +195,9 @@ If model IDs are wrong, `doctor` prints the full list of available models.
 
 ## Local Development Flags
 
-| Flag | Purpose |
-|------|---------|
-| `DRY_RUN=true` | Never commit or open a PR |
-| `OFFLINE=true` | Skip network gates (external link checking) |
-| `LOG_LEVEL=debug` | Verbose logging including API call details |
-| `--research-only` | Queue topics without drafting |
+| Flag              | Purpose                                     |
+| ----------------- | ------------------------------------------- |
+| `DRY_RUN=true`    | Never commit or open a PR                   |
+| `OFFLINE=true`    | Skip network gates (external link checking) |
+| `LOG_LEVEL=debug` | Verbose logging including API call details  |
+| `--research-only` | Queue topics without drafting               |

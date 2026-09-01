@@ -10,7 +10,7 @@ The agent runs via a GitHub Actions workflow defined in `.github/workflows/blog-
 
 ```yaml
 schedule:
-  - cron: '17 */6 * * *'    # Every 6 hours at :17 past the hour
+  - cron: '17 */6 * * *' # Every 6 hours at :17 past the hour
 ```
 
 The off-hour minute (`:17`) avoids the most contended cron slot on shared runners (top of the hour), where delayed starts are routine.
@@ -45,21 +45,21 @@ concurrency:
 
 ```yaml
 permissions:
-  contents: write       # Push bot/* branches and the state branch
-  pull-requests: write  # Open PRs
+  contents: write # Push bot/* branches and the state branch
+  pull-requests: write # Open PRs
 ```
 
 ## Workflow Steps
 
-| Step | Description |
-|------|-------------|
-| **Checkout** | `actions/checkout@v4` with `fetch-depth: 0` (full history for worktree operations) |
-| **Node.js setup** | `actions/setup-node@v4` with Node 20 |
-| **Install site dependencies** | `corepack enable && yarn install --immutable` (needed for compile gate's symlinked node_modules) |
-| **Install agent dependencies** | `npm ci` in `tools/blog-agent/` |
-| **Verify agent** | `npm run verify` (typecheck + tests) |
-| **Run agent** | `npm run start -- run` with mode and dry-run flags from inputs |
-| **Upload artifacts on failure** | `actions/upload-artifact@v4` — uploads `.artifacts/` for debugging (7-day retention) |
+| Step                            | Description                                                                                      |
+| ------------------------------- | ------------------------------------------------------------------------------------------------ |
+| **Checkout**                    | `actions/checkout@v4` with `fetch-depth: 0` (full history for worktree operations)               |
+| **Node.js setup**               | `actions/setup-node@v4` with Node 20                                                             |
+| **Install site dependencies**   | `corepack enable && yarn install --immutable` (needed for compile gate's symlinked node_modules) |
+| **Install agent dependencies**  | `npm ci` in `tools/blog-agent/`                                                                  |
+| **Verify agent**                | `npm run verify` (typecheck + tests)                                                             |
+| **Run agent**                   | `npm run start -- run` with mode and dry-run flags from inputs                                   |
+| **Upload artifacts on failure** | `actions/upload-artifact@v4` — uploads `.artifacts/` for debugging (7-day retention)             |
 
 ## Environment Variables in CI
 
@@ -67,7 +67,6 @@ permissions:
 env:
   GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
   GEMINI_TEXT_MODEL: ${{ vars.GEMINI_TEXT_MODEL || 'gemini-3.5-flash' }}
-  GEMINI_IMAGE_MODEL: ${{ vars.GEMINI_IMAGE_MODEL || 'imagen-4.0-generate-001' }}
   GEMINI_EMBEDDING_MODEL: ${{ vars.GEMINI_EMBEDDING_MODEL || 'gemini-embedding-2-preview' }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   GITHUB_REPOSITORY: ${{ github.repository }}
@@ -109,25 +108,27 @@ There is no production build step. The agent is executed directly via `tsx` (Typ
 ## Timeout
 
 The workflow has a **30-minute timeout** (`timeout-minutes: 30`). Individual API calls have their own timeouts:
+
 - Text generation: 120s
 - Image generation: 180s
 - Total run ceiling: 1,200s (20 min)
 
 ## Failure Handling
 
-| Failure | CI Outcome |
-|---------|-----------|
-| Cadence gate blocks (normal) | Exit 0 (green) |
-| Research-only mode | Exit 0 (green) |
-| Dry run | Exit 0 (green) |
-| Gate validation failure | Exit 1 (red) — artifacts uploaded |
-| API quota exhausted | Exit 1 (red) |
-| State corruption | Exit 1 (red) |
-| Unhandled exception | Exit 1 (red) — artifacts uploaded |
+| Failure                      | CI Outcome                        |
+| ---------------------------- | --------------------------------- |
+| Cadence gate blocks (normal) | Exit 0 (green)                    |
+| Research-only mode           | Exit 0 (green)                    |
+| Dry run                      | Exit 0 (green)                    |
+| Gate validation failure      | Exit 1 (red) — artifacts uploaded |
+| API quota exhausted          | Exit 1 (red)                      |
+| State corruption             | Exit 1 (red)                      |
+| Unhandled exception          | Exit 1 (red) — artifacts uploaded |
 
 ## Rollback
 
 There is no automated rollback mechanism. If a bad post is merged:
+
 1. Revert the merge commit
 2. Mark the entry as `rejected` in `state/published.json` on the state branch (or let reconciliation handle it when the PR is closed)
 
@@ -135,4 +136,4 @@ There is no automated rollback mechanism. If a bad post is merged:
 
 - **Stall detection:** After 12 consecutive idle runs (~72 hours), the agent logs an error
 - **Run outcome logging:** Each run reports `published/not-published`, reason, slug, PR URL, queue depth, and token usage
-- **Artifact upload on failure:** `.artifacts/` contains generated MDX, hero images, and debug output
+- **Artifact upload on failure:** `.artifacts/` contains generated MDX and debug output

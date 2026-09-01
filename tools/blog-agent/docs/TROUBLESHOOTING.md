@@ -5,6 +5,7 @@
 ### `Could not locate the blog repo root`
 
 **Problem:**
+
 ```
 Error: Could not locate the blog repo root above /path/to/blog-agent (looked for contentlayer.config.ts)
 ```
@@ -14,6 +15,7 @@ Error: Could not locate the blog repo root above /path/to/blog-agent (looked for
 **Solution:** Ensure the agent is located at `tools/blog-agent/` within the blog repository that contains `contentlayer.config.ts` at its root.
 
 **Verification:**
+
 ```bash
 ls ../../contentlayer.config.ts
 ```
@@ -23,6 +25,7 @@ ls ../../contentlayer.config.ts
 ### `Invalid environment: GEMINI_API_KEY`
 
 **Problem:**
+
 ```
 ConfigError: Invalid environment:
   GEMINI_API_KEY: String must contain at least 1 character(s)
@@ -31,12 +34,14 @@ ConfigError: Invalid environment:
 **Cause:** Required environment variables are missing or empty.
 
 **Solution:**
+
 ```bash
 cp .env.example .env
 # Edit .env and fill in GEMINI_API_KEY, GEMINI_TEXT_MODEL, etc.
 ```
 
 **Verification:**
+
 ```bash
 npm run doctor
 ```
@@ -50,6 +55,7 @@ npm run doctor
 **Cause:** Invalid combination of values in `.env`.
 
 **Solution:** Check and correct the related values. All cross-field constraints:
+
 - `TARGET_WORDS_MIN ≤ TARGET_WORDS_MAX`
 - `DEDUP_ESCALATE_COSINE ≤ DEDUP_REJECT_COSINE`
 - `RETRY_BASE_MS ≤ RETRY_CAP_MS`
@@ -65,9 +71,11 @@ npm run doctor
 **Cause:** Model names change frequently. A previously valid ID may have been retired.
 
 **Solution:**
+
 ```bash
 npm run doctor
 ```
+
 The command prints all available models. Update `.env` with a valid model ID.
 
 ---
@@ -75,6 +83,7 @@ The command prints all available models. Update `.env` with a valid model ID.
 ### `429: RESOURCE_EXHAUSTED` (Quota Exhausted)
 
 **Problem:**
+
 ```
 ERROR  text generation failed  err=429: You exceeded your current quota
 ```
@@ -116,6 +125,7 @@ ERROR  text generation failed  err=429: You exceeded your current quota
 **Cause:** Likely a process killed during write (though the atomic write pattern should prevent this) or manual editing error.
 
 **Solution:**
+
 1. Check out the state branch: `git fetch origin blog-agent-state && git worktree add /tmp/state blog-agent-state`
 2. Inspect and fix the corrupted file
 3. Commit and push the fix
@@ -131,26 +141,33 @@ ERROR  text generation failed  err=429: You exceeded your current quota
 **Possible causes and checks:**
 
 1. **Kill switch enabled:**
+
    ```bash
    cat state/control.json  # Check enabled: true
    ```
 
 2. **Inflight entry blocking:**
+
    ```bash
    cat state/published.json | jq '.entries[] | select(.state == "inflight")'
    ```
+
    Fix: The next non-dry-run should reconcile it. If not, manually set the entry's state to `rejected`.
 
 3. **Open PR blocking:**
+
    ```bash
    cat state/published.json | jq '.entries[] | select(.state == "open")'
    ```
+
    Fix: Merge or close the open PR.
 
 4. **Queue empty:**
+
    ```bash
    cat state/queue.json | jq '.entries | length'
    ```
+
    Fix: Run with `--research-only` to populate the queue.
 
 5. **Cadence gate:**
@@ -168,6 +185,7 @@ ERROR  text generation failed  err=429: You exceeded your current quota
 **Cause:** Local modifications in the post or image directories.
 
 **Solution:**
+
 ```bash
 git status data/blog public/static/images/blog
 # Either commit, stash, or discard the changes
@@ -185,6 +203,7 @@ git stash  # or git checkout -- data/blog public/static/images/blog
 **Cause:** The generated MDX is invalid, references undefined variables, or triggers a contentlayer error.
 
 **Solution:** Check the `.artifacts/<runId>/<slug>.mdx` file for issues. Common problems:
+
 - Unknown JSX components (should be caught by the component allowlist gate first)
 - Invalid frontmatter (should be caught by the frontmatter gate first)
 - YAML parsing errors
@@ -206,6 +225,7 @@ git stash  # or git checkout -- data/blog public/static/images/blog
 ### `gh pr create was refused`
 
 **Problem:**
+
 ```
 Error: gh pr create was refused. Enable Settings -> Actions -> General ->
 "Allow GitHub Actions to create and approve pull requests"
@@ -236,6 +256,7 @@ Error: gh pr create was refused. Enable Settings -> Actions -> General ->
 **Cause:** `gh` is not authenticated, or the network is unavailable.
 
 **Solution:** The agent deliberately refuses to continue rather than assuming "nothing is open" (which would duplicate posts). Ensure `gh` is authenticated:
+
 ```bash
 gh auth status
 ```

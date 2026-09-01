@@ -6,8 +6,19 @@ import type { Logger } from '../lib/logger.js'
 import { runCompileGate } from './compile.js'
 import { assetsExistGate, externalLinksGate, internalLinksGate } from './assets.js'
 import { makeContentQualityGate, makeDateGate, frontmatterGate } from './content.js'
-import { componentAllowlistGate, headingHierarchyGate, secretScanGate } from './structure.js'
-import { summarize, type Gate, type GateContext, type GateFinding, type GateReport } from './types.js'
+import {
+  componentAllowlistGate,
+  headingHierarchyGate,
+  mediaFreeGate,
+  secretScanGate,
+} from './structure.js'
+import {
+  summarize,
+  type Gate,
+  type GateContext,
+  type GateFinding,
+  type GateReport,
+} from './types.js'
 
 export interface RunGatesInput {
   slug: string
@@ -59,6 +70,7 @@ export async function runGates(input: RunGatesInput): Promise<RunGatesResult> {
     makeDateGate(input.today),
     headingHierarchyGate,
     componentAllowlistGate,
+    mediaFreeGate,
     secretScanGate,
     assetsExistGate,
     internalLinksGate,

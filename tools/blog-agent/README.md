@@ -1,10 +1,10 @@
 # Blog Agent
 
-An autonomous research-and-draft pipeline that researches topics, writes blog posts, and opens pull requests on a daily cadence. It uses Gemini AI for content generation, metadata extraction, and hero image creation.
+An autonomous research-and-draft pipeline that researches topics, writes image-free MDX blog posts, and opens pull requests on a daily cadence. It uses Gemini AI for content generation and metadata extraction.
 
 ## Overview
 
-`blog-agent` is designed to run automatically (e.g., via a cron job or CI/CD workflow), maintain a queue of potential topics, research them, draft an MDX blog post, generate hero images, and open a Pull Request against the main repository.
+`blog-agent` is designed to run automatically (e.g., via a cron job or CI/CD workflow), maintain a queue of potential topics, research them, draft an image-free MDX blog post, and open a Pull Request against the main repository.
 
 ## Installation
 
@@ -23,9 +23,9 @@ cp .env.example .env
 ```
 
 ### Essential Environment Variables
+
 - `GEMINI_API_KEY`: Your Google Gemini API Key.
 - `GEMINI_TEXT_MODEL`: ID for the text generation model (e.g., `gemini-1.5-pro`).
-- `GEMINI_IMAGE_MODEL`: ID for the hero image generation model.
 - `GEMINI_EMBEDDING_MODEL`: ID for the embeddings model.
 - `GITHUB_TOKEN` & `GITHUB_REPOSITORY`: For PR creation and state reconciliation.
 
@@ -37,11 +37,10 @@ The agent exposes several CLI commands via `npm run start`:
 
 - **`npm run start -- run`**
   The main pipeline command. Researches topics, scores them, and if the cadence gate allows, drafts and opens a PR for a new post.
-  *Options:*
+  _Options:_
   - `--dry-run`: Generate and validate, but never commit or open a PR.
   - `--research-only`: Refresh the topic queue and stop.
   - `--force-publish`: Bypass the once-per-day cadence gate.
-  
 - **`npm run start -- doctor`**
   Validates the environment, verifies model IDs, and probes SDK capabilities (useful for checking API quotas and capabilities).
 

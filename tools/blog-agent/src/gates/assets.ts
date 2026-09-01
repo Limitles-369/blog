@@ -77,7 +77,11 @@ export const internalLinksGate: Gate = {
             findings.push(err(this.name, `Internal link to unknown post: ${href}`, lineNo))
           } else if (!href.endsWith('/')) {
             findings.push(
-              warn(this.name, `Internal link should end with a slash (trailingSlash: true): ${href}`, lineNo)
+              warn(
+                this.name,
+                `Internal link should end with a slash (trailingSlash: true): ${href}`,
+                lineNo
+              )
             )
           }
           continue

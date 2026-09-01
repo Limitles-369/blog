@@ -28,7 +28,7 @@ import { createStateStore } from './state/store.js'
  *   corpus  — list what the agent sees on disk; no API calls
  */
 
-const SUBCOMMANDS = ['run', 'generate', 'doctor', 'style', 'corpus'] as const
+const SUBCOMMANDS = ['run', 'generate', 'doctor', 'style', 'corpus', 'topics'] as const
 type Subcommand = (typeof SUBCOMMANDS)[number]
 
 /** Minimal .env loader — avoids a dependency for one well-understood format. */
@@ -64,6 +64,7 @@ function usage(): string {
     '  doctor    Validate env, verify model IDs, probe SDK capabilities',
     '  style     Print the style brief derived from data/blog/*.mdx',
     '  corpus    Summarise the posts currently on disk',
+    '  topics    Manage the persisted topic queue (collect/list/skip/retry)',
     '',
     'Options:',
     '  --dry-run           Generate and validate, but never commit or open a PR',
@@ -179,7 +180,6 @@ async function cmdDoctor(config: Config, client: GeminiClient, logger: Logger): 
 
   for (const [label, id] of [
     ['GEMINI_TEXT_MODEL', config.GEMINI_TEXT_MODEL],
-    ['GEMINI_IMAGE_MODEL', config.GEMINI_IMAGE_MODEL],
     ['GEMINI_EMBEDDING_MODEL', config.GEMINI_EMBEDDING_MODEL],
   ] as const) {
     const found = available.includes(id)
@@ -201,10 +201,6 @@ async function cmdDoctor(config: Config, client: GeminiClient, logger: Logger): 
     const res = await client.generateText({
       prompt: 'Reply with the single word: ready',
       label: 'doctor.text',
-      // Thinking tokens are drawn from maxOutputTokens, so a tight cap on a
-      // thinking model leaves nothing for the visible reply. Disable thinking
-      // for this probe and still leave generous headroom.
-      thinkingBudget: 0,
       maxOutputTokens: 256,
       temperature: 0,
     })
@@ -301,7 +297,8 @@ async function cmdDoctor(config: Config, client: GeminiClient, logger: Logger): 
           '        discovery stages (a) and (b) can be merged into one call\n'
       )
     } catch (cause) {
-      const quota = isExhaustedQuota(cause) || isExhaustedQuota((cause as { cause?: unknown })?.cause)
+      const quota =
+        isExhaustedQuota(cause) || isExhaustedQuota((cause as { cause?: unknown })?.cause)
       if (quota) {
         process.stdout.write('  ??    grounding + JSON in one call — inconclusive (quota)\n')
       } else {
@@ -317,7 +314,9 @@ async function cmdDoctor(config: Config, client: GeminiClient, logger: Logger): 
 
   const usage = client.totalUsage()
   logger.info('doctor complete', { failures, ...usage })
-  process.stdout.write(`\n${failures === 0 ? 'All checks passed.' : `${failures} check(s) failed.`}\n`)
+  process.stdout.write(
+    `\n${failures === 0 ? 'All checks passed.' : `${failures} check(s) failed.`}\n`
+  )
   return failures === 0 ? 0 : 1
 }
 
@@ -422,6 +421,92 @@ async function cmdRun(args: RunArgs): Promise<number> {
   }
 }
 
+async function withTopicState<T>(
+  config: Config,
+  logger: Logger,
+  action: (store: ReturnType<typeof createStateStore>) => Promise<T>
+): Promise<T> {
+  const checkout = await checkoutState({
+    repoRoot: paths.root,
+    branch: config.STATE_BRANCH,
+    githubToken: config.GITHUB_TOKEN,
+    botName: 'blog-agent[bot]',
+    botEmail: 'blog-agent@users.noreply.github.com',
+    logger,
+  })
+  try {
+    return await action(createStateStore(checkout.dir, logger))
+  } finally {
+    await checkout.cleanup()
+  }
+}
+
+async function cmdTopics(args: {
+  config: Config
+  logger: Logger
+  json: boolean
+  action?: string
+  id?: string
+}): Promise<number> {
+  const action = args.action ?? 'list'
+  if (action === 'collect') {
+    return cmdRun({
+      config: args.config,
+      logger: args.logger,
+      dryRun: false,
+      researchOnly: true,
+      forcePublish: false,
+      json: args.json,
+    })
+  }
+
+  return withTopicState(args.config, args.logger, async (store) => {
+    const state = await store.load()
+    if (action === 'list') {
+      if (args.json) {
+        process.stdout.write(JSON.stringify(state.queue.entries, null, 2) + '\n')
+      } else if (state.queue.entries.length === 0) {
+        process.stdout.write('Topic queue is empty. Run: npm run start -- topics collect\n')
+      } else {
+        state.queue.entries
+          .slice()
+          .sort((a, b) => b.score - a.score)
+          .forEach((entry, index) => {
+            process.stdout.write(
+              `${index + 1}. [${entry.category}] ${entry.title}\n` +
+                `   score: ${entry.score}  source: ${entry.sourceNames.join(', ') || entry.sources[0] || 'unknown'}\n` +
+                `   discovered: ${entry.discoveredAt}${entry.scheduledDate ? `  scheduled: ${entry.scheduledDate}` : ''}\n` +
+                `   id: ${entry.id}\n`
+            )
+          })
+      }
+      return 0
+    }
+
+    if (!args.id) {
+      process.stderr.write(`topics ${action} requires a topic id\n`)
+      return 1
+    }
+    const index = state.queue.entries.findIndex((entry) => entry.id === args.id)
+    if (index === -1) {
+      process.stderr.write(`Topic not found: ${args.id}\n`)
+      return 1
+    }
+    const entries = state.queue.entries.slice()
+    const current = entries[index]
+    if (!current) return 1
+    if (action === 'skip') entries.splice(index, 1)
+    else if (action === 'retry') entries[index] = { ...current, attempts: 0 }
+    else {
+      process.stderr.write(`Unknown topics action: ${action}\n`)
+      return 1
+    }
+    await store.saveQueue({ ...state.queue, entries })
+    process.stdout.write(`${action === 'skip' ? 'Skipped' : 'Reset retry count for'} ${args.id}\n`)
+    return 0
+  })
+}
+
 async function main(): Promise<number> {
   const argv = process.argv.slice(2)
   const command = argv[0] as Subcommand | undefined
@@ -450,6 +535,10 @@ async function main(): Promise<number> {
 
   if (command === 'doctor') return cmdDoctor(config, createGeminiClient(config, logger), logger)
 
+  if (command === 'topics') {
+    return cmdTopics({ config, logger, json, action: argv[1], id: argv[2] })
+  }
+
   if (command === 'run') {
     return cmdRun({ config, logger, dryRun, researchOnly, forcePublish, json })
   }
@@ -467,6 +556,8 @@ main()
     process.exitCode = code
   })
   .catch((cause: unknown) => {
-    process.stderr.write(`\nUnhandled failure: ${cause instanceof Error ? cause.stack : String(cause)}\n`)
+    process.stderr.write(
+      `\nUnhandled failure: ${cause instanceof Error ? cause.stack : String(cause)}\n`
+    )
     process.exitCode = 1
   })

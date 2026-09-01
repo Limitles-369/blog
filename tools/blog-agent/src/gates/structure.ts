@@ -25,7 +25,11 @@ export const headingHierarchyGate: Gate = {
     for (const h of headings) {
       if (h.depth === 1) {
         findings.push(
-          err(this.name, `H1 "${h.text}" is not allowed; the title already renders as H1`, loc(h.line))
+          err(
+            this.name,
+            `H1 "${h.text}" is not allowed; the title already renders as H1`,
+            loc(h.line)
+          )
         )
         continue
       }
@@ -71,20 +75,38 @@ export const headingHierarchyGate: Gate = {
  * deploy, after the PR has merged. Only the components in
  * components/MDXComponents.tsx plus intrinsic HTML tags can resolve.
  */
-const ALLOWED_COMPONENTS = new Set([
-  'Image',
-  'TOCInline',
-  'BlogNewsletterForm',
-  'a',
-  'pre',
-  'table',
-])
+const ALLOWED_COMPONENTS = new Set(['TOCInline', 'BlogNewsletterForm', 'a', 'pre', 'table'])
 
 const ALLOWED_HTML = new Set([
-  'p', 'div', 'span', 'strong', 'em', 'code', 'br', 'hr', 'ul', 'ol', 'li',
-  'blockquote', 'h2', 'h3', 'h4', 'h5', 'h6', 'thead', 'tbody', 'tr', 'th',
-  'td', 'figure', 'figcaption', 'sup', 'sub', 'del', 'kbd', 'small', 'video',
-  'source', 'picture', 'img',
+  'p',
+  'div',
+  'span',
+  'strong',
+  'em',
+  'code',
+  'br',
+  'hr',
+  'ul',
+  'ol',
+  'li',
+  'blockquote',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'thead',
+  'tbody',
+  'tr',
+  'th',
+  'td',
+  'figure',
+  'figcaption',
+  'sup',
+  'sub',
+  'del',
+  'kbd',
+  'small',
 ])
 
 export const componentAllowlistGate: Gate = {
@@ -119,6 +141,30 @@ export const componentAllowlistGate: Gate = {
             )
           )
         }
+      }
+    }
+    return findings
+  },
+}
+
+/** The current publication is intentionally media-free. Keep generated MDX
+ * aligned with the image-free layouts and avoid broken or unused assets. */
+export const mediaFreeGate: Gate = {
+  name: 'media-free',
+  run(ctx): GateFinding[] {
+    const findings: GateFinding[] = []
+    if (ctx.frontmatter['images'] !== undefined) {
+      findings.push(err(this.name, 'Frontmatter images are not allowed on this image-free site'))
+    }
+    for (const [i, line] of ctx.body.split('\n').entries()) {
+      if (/!\[[^\]]*\]\([^)]*\)|<\/?(?:img|image|picture|source|video)\b/i.test(line)) {
+        findings.push(
+          err(
+            this.name,
+            'Images and video are not allowed in generated posts',
+            i + 1 + ctx.bodyLineOffset
+          )
+        )
       }
     }
     return findings

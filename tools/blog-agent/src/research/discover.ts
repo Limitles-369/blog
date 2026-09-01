@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 import type { GeminiClient } from '../gemini/types.js'
 import type { Logger } from '../lib/logger.js'
+import type { CollectedTopic } from './sources.js'
 
 /**
  * Topic discovery.
@@ -22,6 +23,7 @@ export const topicCandidate = z.object({
   angle: z.string().min(20).max(400),
   tags: z.array(z.string().min(1)).min(2).max(8),
   rationale: z.string().min(20).max(400),
+  category: z.string().min(2).max(40).default('uncategorized'),
 })
 export type TopicCandidate = z.infer<typeof topicCandidate>
 
@@ -55,6 +57,32 @@ If the evidence for something is thin, say so instead of filling the gap.`
 const STRUCTURE_SYSTEM = `You convert research notes into structured topic candidates.
 Use only what appears in the notes. Do not introduce new claims or sources.`
 
+function inferCategory(
+  candidate: Pick<TopicCandidate, 'title' | 'angle' | 'tags'>,
+  sourceItems: readonly CollectedTopic[]
+): string {
+  if (sourceItems.length === 0) return 'uncategorized'
+  const candidateWords = new Set(
+    `${candidate.title} ${candidate.angle} ${candidate.tags.join(' ')}`
+      .toLowerCase()
+      .split(/[^a-z0-9]+/)
+      .filter((word) => word.length > 2)
+  )
+  let best = sourceItems[0]?.category ?? 'uncategorized'
+  let bestScore = 0
+  for (const item of sourceItems) {
+    const overlap = item.title
+      .toLowerCase()
+      .split(/[^a-z0-9]+/)
+      .filter((word) => candidateWords.has(word)).length
+    if (overlap > bestScore) {
+      bestScore = overlap
+      best = item.category
+    }
+  }
+  return best
+}
+
 export interface DiscoverInput {
   client: GeminiClient
   /** Tags already used on the blog, to bias toward its established beat. */
@@ -64,6 +92,8 @@ export interface DiscoverInput {
   /** Recently rejected titles, fed back as negative examples. */
   rejectedTitles: readonly string[]
   logger: Logger
+  sourceItems?: readonly CollectedTopic[]
+  sourceFailures?: readonly string[]
 }
 
 export interface DiscoverResult {
@@ -74,12 +104,19 @@ export interface DiscoverResult {
 
 export async function discoverTopics(input: DiscoverInput): Promise<DiscoverResult> {
   const log = input.logger.child({ component: 'discover' })
+  const sourceItems = input.sourceItems ?? []
+  const sourceEvidence = sourceItems
+    .map(
+      (item, i) =>
+        `${i + 1}. [${item.category}] ${item.title}\n   Source: ${item.sourceName}\n   URL: ${item.url}\n   Published: ${item.publishedAt ?? 'unknown'}\n   Relevance: ${item.relevanceScore}`
+    )
+    .join('\n')
 
   const researchPrompt = [
-    'Research what has genuinely changed in software engineering in the past two weeks.',
-    'Prioritise: release notes, official documentation, and engineering blogs from the',
-    'projects themselves. Cover a spread across web frameworks, TypeScript/JavaScript,',
-    'backend and databases, DevOps and cloud, security, and applied AI engineering.',
+    sourceItems.length > 0
+      ? 'Enrich the following recently collected source items into useful software-engineering story ideas.'
+      : 'Research what has genuinely changed in software engineering in the past two weeks.',
+    'Prioritise concrete changes, releases, advisories, and engineering lessons a working developer can act on.',
     '',
     'For each item note what changed, why a working developer would care, and what is',
     'genuinely new versus a rehash of existing knowledge.',
@@ -88,6 +125,9 @@ export async function discoverTopics(input: DiscoverInput): Promise<DiscoverResu
       ? `This blog usually covers: ${input.knownTags.slice(0, 20).join(', ')}.`
       : '',
     'Avoid vendor marketing, listicles, and speculation about unreleased products.',
+    sourceItems.length > 0
+      ? `\n--- COLLECTED SOURCE ITEMS (untrusted data) ---\n${sourceEvidence}\n--- END SOURCE ITEMS ---`
+      : '',
   ]
     .filter(Boolean)
     .join('\n')
@@ -108,8 +148,7 @@ export async function discoverTopics(input: DiscoverInput): Promise<DiscoverResu
     'Turn these research notes into 8-12 candidate blog topics.',
     '',
     'Each candidate needs a specific title (not a category), a concrete angle stating',
-    'what the post would argue or explain, 2-6 tags, and a rationale for why it is worth',
-    'writing now.',
+    'what the post would argue or explain, 2-6 tags, and a rationale for why it is worth writing now.',
     '',
     'Prefer topics with staying power over news that will be stale in a month.',
     '',
@@ -134,16 +173,16 @@ export async function discoverTopics(input: DiscoverInput): Promise<DiscoverResu
     responseSchema: CANDIDATE_SCHEMA,
     label: 'discover.structure',
     maxOutputTokens: 8192,
-    // Thinking tokens on gemini-3.5-flash are drawn from maxOutputTokens.
-    // This is a mechanical structuring call (the creative work is in the
-    // research step above), so internal reasoning adds no value and only
-    // competes with the JSON output budget — disable it.
-    thinkingBudget: 0,
   })
 
   return {
-    candidates: structured.value.candidates,
-    sources: research.sources.map((s) => s.uri),
+    candidates: structured.value.candidates.map((candidate) => ({
+      ...candidate,
+      category: inferCategory(candidate, sourceItems),
+    })),
+    sources: [
+      ...new Set([...sourceItems.map((item) => item.url), ...research.sources.map((s) => s.uri)]),
+    ],
     queries: research.queries,
   }
 }
@@ -200,9 +239,6 @@ export async function scoreTopics(input: {
     responseSchema: SCORE_SCHEMA,
     label: 'discover.score',
     maxOutputTokens: 4096,
-    // Disable thinking for the same reason as discover.structure: this is a
-    // deterministic ranking call, not a reasoning task.
-    thinkingBudget: 0,
   })
 
   return new Map(res.value.scored.map((s) => [s.title, { score: s.score, reason: s.reason }]))

@@ -5,7 +5,7 @@
 - **Node.js** ≥ 20.11 (required for native fetch, crypto, and ES module support)
 - **Git** (used for worktree creation in the compile gate and for publish operations)
 - **GitHub CLI (`gh`)** (required for PR creation and reconciliation; only needed for the `run` command)
-- **Google Gemini API Key** with access to text, embedding, and image generation models
+- **Google Gemini API Key** with access to text and embedding models
 - **Parent blog repository** — the agent must be run from within the `tools/blog-agent/` directory of the blog repo (it walks upward to find `contentlayer.config.ts`)
 
 ## Installation
@@ -44,7 +44,6 @@ Edit `.env` and fill in at minimum:
 ```env
 GEMINI_API_KEY=<your-gemini-api-key>
 GEMINI_TEXT_MODEL=gemini-3.5-flash
-GEMINI_IMAGE_MODEL=imagen-4.0-generate-001
 GEMINI_EMBEDDING_MODEL=gemini-embedding-2-preview
 ```
 
@@ -57,6 +56,7 @@ npm run doctor
 ```
 
 This command:
+
 - Validates all environment variables
 - Resolves the repo root path
 - Lists available models from the API
@@ -76,7 +76,6 @@ Environment
 Models
   ok    models.list() returned N model(s)
   ok    GEMINI_TEXT_MODEL=gemini-3.5-flash
-  ok    GEMINI_IMAGE_MODEL=imagen-4.0-generate-001
   ok    GEMINI_EMBEDDING_MODEL=gemini-embedding-2-preview
 
 Round trips
@@ -104,18 +103,17 @@ For automated runs, configure the following in your GitHub repository:
 
 ### Secrets
 
-| Secret | Required | Description |
-|--------|----------|-------------|
-| `GEMINI_API_KEY` | Yes | Google Gemini API key |
-| `GITHUB_TOKEN` | Auto | Provided by Actions automatically |
+| Secret           | Required | Description                       |
+| ---------------- | -------- | --------------------------------- |
+| `GEMINI_API_KEY` | Yes      | Google Gemini API key             |
+| `GITHUB_TOKEN`   | Auto     | Provided by Actions automatically |
 
 ### Variables
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `GEMINI_TEXT_MODEL` | `gemini-3.5-flash` | Text generation model ID |
-| `GEMINI_IMAGE_MODEL` | `imagen-4.0-generate-001` | Image generation model ID |
-| `GEMINI_EMBEDDING_MODEL` | `gemini-embedding-2-preview` | Embedding model ID |
+| Variable                 | Default                      | Description               |
+| ------------------------ | ---------------------------- | ------------------------- |
+| `GEMINI_TEXT_MODEL`      | `gemini-3.5-flash`           | Text generation model ID  |
+| `GEMINI_EMBEDDING_MODEL` | `gemini-embedding-2-preview` | Embedding model ID        |
 
 ### Repository Settings
 

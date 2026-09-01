@@ -164,11 +164,10 @@ export function makeReconcileDeps(input: {
     },
 
     async listRemoteBranches(): Promise<string[]> {
-      const { stdout } = await exec(
-        'git',
-        ['ls-remote', '--heads', 'origin', `${branchPrefix}*`],
-        { cwd: repoRoot, maxBuffer: 8 * 1024 * 1024 }
-      )
+      const { stdout } = await exec('git', ['ls-remote', '--heads', 'origin', `${branchPrefix}*`], {
+        cwd: repoRoot,
+        maxBuffer: 8 * 1024 * 1024,
+      })
       return stdout
         .split('\n')
         .map((line) => line.split('refs/heads/')[1]?.trim())

@@ -76,10 +76,7 @@ export async function checkDuplicate(input: DedupInput): Promise<DedupVerdict> {
   const { candidate, config, logger } = input
   const log = logger.child({ component: 'dedup' })
 
-  const known = [
-    ...knownFromCorpus(input.corpus),
-    ...knownFromState(input.published, input.queue),
-  ]
+  const known = [...knownFromCorpus(input.corpus), ...knownFromState(input.published, input.queue)]
   if (known.length === 0) return { duplicate: false, reason: 'no prior topics', score: 0 }
 
   // Tier 1 — normalised title equality. No API call.
@@ -152,7 +149,7 @@ export async function checkDuplicate(input: DedupInput): Promise<DedupVerdict> {
 
   if (best >= config.DEDUP_ESCALATE_COSINE) {
     const match = known.find((k) => k.label === bestLabel)
-    if (match && (await judge(candidate, match, input.client))) {
+    if (match && (await safeJudge(candidate, match, input.client, log))) {
       return {
         duplicate: true,
         reason: `judged as covering the same ground as ${bestLabel} (cosine ${best.toFixed(3)})`,
@@ -209,8 +206,28 @@ export async function judge(
     ].join('\n'),
     label: 'dedup.judge',
     temperature: 0,
-    thinkingBudget: 0,
-    maxOutputTokens: 64,
+    // Gemini 3.x may spend most of a small budget on internal reasoning even
+    // for this one-word decision. Leave enough room for visible YES/NO output.
+    maxOutputTokens: 512,
   })
   return /\byes\b/i.test(res.text)
+}
+
+async function safeJudge(
+  candidate: DedupCandidate,
+  match: { title: string; text: string },
+  client: GeminiClient,
+  logger: Logger
+): Promise<boolean> {
+  try {
+    return await judge(candidate, match, client)
+  } catch (cause) {
+    // The judge is only a tie-breaker between the embedding thresholds. If a
+    // provider is overloaded or returns no visible text, keep the candidate
+    // and let the next run retry rather than losing the whole source sweep.
+    logger.warn('dedup judge unavailable; keeping candidate', {
+      error: cause instanceof Error ? cause.message : String(cause),
+    })
+    return false
+  }
 }

@@ -25,6 +25,7 @@ function entry(over: Partial<PublishedEntry> = {}): PublishedEntry {
     dedupText: 'some post',
     textHash: 'a'.repeat(64),
     tags: ['x'],
+    category: 'uncategorized',
     state: 'open',
     createdAt: iso('2026-08-01T00:00:00Z'),
     updatedAt: iso('2026-08-01T00:00:00Z'),
@@ -73,7 +74,6 @@ describe('decidePublish', () => {
     expect(d.reason).toBe('disabled')
   })
 
-
   // The regression this whole design exists to prevent. With an elapsed-time
   // test, a 00:15 publish makes the next day's 00:05 run miss by 10 minutes,
   // pushing the anchor 6h later each time until a day is skipped entirely.
@@ -116,6 +116,18 @@ describe('decidePublish', () => {
     expect(d.publish).toBe(true)
   })
 
+  it('accepts a runtime policy from validated configuration', () => {
+    const last = new Date('2026-08-08T12:00:00Z')
+    const d = decidePublish({
+      now: new Date(last.getTime() + 10 * 3_600_000),
+      cadence: cadence({ lastPublishedDay: '2026-08-08', lastPublishedAt: last.toISOString() }),
+      published: emptyPublished,
+      enabled,
+      policy: { minGapMs: 10 * 3_600_000, maxOpenPrs: 1 },
+    })
+    expect(d.publish).toBe(true)
+  })
+
   // Without this cap, a merged backlog puts several back-dated posts live at
   // once — the burst pattern the daily cap is meant to prevent.
   it('refuses while max bot PRs are still open', () => {
@@ -124,7 +136,7 @@ describe('decidePublish', () => {
       cadence: cadence({ lastPublishedDay: '2026-08-08' }),
       published: withEntries([
         entry({ state: 'open', prNumber: 7 }),
-        entry({ state: 'open', prNumber: 8 })
+        entry({ state: 'open', prNumber: 8 }),
       ]),
       enabled,
     })

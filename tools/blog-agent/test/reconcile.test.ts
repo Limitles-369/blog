@@ -14,6 +14,7 @@ function entry(over: Partial<PublishedEntry> = {}): PublishedEntry {
     dedupText: 'a post',
     textHash: 'a'.repeat(64),
     tags: ['x'],
+    category: 'uncategorized',
     state: 'inflight',
     branch: 'bot/post-a-post-9001',
     runId: '9001',

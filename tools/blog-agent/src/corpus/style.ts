@@ -31,7 +31,7 @@ const median = (xs: number[]): number => {
   if (xs.length === 0) return 0
   const s = [...xs].sort((a, b) => a - b)
   const mid = Math.floor(s.length / 2)
-  return s.length % 2 === 1 ? (s[mid] as number) : (((s[mid - 1] as number) + (s[mid] as number)) / 2)
+  return s.length % 2 === 1 ? (s[mid] as number) : ((s[mid - 1] as number) + (s[mid] as number)) / 2
 }
 
 const percentile = (xs: number[], p: number): number => {
@@ -147,7 +147,8 @@ export function computeStyleMetrics(all: readonly CorpusPost[]): StyleMetrics {
       median: median(paragraphWordCounts),
       p90: percentile(paragraphWordCounts, 90),
     },
-    codeFenceRatio: posts.length === 0 ? 0 : posts.filter((p) => /^```/m.test(p.body)).length / posts.length,
+    codeFenceRatio:
+      posts.length === 0 ? 0 : posts.filter((p) => /^```/m.test(p.body)).length / posts.length,
     bulletsPerPost: {
       median: median(posts.map((p) => (p.body.match(/^\s*[-*]\s+/gm) ?? []).length)),
     },
@@ -174,9 +175,7 @@ export function renderStyleBrief(m: StyleMetrics): string {
     `- Length: ${m.words.median} words median (range ${m.words.min}-${m.words.max}).`,
     `- Structure: ${m.h2PerPost.median} H2 sections median; ${m.h3PerPost.median} H3 median.`,
     `- NEVER emit an H1. The page renders the title from frontmatter.`,
-    m.opensWithHeading
-      ? `- Posts may open with a heading.`
-      : `- Open with prose, not a heading.`,
+    m.opensWithHeading ? `- Posts may open with a heading.` : `- Open with prose, not a heading.`,
     `- Paragraphs: ${m.paragraphWords.median} words median, ${m.paragraphWords.p90} at p90. Keep them short.`,
     `- Bullet lists: ~${m.bulletsPerPost.median} bullet lines per post.`,
     `- External links: ~${m.externalLinksPerPost.median} per post, to primary sources.`,

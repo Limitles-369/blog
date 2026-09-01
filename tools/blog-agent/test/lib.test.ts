@@ -1,7 +1,21 @@
 import { describe, expect, it } from 'vitest'
 
-import { cosine, dequantize, l2Normalize, nearest, quantize, VectorMismatchError } from '../src/lib/vector.js'
-import { imageKey, jaccard, normalizeForCompare, slugify, slugifyBounded, tokenSet } from '../src/lib/slugify.js'
+import {
+  cosine,
+  dequantize,
+  l2Normalize,
+  nearest,
+  quantize,
+  VectorMismatchError,
+} from '../src/lib/vector.js'
+import {
+  imageKey,
+  jaccard,
+  normalizeForCompare,
+  slugify,
+  slugifyBounded,
+  tokenSet,
+} from '../src/lib/slugify.js'
 
 describe('slugify', () => {
   it('produces filename-safe kebab-case', () => {
@@ -54,7 +68,9 @@ describe('imageKey', () => {
 
 describe('jaccard', () => {
   it('is 1 for identical token sets', () => {
-    expect(jaccard(tokenSet('react server components'), tokenSet('React Server Components'))).toBe(1)
+    expect(jaccard(tokenSet('react server components'), tokenSet('React Server Components'))).toBe(
+      1
+    )
   })
 
   it('ignores word order and stopwords', () => {

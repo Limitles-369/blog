@@ -8,15 +8,17 @@ import { computeStyleMetrics } from '../corpus/style.js'
 import { runGates } from '../gates/run.js'
 import type { GeminiClient } from '../gemini/types.js'
 import type { Logger } from '../lib/logger.js'
-import { imageKey, slugifyBounded } from '../lib/slugify.js'
+import { slugifyBounded } from '../lib/slugify.js'
 import { serializePost } from '../mdx/serialize.js'
 import type { Frontmatter } from '../mdx/frontmatter.js'
 import { formatMdx, publishPost } from '../publish/pr.js'
 import { makeReconcileDeps, reconcile } from '../publish/reconcile.js'
 import { checkDuplicate } from '../research/dedup.js'
 import { discoverTopics, scoreTopics, type TopicCandidate } from '../research/discover.js'
+import { readDiscoveryKeywords, filterAndScoreTopics } from '../research/scoring.js'
+import { collectTopics } from '../research/sources.js'
 import { buildOutline, critiqueDraft, refineDraft, writeDraft } from '../stages/draft.js'
-import { generateHero, generateMetadata } from '../stages/metadata.js'
+import { generateMetadata } from '../stages/metadata.js'
 import { decidePublish, isStalled, utcDay } from '../state/cadence.js'
 import { STATE_VERSION, type PublishedEntry, type QueueEntry } from '../state/schema.js'
 import { dedupHash, dedupText, type StateStore } from '../state/store.js'
@@ -128,6 +130,10 @@ export async function runPipeline(opts: RunOptions): Promise<RunOutcomeShape> {
           cadence: state.cadence,
           published: state.published,
           enabled: state.control.enabled,
+          policy: {
+            minGapMs: config.MIN_HOURS_BETWEEN_POSTS * 3_600_000,
+            maxOpenPrs: config.MAX_OPEN_BOT_PRS,
+          },
         })
 
   if (!decision.publish) {
@@ -143,7 +149,22 @@ export async function runPipeline(opts: RunOptions): Promise<RunOutcomeShape> {
     return outcome({ reason: decision.reason, queued: state.queue.entries.length })
   }
 
-  const next = state.queue.entries.slice().sort((a, b) => b.score - a.score)[0]
+  const categoryCounts = new Map<string, number>()
+  for (const entry of state.published.entries) {
+    categoryCounts.set(entry.category, (categoryCounts.get(entry.category) ?? 0) + 1)
+  }
+  const recentCategory = [...state.published.entries]
+    .sort((a, b) => Date.parse(b.updatedAt) - Date.parse(a.updatedAt))
+    .find((entry) => entry.category !== 'uncategorized')?.category
+  const next = state.queue.entries
+    .map((entry) => ({
+      entry,
+      selectionScore:
+        entry.score -
+        (categoryCounts.get(entry.category) ?? 0) * 8 -
+        (entry.category === recentCategory ? 15 : 0),
+    }))
+    .sort((a, b) => b.selectionScore - a.selectionScore)[0]?.entry
   if (!next) {
     log.warn('nothing in the queue to write')
     return outcome({ reason: 'empty-queue' })
@@ -157,6 +178,7 @@ export async function runPipeline(opts: RunOptions): Promise<RunOutcomeShape> {
     angle: next.angle,
     tags: next.tags,
     rationale: '',
+    category: next.category,
   }
 
   const ctx = {
@@ -192,23 +214,12 @@ export async function runPipeline(opts: RunOptions): Promise<RunOutcomeShape> {
   )
 
   const slug = ensureUniqueSlug(meta.slug, allSlugs(corpus))
-  const key = imageKey(slug)
-  const heroRel = path.posix.join('static/images/blog', key, 'hero.png')
-
-  let hero = null
-  if (config.GENERATE_HERO_IMAGE) {
-    hero = await log.timed('hero image', () =>
-      generateHero({ client, subject: meta.imagePrompt, logger: log })
-    )
-  }
-
   const frontmatter: Frontmatter = {
     title: meta.title,
     date: utcDay(now),
     tags: meta.tags,
     draft: false,
     summary: meta.summary,
-    ...(hero ? { images: [`/${heroRel}`] } : {}),
     authors: [config.POST_AUTHOR],
     layout: config.POST_LAYOUT,
   }
@@ -220,18 +231,10 @@ export async function runPipeline(opts: RunOptions): Promise<RunOutcomeShape> {
   const source = await formatMdx(paths.root, raw, log)
 
   // ---- Phase 5: gates ----------------------------------------------------
-  const assets = new Map<string, string>()
-  const heroAbs = path.join(paths.artifacts, runId, 'hero.png')
-  if (hero) {
-    await writeArtifact(heroAbs, hero.bytes)
-    assets.set(path.posix.join('public', heroRel), heroAbs)
-  }
-
   const report = await log.timed('gates', () =>
     runGates({
       slug,
       source,
-      assets,
       today: utcDay(now),
       minWords: config.TARGET_WORDS_MIN,
       maxWords: config.TARGET_WORDS_MAX,
@@ -264,6 +267,7 @@ export async function runPipeline(opts: RunOptions): Promise<RunOutcomeShape> {
     dedupText: dedupText({ title: meta.title, summary: meta.summary, tags: meta.tags }),
     textHash: dedupHash(dedupText({ title: meta.title, summary: meta.summary, tags: meta.tags })),
     tags: meta.tags,
+    category: next.category,
     state: 'inflight',
     branch: `${config.BRANCH_PREFIX}${slug}-${runId}`,
     runId,
@@ -285,7 +289,7 @@ export async function runPipeline(opts: RunOptions): Promise<RunOutcomeShape> {
     title: meta.title,
     source,
     postPath: path.posix.join('data/blog', `${slug}.mdx`),
-    assets: hero ? new Map([[path.posix.join('public', heroRel), hero.bytes]]) : new Map(),
+    assets: new Map(),
     ...(report.tagData ? { tagData: report.tagData } : {}),
     report,
     sources: next.sources,
@@ -348,6 +352,16 @@ async function refreshQueue(input: {
     .slice(-10)
     .map((e) => e.title)
 
+  const collected = await log.timed('source-collect', () => collectTopics(input.now))
+  const keywordMap = await readDiscoveryKeywords()
+  const sourceItems = filterAndScoreTopics(collected.items, keywordMap, input.now)
+  log.info('source collection complete', {
+    attempted: collected.attempted,
+    succeeded: collected.succeeded,
+    candidates: sourceItems.length,
+    failures: collected.failures.length,
+  })
+
   const discovered = await log.timed('discover', () =>
     discoverTopics({
       client: input.client,
@@ -355,6 +369,8 @@ async function refreshQueue(input: {
       avoidTitles,
       rejectedTitles,
       logger: log,
+      sourceItems,
+      sourceFailures: collected.failures,
     })
   )
 
@@ -384,6 +400,7 @@ async function refreshQueue(input: {
     }
 
     const text = dedupText({ title: candidate.title, summary, tags: candidate.tags })
+    const supportingItems = sourceItems.filter((item) => item.category === candidate.category)
     fresh.push({
       id: `${input.runId}-${fresh.length}`,
       title: candidate.title,
@@ -391,8 +408,11 @@ async function refreshQueue(input: {
       dedupText: text,
       textHash: dedupHash(text),
       tags: candidate.tags,
+      category: candidate.category,
+      sourceNames: [...new Set(supportingItems.map((item) => item.sourceName))],
       score: scores.get(candidate.title)?.score ?? 50,
-      sources: discovered.sources,
+      sources:
+        supportingItems.length > 0 ? supportingItems.map((item) => item.url) : discovered.sources,
       discoveredAt: input.now.toISOString(),
       attempts: 0,
     })
