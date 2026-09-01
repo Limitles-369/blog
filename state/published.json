@@ -13,6 +13,7 @@
         "refactoring",
         "software-architecture"
       ],
+      "category": "uncategorized",
       "state": "merged",
       "branch": "bot/post-eliminating-dead-side-effect-imports-typescript-20260809-a04a23e1",
       "prNumber": 6,
@@ -34,6 +35,7 @@
         "devops",
         "cloud-security"
       ],
+      "category": "uncategorized",
       "state": "rejected",
       "branch": "bot/post-hardening-github-actions-oidc-trust-policies-20260809-8ff530f7",
       "prNumber": 7,
@@ -52,6 +54,7 @@
         "refactoring",
         "software-architecture"
       ],
+      "category": "uncategorized",
       "state": "merged",
       "branch": "bot/post-automating-legacy-guis-claude-3-5-20260809-ba0b0d6c",
       "prNumber": 8,
@@ -71,6 +74,7 @@
         "refactoring",
         "software-architecture"
       ],
+      "category": "uncategorized",
       "state": "merged",
       "branch": "bot/post-typescript-5-8-esm-commonjs-interop-20260809-e854e22e",
       "prNumber": 9,
@@ -88,6 +92,7 @@
         "typescript",
         "software-architecture"
       ],
+      "category": "uncategorized",
       "state": "merged",
       "branch": "bot/post-streaming-deepseek-r1-reasoning-ollama-20260810-803681f6",
       "prNumber": 10,
@@ -105,6 +110,7 @@
         "typescript",
         "software-architecture"
       ],
+      "category": "uncategorized",
       "state": "merged",
       "branch": "bot/post-native-tool-calling-ollama-20260810-aa5a2440",
       "prNumber": 11,
@@ -122,6 +128,7 @@
         "typescript",
         "javascript"
       ],
+      "category": "uncategorized",
       "state": "merged",
       "branch": "bot/post-native-typescript-node-v23-6-0-20260811-0d20eb2d",
       "prNumber": 13,
@@ -141,6 +148,7 @@
         "refactoring",
         "software-architecture"
       ],
+      "category": "uncategorized",
       "state": "merged",
       "branch": "bot/post-future-proof-typescript-5-8-erasable-syntax-20260811-94854ba8",
       "prNumber": 15,
@@ -159,6 +167,7 @@
         "web-performance",
         "software-architecture"
       ],
+      "category": "uncategorized",
       "state": "merged",
       "branch": "bot/post-speed-up-builds-typescript-5-8-nocheck-20260812-638fc413",
       "prNumber": 16,
@@ -178,6 +187,7 @@
         "web-performance",
         "software-architecture"
       ],
+      "category": "uncategorized",
       "state": "merged",
       "branch": "bot/post-bypassing-js-drivers-native-query-compilation-20260814-cd38bf3c",
       "prNumber": 17,
@@ -196,6 +206,7 @@
         "javascript",
         "typescript"
       ],
+      "category": "uncategorized",
       "state": "merged",
       "branch": "bot/post-multi-runtime-app-architecture-vite-6-20260815-b799d513",
       "prNumber": 18,
@@ -214,6 +225,7 @@
         "refactoring",
         "software-architecture"
       ],
+      "category": "uncategorized",
       "state": "merged",
       "branch": "bot/post-prevent-broken-imports-typescript-watch-mode-20260816-ee1768b0",
       "prNumber": 19,
@@ -232,6 +244,7 @@
         "web-performance",
         "software-architecture"
       ],
+      "category": "uncategorized",
       "state": "merged",
       "branch": "bot/post-prisma-6-type-safe-raw-sql-20260817-da94f521",
       "prNumber": 20,
@@ -250,6 +263,7 @@
         "software-architecture",
         "web-performance"
       ],
+      "category": "uncategorized",
       "state": "merged",
       "branch": "bot/post-zero-dependency-postgres-bun-20260818-592dd103",
       "prNumber": 21,
@@ -267,6 +281,7 @@
         "software-architecture",
         "web-performance"
       ],
+      "category": "uncategorized",
       "state": "merged",
       "branch": "bot/post-debugging-minimal-containers-image-bloat-20260819-1a968639",
       "prNumber": 22,
@@ -274,6 +289,24 @@
       "createdAt": "2026-08-19T07:09:33.595Z",
       "updatedAt": "2026-08-19T13:13:47.595Z",
       "publishedAt": "2026-08-19T08:16:04Z"
+    },
+    {
+      "slug": "scaling-dns-caches-100-tb-memory-reductions",
+      "title": "Scaling DNS Caches: 100 TB Memory Reductions",
+      "dedupText": "Scaling DNS Caches: 100 TB Memory Reductions\nLearn how to reduce massive DNS cache memory footprints by up to 100 TB through data structure refactoring, object alignment, and pointer reduction strategies.\nrefactoring, software-architecture, web-performance",
+      "textHash": "e76c2d7c22bdbd34e95a3efb038f6b22af5e261042868907e285cd5de2bd128a",
+      "tags": [
+        "software-architecture",
+        "web-performance",
+        "refactoring"
+      ],
+      "category": "cloud-infrastructure",
+      "state": "open",
+      "branch": "bot/post-scaling-dns-caches-100-tb-memory-reductions-20260901-f99be4b4",
+      "runId": "20260901-f99be4b4",
+      "createdAt": "2026-09-01T20:02:13.320Z",
+      "updatedAt": "2026-09-01T20:05:44.155Z",
+      "prNumber": 23
     }
   ]
 }
