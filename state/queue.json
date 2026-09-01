@@ -12,6 +12,8 @@
         "Web Development",
         "Caching"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 85,
       "sources": [],
       "discoveredAt": "2026-08-09T20:50:15.477Z",
@@ -28,6 +30,8 @@
         "Database",
         "Backend"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 75,
       "sources": [],
       "discoveredAt": "2026-08-09T20:50:15.477Z",
@@ -44,6 +48,8 @@
         "CI/CD",
         "Supply Chain"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 70,
       "sources": [],
       "discoveredAt": "2026-08-09T20:50:15.477Z",
@@ -60,6 +66,8 @@
         "Ollama",
         "LLM"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 82,
       "sources": [],
       "discoveredAt": "2026-08-09T20:50:15.477Z",
@@ -76,6 +84,8 @@
         "Build Tools",
         "Monorepo"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 65,
       "sources": [],
       "discoveredAt": "2026-08-09T20:50:15.477Z",
@@ -92,6 +102,8 @@
         "JavaScript",
         "Refactoring"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 88,
       "sources": [],
       "discoveredAt": "2026-08-09T21:03:16.210Z",
@@ -108,6 +120,8 @@
         "DevOps",
         "Cloud Native"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 70,
       "sources": [],
       "discoveredAt": "2026-08-09T21:03:16.210Z",
@@ -124,6 +138,8 @@
         "LLM",
         "Local Inference"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 85,
       "sources": [],
       "discoveredAt": "2026-08-09T21:03:16.210Z",
@@ -140,6 +156,8 @@
         "Open Source",
         "Supply Chain"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 78,
       "sources": [],
       "discoveredAt": "2026-08-09T21:03:16.210Z",
@@ -156,6 +174,8 @@
         "Web Standards",
         "UX"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 72,
       "sources": [],
       "discoveredAt": "2026-08-09T21:03:16.210Z",
@@ -172,6 +192,8 @@
         "Web Performance",
         "Server Components"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 85,
       "sources": [],
       "discoveredAt": "2026-08-09T21:05:58.766Z",
@@ -188,6 +210,8 @@
         "DevOps",
         "Infrastructure"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 80,
       "sources": [],
       "discoveredAt": "2026-08-09T21:05:58.766Z",
@@ -205,6 +229,8 @@
         "SQL",
         "Data Engineering"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 88,
       "sources": [],
       "discoveredAt": "2026-08-09T21:08:02.225Z",
@@ -222,6 +248,8 @@
         "CI/CD",
         "Infrastructure"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 85,
       "sources": [],
       "discoveredAt": "2026-08-09T21:08:02.225Z",
@@ -239,6 +267,8 @@
         "Networking",
         "Systems Programming"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 80,
       "sources": [],
       "discoveredAt": "2026-08-09T21:08:02.225Z",
@@ -256,6 +286,8 @@
         "LangChain",
         "LlamaIndex"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 82,
       "sources": [],
       "discoveredAt": "2026-08-09T21:35:28.664Z",
@@ -272,6 +304,8 @@
         "npm",
         "DevOps"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 65,
       "sources": [],
       "discoveredAt": "2026-08-09T21:35:28.664Z",
@@ -288,6 +322,8 @@
         "Next.js",
         "Performance"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 75,
       "sources": [],
       "discoveredAt": "2026-08-09T21:35:28.664Z",
@@ -304,6 +340,8 @@
         "LangGraph",
         "Architecture"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 85,
       "sources": [],
       "discoveredAt": "2026-08-09T21:36:22.714Z",
@@ -320,6 +358,8 @@
         "Security",
         "Database"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 75,
       "sources": [],
       "discoveredAt": "2026-08-09T21:36:22.714Z",
@@ -336,6 +376,8 @@
         "Next.js",
         "Web Development"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 65,
       "sources": [],
       "discoveredAt": "2026-08-09T21:36:22.714Z",
@@ -353,6 +395,8 @@
         "Rust",
         "Web Performance"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 82,
       "sources": [],
       "discoveredAt": "2026-08-09T21:45:37.502Z",
@@ -370,6 +414,8 @@
         "Cloud Architecture",
         "Serverless"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 87,
       "sources": [],
       "discoveredAt": "2026-08-09T21:45:37.502Z",
@@ -387,6 +433,8 @@
         "Databases",
         "Web Performance"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 58,
       "sources": [],
       "discoveredAt": "2026-08-09T21:45:37.502Z",
@@ -404,6 +452,8 @@
         "DevOps",
         "Backend"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 68,
       "sources": [],
       "discoveredAt": "2026-08-09T21:45:37.502Z",
@@ -421,6 +471,8 @@
         "Frontend Architecture",
         "Web Standards"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 64,
       "sources": [],
       "discoveredAt": "2026-08-09T21:45:37.502Z",
@@ -438,6 +490,8 @@
         "Frontend Development",
         "Web Design"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 85,
       "sources": [],
       "discoveredAt": "2026-08-10T10:40:32.354Z",
@@ -454,6 +508,8 @@
         "Type System",
         "Web Development"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 80,
       "sources": [],
       "discoveredAt": "2026-08-10T10:40:32.354Z",
@@ -471,6 +527,8 @@
         "DevOps",
         "JavaScript"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 83,
       "sources": [],
       "discoveredAt": "2026-08-10T10:40:32.354Z",
@@ -487,6 +545,8 @@
         "Databases",
         "Performance Optimization"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 65,
       "sources": [],
       "discoveredAt": "2026-08-10T10:40:32.354Z",
@@ -504,6 +564,8 @@
         "Databases",
         "Embedded Systems"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 88,
       "sources": [],
       "discoveredAt": "2026-08-10T10:40:32.354Z",
@@ -520,6 +582,8 @@
         "Databases",
         "Data Integrity"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 72,
       "sources": [],
       "discoveredAt": "2026-08-10T10:40:32.354Z",
@@ -537,6 +601,8 @@
         "Debugging",
         "Type Safety"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 88,
       "sources": [],
       "discoveredAt": "2026-08-10T15:34:08.604Z",
@@ -555,6 +621,8 @@
         "NestJS",
         "gRPC"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 85,
       "sources": [],
       "discoveredAt": "2026-08-10T15:34:08.604Z",
@@ -572,6 +640,8 @@
         "Storage",
         "Cloud Infrastructure"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 58,
       "sources": [],
       "discoveredAt": "2026-08-10T15:34:08.604Z",
@@ -589,6 +659,8 @@
         "DevOps",
         "OIDC"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 50,
       "sources": [],
       "discoveredAt": "2026-08-10T15:34:08.604Z",
@@ -606,6 +678,8 @@
         "Type Safety",
         "Web Development"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 88,
       "sources": [],
       "discoveredAt": "2026-08-11T16:04:40.869Z",
@@ -623,6 +697,8 @@
         "System Architecture",
         "High Availability"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 75,
       "sources": [],
       "discoveredAt": "2026-08-11T16:04:40.869Z",
@@ -641,6 +717,8 @@
         "Web Performance",
         "UX Design"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 58,
       "sources": [],
       "discoveredAt": "2026-08-11T16:04:40.869Z",
@@ -659,6 +737,8 @@
         "Software Architecture",
         "Cloud Costs"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 50,
       "sources": [],
       "discoveredAt": "2026-08-11T16:04:40.869Z",
@@ -675,6 +755,8 @@
         "Frontend Architecture",
         "State Management"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 88,
       "sources": [],
       "discoveredAt": "2026-08-11T17:16:25.669Z",
@@ -691,6 +773,8 @@
         "Component Design",
         "Frontend"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 80,
       "sources": [],
       "discoveredAt": "2026-08-11T17:16:25.669Z",
@@ -707,6 +791,8 @@
         "Turbopack",
         "Developer Experience"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 70,
       "sources": [],
       "discoveredAt": "2026-08-11T17:16:25.669Z",
@@ -723,6 +809,8 @@
         "Node.js",
         "Migration"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 85,
       "sources": [],
       "discoveredAt": "2026-08-11T17:16:25.669Z",
@@ -739,6 +827,8 @@
         "Monorepos",
         "Workspaces"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 78,
       "sources": [],
       "discoveredAt": "2026-08-11T17:16:25.669Z",
@@ -755,6 +845,8 @@
         "JavaScript",
         "Frontend"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 70,
       "sources": [],
       "discoveredAt": "2026-08-11T19:29:37.929Z",
@@ -771,6 +863,8 @@
         "JavaScript",
         "Frontend"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 82,
       "sources": [],
       "discoveredAt": "2026-08-11T19:29:37.929Z",
@@ -787,6 +881,8 @@
         "JavaScript",
         "Frontend"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 75,
       "sources": [],
       "discoveredAt": "2026-08-11T19:29:37.929Z",
@@ -804,6 +900,8 @@
         "Vercel AI SDK",
         "Zod"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 75,
       "sources": [],
       "discoveredAt": "2026-08-12T13:52:30.865Z",
@@ -821,6 +919,8 @@
         "Vercel AI SDK",
         "Server Actions"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 80,
       "sources": [],
       "discoveredAt": "2026-08-12T13:52:30.865Z",
@@ -838,6 +938,8 @@
         "JavaScript",
         "Git"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 65,
       "sources": [],
       "discoveredAt": "2026-08-14T13:49:02.523Z",
@@ -855,6 +957,8 @@
         "Automation",
         "Software Architecture"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 72,
       "sources": [],
       "discoveredAt": "2026-08-14T13:49:02.523Z",
@@ -872,6 +976,8 @@
         "API Design",
         "JSON"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 78,
       "sources": [],
       "discoveredAt": "2026-08-14T13:49:02.523Z",
@@ -889,6 +995,8 @@
         "JavaScript Runtimes",
         "SWC"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 78,
       "sources": [],
       "discoveredAt": "2026-08-15T13:02:30.807Z",
@@ -905,6 +1013,8 @@
         "javascript",
         "regex"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 82,
       "sources": [],
       "discoveredAt": "2026-08-16T07:03:31.279Z",
@@ -921,6 +1031,8 @@
         "javascript",
         "type-safety"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 85,
       "sources": [],
       "discoveredAt": "2026-08-16T07:03:31.279Z",
@@ -938,6 +1050,8 @@
         "npm",
         "devops"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 60,
       "sources": [],
       "discoveredAt": "2026-08-16T07:03:31.279Z",
@@ -955,6 +1069,8 @@
         "node-js",
         "javascript"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 75,
       "sources": [],
       "discoveredAt": "2026-08-16T07:03:31.279Z",
@@ -971,6 +1087,8 @@
         "ESM",
         "Build Tools"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 88,
       "sources": [],
       "discoveredAt": "2026-08-17T07:20:14.443Z",
@@ -987,6 +1105,8 @@
         "Database",
         "DevOps"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 82,
       "sources": [],
       "discoveredAt": "2026-08-17T07:20:14.443Z",
@@ -1004,6 +1124,8 @@
         "Performance",
         "Backend"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 65,
       "sources": [],
       "discoveredAt": "2026-08-17T13:10:06.985Z",
@@ -1021,6 +1143,8 @@
         "API",
         "Web Development"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 78,
       "sources": [],
       "discoveredAt": "2026-08-17T13:10:06.985Z",
@@ -1037,6 +1161,8 @@
         "AI Engineering",
         "Local LLM"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 78,
       "sources": [],
       "discoveredAt": "2026-08-18T07:52:46.018Z",
@@ -1054,6 +1180,8 @@
         "databases",
         "backend"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 85,
       "sources": [],
       "discoveredAt": "2026-08-19T07:09:33.595Z",
@@ -1071,6 +1199,8 @@
         "AI Engineering",
         "API Design"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 75,
       "sources": [],
       "discoveredAt": "2026-08-19T13:13:47.595Z",
@@ -1088,9 +1218,196 @@
         "DevOps",
         "Testing"
       ],
+      "category": "uncategorized",
+      "sourceNames": [],
       "score": 85,
       "sources": [],
       "discoveredAt": "2026-08-19T13:13:47.595Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260901-3821344e-0",
+      "title": "Data Structure Refactoring for Massive DNS Caches: Lessons from 100 TB Memory Reductions",
+      "angle": "Explains how object alignment, pointer reduction, and data structure selection in high-concurrency caching layers reduce memory overhead in high-throughput network services.",
+      "dedupText": "Data Structure Refactoring for Massive DNS Caches: Lessons from 100 TB Memory Reductions\nExplains how object alignment, pointer reduction, and data structure selection in high-concurrency caching layers reduce memory overhead in high-throughput network services.\nArchitecture, Backend, Caching, Memory Optimization, Performance",
+      "textHash": "5c8dc3514eca69e4568f4cced28eb66117d4375c496645a905ced72f5fd8f26d",
+      "tags": [
+        "Architecture",
+        "Caching",
+        "Backend",
+        "Memory Optimization",
+        "Performance"
+      ],
+      "category": "cloud-infrastructure",
+      "sourceNames": [
+        "Cloudflare Blog",
+        "Kubernetes Releases"
+      ],
+      "score": 88,
+      "sources": [
+        "https://blog.cloudflare.com/botbase-for-operators/",
+        "https://blog.cloudflare.com/cache-transcoding/",
+        "https://blog.cloudflare.com/cloudflare-blog-uses-emdash/",
+        "https://blog.cloudflare.com/introducing-adaptive-intelligence/",
+        "https://blog.cloudflare.com/revisiting-spectre-attacks-on-workers/",
+        "https://blog.cloudflare.com/dns-cache-memory-optimization-1111/",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.37.0",
+        "https://blog.cloudflare.com/bot-preference-sync/",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.36.4",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.35.8",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.34.11",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.37.0-rc.1",
+        "https://blog.cloudflare.com/task-based-oauth-consent/"
+      ],
+      "discoveredAt": "2026-09-01T19:47:35.109Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260901-3821344e-1",
+      "title": "Reducing Edge Cache Storage Footprints with Zstandard Transcoding in Pingora Proxies",
+      "angle": "Explores how pairing the Pingora proxy framework with Zstandard compression reduces HTTP cache storage usage and payload sizes across edge networks.",
+      "dedupText": "Reducing Edge Cache Storage Footprints with Zstandard Transcoding in Pingora Proxies\nExplores how pairing the Pingora proxy framework with Zstandard compression reduces HTTP cache storage usage and payload sizes across edge networks.\nArchitecture, Networking, Pingora, Web Performance, Zstandard",
+      "textHash": "5497ad0b5bc1fdac90b5fd89c1014a85ee917b89efe5a0217b98bef087762e10",
+      "tags": [
+        "Pingora",
+        "Zstandard",
+        "Web Performance",
+        "Architecture",
+        "Networking"
+      ],
+      "category": "cloud-infrastructure",
+      "sourceNames": [
+        "Cloudflare Blog",
+        "Kubernetes Releases"
+      ],
+      "score": 85,
+      "sources": [
+        "https://blog.cloudflare.com/botbase-for-operators/",
+        "https://blog.cloudflare.com/cache-transcoding/",
+        "https://blog.cloudflare.com/cloudflare-blog-uses-emdash/",
+        "https://blog.cloudflare.com/introducing-adaptive-intelligence/",
+        "https://blog.cloudflare.com/revisiting-spectre-attacks-on-workers/",
+        "https://blog.cloudflare.com/dns-cache-memory-optimization-1111/",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.37.0",
+        "https://blog.cloudflare.com/bot-preference-sync/",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.36.4",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.35.8",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.34.11",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.37.0-rc.1",
+        "https://blog.cloudflare.com/task-based-oauth-consent/"
+      ],
+      "discoveredAt": "2026-09-01T19:47:35.109Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260901-3821344e-2",
+      "title": "Mitigating Spectre Side-Channel Vulnerabilities in Multi-Tenant JavaScript Isolate Runtimes",
+      "angle": "Examines defensive measures including timer precision adjustments and process isolation to secure untrusted user code execution in JavaScript isolate environments.",
+      "dedupText": "Mitigating Spectre Side-Channel Vulnerabilities in Multi-Tenant JavaScript Isolate Runtimes\nExamines defensive measures including timer precision adjustments and process isolation to secure untrusted user code execution in JavaScript isolate environments.\nArchitecture, Edge Computing, JavaScript, Security, V8",
+      "textHash": "4bb7f830f6022279421990dc2a0c726d08c284a8faa7be53a52fe78e69fd0e0c",
+      "tags": [
+        "Security",
+        "JavaScript",
+        "Edge Computing",
+        "V8",
+        "Architecture"
+      ],
+      "category": "cloud-infrastructure",
+      "sourceNames": [
+        "Cloudflare Blog",
+        "Kubernetes Releases"
+      ],
+      "score": 86,
+      "sources": [
+        "https://blog.cloudflare.com/botbase-for-operators/",
+        "https://blog.cloudflare.com/cache-transcoding/",
+        "https://blog.cloudflare.com/cloudflare-blog-uses-emdash/",
+        "https://blog.cloudflare.com/introducing-adaptive-intelligence/",
+        "https://blog.cloudflare.com/revisiting-spectre-attacks-on-workers/",
+        "https://blog.cloudflare.com/dns-cache-memory-optimization-1111/",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.37.0",
+        "https://blog.cloudflare.com/bot-preference-sync/",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.36.4",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.35.8",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.34.11",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.37.0-rc.1",
+        "https://blog.cloudflare.com/task-based-oauth-consent/"
+      ],
+      "discoveredAt": "2026-09-01T19:47:35.109Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260901-3821344e-3",
+      "title": "Maintaining Pipeline Integrity Across Patch Releases: Node.js LTS and TypeScript Updates",
+      "angle": "Explains practical strategies for tracking maintenance updates in core tools like Node.js v24.20.0 and TypeScript 7.0.2 to prevent subtle build regressions.",
+      "dedupText": "Maintaining Pipeline Integrity Across Patch Releases: Node.js LTS and TypeScript Updates\nExplains practical strategies for tracking maintenance updates in core tools like Node.js v24.20.0 and TypeScript 7.0.2 to prevent subtle build regressions.\nDevOps, JavaScript, Node.js, Tooling, TypeScript",
+      "textHash": "1ede1ea1d30131ca53037aa4d405677a7ee5e66ffac2538fd5c3f34bea89f1fa",
+      "tags": [
+        "Node.js",
+        "TypeScript",
+        "DevOps",
+        "JavaScript",
+        "Tooling"
+      ],
+      "category": "cloud-infrastructure",
+      "sourceNames": [
+        "Cloudflare Blog",
+        "Kubernetes Releases"
+      ],
+      "score": 52,
+      "sources": [
+        "https://blog.cloudflare.com/botbase-for-operators/",
+        "https://blog.cloudflare.com/cache-transcoding/",
+        "https://blog.cloudflare.com/cloudflare-blog-uses-emdash/",
+        "https://blog.cloudflare.com/introducing-adaptive-intelligence/",
+        "https://blog.cloudflare.com/revisiting-spectre-attacks-on-workers/",
+        "https://blog.cloudflare.com/dns-cache-memory-optimization-1111/",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.37.0",
+        "https://blog.cloudflare.com/bot-preference-sync/",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.36.4",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.35.8",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.34.11",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.37.0-rc.1",
+        "https://blog.cloudflare.com/task-based-oauth-consent/"
+      ],
+      "discoveredAt": "2026-09-01T19:47:35.109Z",
+      "attempts": 0
+    },
+    {
+      "id": "20260901-3821344e-4",
+      "title": "Modernizing Dev Server Defaults with Vite v8.2.2 and create-vite v9.2.0 Scaffolding",
+      "angle": "Analyzes how updates to create-vite templates set baseline tooling configurations and maintain clean dev server setups for frontend applications.",
+      "dedupText": "Modernizing Dev Server Defaults with Vite v8.2.2 and create-vite v9.2.0 Scaffolding\nAnalyzes how updates to create-vite templates set baseline tooling configurations and maintain clean dev server setups for frontend applications.\nFrontend, JavaScript, Tooling, TypeScript, Vite",
+      "textHash": "1f1b411096ffc3ded44231153b9d6f62a4637778e55af6feea18957edc3ecfa6",
+      "tags": [
+        "Vite",
+        "Frontend",
+        "JavaScript",
+        "Tooling",
+        "TypeScript"
+      ],
+      "category": "cloud-infrastructure",
+      "sourceNames": [
+        "Cloudflare Blog",
+        "Kubernetes Releases"
+      ],
+      "score": 45,
+      "sources": [
+        "https://blog.cloudflare.com/botbase-for-operators/",
+        "https://blog.cloudflare.com/cache-transcoding/",
+        "https://blog.cloudflare.com/cloudflare-blog-uses-emdash/",
+        "https://blog.cloudflare.com/introducing-adaptive-intelligence/",
+        "https://blog.cloudflare.com/revisiting-spectre-attacks-on-workers/",
+        "https://blog.cloudflare.com/dns-cache-memory-optimization-1111/",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.37.0",
+        "https://blog.cloudflare.com/bot-preference-sync/",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.36.4",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.35.8",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.34.11",
+        "https://github.com/kubernetes/kubernetes/releases/tag/v1.37.0-rc.1",
+        "https://blog.cloudflare.com/task-based-oauth-consent/"
+      ],
+      "discoveredAt": "2026-09-01T19:47:35.109Z",
       "attempts": 0
     }
   ]
