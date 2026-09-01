@@ -301,12 +301,13 @@
         "refactoring"
       ],
       "category": "cloud-infrastructure",
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-scaling-dns-caches-100-tb-memory-reductions-20260901-f99be4b4",
+      "prNumber": 23,
       "runId": "20260901-f99be4b4",
       "createdAt": "2026-09-01T20:02:13.320Z",
-      "updatedAt": "2026-09-01T20:05:44.155Z",
-      "prNumber": 23
+      "updatedAt": "2026-09-01T20:45:20.698Z",
+      "publishedAt": "2026-09-01T20:43:10Z"
     }
   ]
 }
