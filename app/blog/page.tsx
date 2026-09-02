@@ -1,6 +1,6 @@
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer'
 import { publishedBlogs } from '@/data/publishedBlogs'
-import { genPageMetadata } from 'app/seo'
+import { genPageMetadata } from '@/app/seo'
 import StackBlogLayout from '@/layouts/StackBlogLayout'
 
 const POSTS_PER_PAGE = 9

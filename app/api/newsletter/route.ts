@@ -56,4 +56,3 @@ export async function POST(req: Request) {
   // @ts-ignore
   return plinyHandler(req, { params: {} })
 }
-

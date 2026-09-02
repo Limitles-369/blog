@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { publishedBlogs } from '@/data/publishedBlogs'
 import { categories } from '@/data/categories'
-import { genPageMetadata } from 'app/seo'
+import { genPageMetadata } from '@/app/seo'
 
 export const metadata = genPageMetadata({
   title: 'Categories',

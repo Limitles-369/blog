@@ -39,7 +39,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
           <header className="border-b border-gray-200 py-10 xl:py-16 dark:border-gray-700">
             <div className="mx-auto max-w-4xl text-center">
               <p className="text-accent-strong dark:text-accent mb-5 text-xs font-bold tracking-[0.18em] uppercase">
-                {tags?.[0] || 'Engineering'} // Field note
+                {tags?.[0] || 'Engineering'} {/* Field note */}
               </p>
               <PageTitle>{title}</PageTitle>
               {summary && (
