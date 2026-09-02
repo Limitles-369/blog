@@ -20,6 +20,7 @@ export const metadata: Metadata = {
   description: siteMetadata.description,
   icons: {
     icon: [
+      { url: '/favicon.ico', sizes: '48x48' },
       { url: '/static/favicons/a-button-svgrepo-com.svg', type: 'image/svg+xml' },
       { url: '/static/favicons/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
       { url: '/static/favicons/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
