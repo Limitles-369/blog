@@ -18,6 +18,15 @@ export const metadata: Metadata = {
     template: `%s | ${siteMetadata.title}`,
   },
   description: siteMetadata.description,
+  icons: {
+    icon: [
+      { url: '/static/favicons/a-button-svgrepo-com.svg', type: 'image/svg+xml' },
+      { url: '/static/favicons/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/static/favicons/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+    ],
+    shortcut: '/static/favicons/a-button-svgrepo-com.svg',
+    apple: '/static/favicons/apple-touch-icon.png',
+  },
   openGraph: {
     title: siteMetadata.title,
     description: siteMetadata.description,
@@ -63,6 +72,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       />
       <link
         rel="icon"
+        type="image/svg+xml"
+        href={`${basePath}/static/favicons/a-button-svgrepo-com.svg`}
+      />
+      <link
+        rel="icon"
         type="image/png"
         sizes="32x32"
         href={`${basePath}/static/favicons/favicon-32x32.png`}
@@ -76,7 +90,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <link rel="manifest" href={`${basePath}/static/favicons/site.webmanifest`} />
       <link
         rel="mask-icon"
-        href={`${basePath}/static/favicons/safari-pinned-tab.svg`}
+        href={`${basePath}/static/favicons/a-button-svgrepo-com.svg`}
         color="#FF8A1E"
       />
       <meta name="msapplication-TileColor" content="#FF8A1E" />
