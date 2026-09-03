@@ -320,12 +320,13 @@
         "web-performance"
       ],
       "category": "cloud-infrastructure",
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-mitigating-spectre-javascript-isolate-runtimes-20260902-481355ba",
+      "prNumber": 24,
       "runId": "20260902-481355ba",
       "createdAt": "2026-09-02T19:29:26.211Z",
-      "updatedAt": "2026-09-02T19:30:19.140Z",
-      "prNumber": 24
+      "updatedAt": "2026-09-03T09:09:46.390Z",
+      "publishedAt": "2026-09-02T20:13:43Z"
     }
   ]
 }
