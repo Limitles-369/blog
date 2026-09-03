@@ -1,8 +1,8 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'Akash Samui | Full-Stack Web Developer',
+  title: 'DevLabs',
   author: 'Akash Samui',
-  headerTitle: 'Akash Samui',
+  headerTitle: 'DevLabs',
   description: 'Full-Stack Developer building modern, scalable, and interactive web applications with React, Next.js, Node.js, Flutter, Three.js, and modern web technologies.',
   language: 'en-US',
   theme: 'system', // system, dark or light
