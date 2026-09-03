@@ -327,6 +327,23 @@
       "createdAt": "2026-09-02T19:29:26.211Z",
       "updatedAt": "2026-09-03T09:09:46.390Z",
       "publishedAt": "2026-09-02T20:13:43Z"
+    },
+    {
+      "slug": "zstandard-cache-transcoding-pingora",
+      "title": "Zstandard Cache Transcoding in Pingora",
+      "dedupText": "Zstandard Cache Transcoding in Pingora\nLearn how to reduce edge cache storage footprints and improve hit ratios using Zstandard transcoding within Pingora proxy architectures.\nsoftware-architecture, web-performance",
+      "textHash": "8c12aa1c03787cc0f74ac789a12a7acb44115e5fc6ab3cf91bf8bd628e7e09dc",
+      "tags": [
+        "software-architecture",
+        "web-performance"
+      ],
+      "category": "cloud-infrastructure",
+      "state": "open",
+      "branch": "bot/post-zstandard-cache-transcoding-pingora-20260903-0d5588aa",
+      "runId": "20260903-0d5588aa",
+      "createdAt": "2026-09-03T19:25:39.355Z",
+      "updatedAt": "2026-09-03T19:26:32.706Z",
+      "prNumber": 25
     }
   ]
 }

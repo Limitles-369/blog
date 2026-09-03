@@ -1292,44 +1292,6 @@
       "attempts": 0
     },
     {
-      "id": "20260901-3821344e-1",
-      "title": "Reducing Edge Cache Storage Footprints with Zstandard Transcoding in Pingora Proxies",
-      "angle": "Explores how pairing the Pingora proxy framework with Zstandard compression reduces HTTP cache storage usage and payload sizes across edge networks.",
-      "dedupText": "Reducing Edge Cache Storage Footprints with Zstandard Transcoding in Pingora Proxies\nExplores how pairing the Pingora proxy framework with Zstandard compression reduces HTTP cache storage usage and payload sizes across edge networks.\nArchitecture, Networking, Pingora, Web Performance, Zstandard",
-      "textHash": "5497ad0b5bc1fdac90b5fd89c1014a85ee917b89efe5a0217b98bef087762e10",
-      "tags": [
-        "Pingora",
-        "Zstandard",
-        "Web Performance",
-        "Architecture",
-        "Networking"
-      ],
-      "category": "cloud-infrastructure",
-      "sourceNames": [
-        "Cloudflare Blog",
-        "Kubernetes Releases"
-      ],
-      "score": 85,
-      "priority": 50,
-      "sources": [
-        "https://blog.cloudflare.com/botbase-for-operators/",
-        "https://blog.cloudflare.com/cache-transcoding/",
-        "https://blog.cloudflare.com/cloudflare-blog-uses-emdash/",
-        "https://blog.cloudflare.com/introducing-adaptive-intelligence/",
-        "https://blog.cloudflare.com/revisiting-spectre-attacks-on-workers/",
-        "https://blog.cloudflare.com/dns-cache-memory-optimization-1111/",
-        "https://github.com/kubernetes/kubernetes/releases/tag/v1.37.0",
-        "https://blog.cloudflare.com/bot-preference-sync/",
-        "https://github.com/kubernetes/kubernetes/releases/tag/v1.36.4",
-        "https://github.com/kubernetes/kubernetes/releases/tag/v1.35.8",
-        "https://github.com/kubernetes/kubernetes/releases/tag/v1.34.11",
-        "https://github.com/kubernetes/kubernetes/releases/tag/v1.37.0-rc.1",
-        "https://blog.cloudflare.com/task-based-oauth-consent/"
-      ],
-      "discoveredAt": "2026-09-01T19:47:35.109Z",
-      "attempts": 0
-    },
-    {
       "id": "20260901-3821344e-3",
       "title": "Maintaining Pipeline Integrity Across Patch Releases: Node.js LTS and TypeScript Updates",
       "angle": "Explains practical strategies for tracking maintenance updates in core tools like Node.js v24.20.0 and TypeScript 7.0.2 to prevent subtle build regressions.",
