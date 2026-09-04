@@ -345,6 +345,24 @@
       "createdAt": "2026-09-03T19:25:39.355Z",
       "updatedAt": "2026-09-04T09:07:01.326Z",
       "publishedAt": "2026-09-03T20:52:51Z"
+    },
+    {
+      "slug": "maintaining-pipeline-integrity-nodejs-typescript",
+      "title": "Maintaining Pipeline Integrity in Node.js and TypeScript",
+      "dedupText": "Maintaining Pipeline Integrity in Node.js and TypeScript\nLearn how to prevent regressions and maintain pipeline integrity across runtime patches and TypeScript compiler updates with automated verification.\njavascript, software-architecture, typescript",
+      "textHash": "200d415a9bdb073c72ec3dff207e54800969febf4cfeb16507510d1dae7216b7",
+      "tags": [
+        "typescript",
+        "javascript",
+        "software-architecture"
+      ],
+      "category": "cloud-infrastructure",
+      "state": "open",
+      "branch": "bot/post-maintaining-pipeline-integrity-nodejs-typescript-20260904-ef3b5d66",
+      "runId": "20260904-ef3b5d66",
+      "createdAt": "2026-09-04T19:07:11.937Z",
+      "updatedAt": "2026-09-04T19:09:13.923Z",
+      "prNumber": 26
     }
   ]
 }

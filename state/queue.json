@@ -1292,44 +1292,6 @@
       "attempts": 0
     },
     {
-      "id": "20260901-3821344e-3",
-      "title": "Maintaining Pipeline Integrity Across Patch Releases: Node.js LTS and TypeScript Updates",
-      "angle": "Explains practical strategies for tracking maintenance updates in core tools like Node.js v24.20.0 and TypeScript 7.0.2 to prevent subtle build regressions.",
-      "dedupText": "Maintaining Pipeline Integrity Across Patch Releases: Node.js LTS and TypeScript Updates\nExplains practical strategies for tracking maintenance updates in core tools like Node.js v24.20.0 and TypeScript 7.0.2 to prevent subtle build regressions.\nDevOps, JavaScript, Node.js, Tooling, TypeScript",
-      "textHash": "1ede1ea1d30131ca53037aa4d405677a7ee5e66ffac2538fd5c3f34bea89f1fa",
-      "tags": [
-        "Node.js",
-        "TypeScript",
-        "DevOps",
-        "JavaScript",
-        "Tooling"
-      ],
-      "category": "cloud-infrastructure",
-      "sourceNames": [
-        "Cloudflare Blog",
-        "Kubernetes Releases"
-      ],
-      "score": 52,
-      "priority": 50,
-      "sources": [
-        "https://blog.cloudflare.com/botbase-for-operators/",
-        "https://blog.cloudflare.com/cache-transcoding/",
-        "https://blog.cloudflare.com/cloudflare-blog-uses-emdash/",
-        "https://blog.cloudflare.com/introducing-adaptive-intelligence/",
-        "https://blog.cloudflare.com/revisiting-spectre-attacks-on-workers/",
-        "https://blog.cloudflare.com/dns-cache-memory-optimization-1111/",
-        "https://github.com/kubernetes/kubernetes/releases/tag/v1.37.0",
-        "https://blog.cloudflare.com/bot-preference-sync/",
-        "https://github.com/kubernetes/kubernetes/releases/tag/v1.36.4",
-        "https://github.com/kubernetes/kubernetes/releases/tag/v1.35.8",
-        "https://github.com/kubernetes/kubernetes/releases/tag/v1.34.11",
-        "https://github.com/kubernetes/kubernetes/releases/tag/v1.37.0-rc.1",
-        "https://blog.cloudflare.com/task-based-oauth-consent/"
-      ],
-      "discoveredAt": "2026-09-01T19:47:35.109Z",
-      "attempts": 0
-    },
-    {
       "id": "20260901-3821344e-4",
       "title": "Modernizing Dev Server Defaults with Vite v8.2.2 and create-vite v9.2.0 Scaffolding",
       "angle": "Analyzes how updates to create-vite templates set baseline tooling configurations and maintain clean dev server setups for frontend applications.",
