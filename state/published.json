@@ -338,12 +338,13 @@
         "web-performance"
       ],
       "category": "cloud-infrastructure",
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-zstandard-cache-transcoding-pingora-20260903-0d5588aa",
+      "prNumber": 25,
       "runId": "20260903-0d5588aa",
       "createdAt": "2026-09-03T19:25:39.355Z",
-      "updatedAt": "2026-09-03T19:26:32.706Z",
-      "prNumber": 25
+      "updatedAt": "2026-09-04T09:07:01.326Z",
+      "publishedAt": "2026-09-03T20:52:51Z"
     }
   ]
 }
