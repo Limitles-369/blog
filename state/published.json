@@ -357,12 +357,13 @@
         "software-architecture"
       ],
       "category": "cloud-infrastructure",
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-maintaining-pipeline-integrity-nodejs-typescript-20260904-ef3b5d66",
+      "prNumber": 26,
       "runId": "20260904-ef3b5d66",
       "createdAt": "2026-09-04T19:07:11.937Z",
-      "updatedAt": "2026-09-04T19:09:13.923Z",
-      "prNumber": 26
+      "updatedAt": "2026-09-05T08:33:45.512Z",
+      "publishedAt": "2026-09-04T19:20:25Z"
     }
   ]
 }
