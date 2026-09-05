@@ -364,6 +364,25 @@
       "createdAt": "2026-09-04T19:07:11.937Z",
       "updatedAt": "2026-09-05T08:33:45.512Z",
       "publishedAt": "2026-09-04T19:20:25Z"
+    },
+    {
+      "slug": "modernizing-dev-server-defaults-scaffolding",
+      "title": "Modernizing Dev Server Defaults in Scaffolding",
+      "dedupText": "Modernizing Dev Server Defaults in Scaffolding\nLearn how modernizing scaffolding and dev server defaults reduces configuration drift, eliminates technical debt, and speeds up full-stack workflows.\nrefactoring, software-architecture, typescript, web-performance",
+      "textHash": "b7caf18f53ba12c3568dc8c5e7b481159a72aab8ec97d20796f682ce0ae1ddbb",
+      "tags": [
+        "software-architecture",
+        "web-performance",
+        "refactoring",
+        "typescript"
+      ],
+      "category": "cloud-infrastructure",
+      "state": "open",
+      "branch": "bot/post-modernizing-dev-server-defaults-scaffolding-20260905-96b06ae7",
+      "runId": "20260905-96b06ae7",
+      "createdAt": "2026-09-05T18:33:48.094Z",
+      "updatedAt": "2026-09-05T18:34:55.461Z",
+      "prNumber": 27
     }
   ]
 }
