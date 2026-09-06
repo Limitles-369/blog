@@ -384,6 +384,25 @@
       "createdAt": "2026-09-05T18:33:48.094Z",
       "updatedAt": "2026-09-06T08:52:12.410Z",
       "publishedAt": "2026-09-05T19:15:31Z"
+    },
+    {
+      "slug": "migrating-typescript-7-breaking-changes",
+      "title": "Migrating to TypeScript 7.0.2: Breaking Changes",
+      "dedupText": "Migrating to TypeScript 7.0.2: Breaking Changes\nLearn how to safely migrate your codebase to TypeScript 7.0.2 by isolating type checking from build pipelines and managing breaking changes systematically.\njavascript, refactoring, software-architecture, typescript",
+      "textHash": "c444ea61e7631a91afbde2cd0bfb5d780a44fb8ded58bf830a3be7142320cc92",
+      "tags": [
+        "typescript",
+        "javascript",
+        "refactoring",
+        "software-architecture"
+      ],
+      "category": "cloud-infrastructure",
+      "state": "open",
+      "branch": "bot/post-migrating-typescript-7-breaking-changes-20260906-4d20ff85",
+      "runId": "20260906-4d20ff85",
+      "createdAt": "2026-09-06T18:37:30.210Z",
+      "updatedAt": "2026-09-06T18:39:31.159Z",
+      "prNumber": 28
     }
   ]
 }
