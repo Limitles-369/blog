@@ -377,12 +377,13 @@
         "typescript"
       ],
       "category": "cloud-infrastructure",
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-modernizing-dev-server-defaults-scaffolding-20260905-96b06ae7",
+      "prNumber": 27,
       "runId": "20260905-96b06ae7",
       "createdAt": "2026-09-05T18:33:48.094Z",
-      "updatedAt": "2026-09-05T18:34:55.461Z",
-      "prNumber": 27
+      "updatedAt": "2026-09-06T08:52:12.410Z",
+      "publishedAt": "2026-09-05T19:15:31Z"
     }
   ]
 }
