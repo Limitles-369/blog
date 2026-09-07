@@ -397,12 +397,13 @@
         "software-architecture"
       ],
       "category": "cloud-infrastructure",
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-migrating-typescript-7-breaking-changes-20260906-4d20ff85",
+      "prNumber": 28,
       "runId": "20260906-4d20ff85",
       "createdAt": "2026-09-06T18:37:30.210Z",
-      "updatedAt": "2026-09-06T18:39:31.159Z",
-      "prNumber": 28
+      "updatedAt": "2026-09-07T09:40:23.769Z",
+      "publishedAt": "2026-09-06T19:23:15Z"
     }
   ]
 }
