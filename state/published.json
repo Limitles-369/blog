@@ -404,6 +404,25 @@
       "createdAt": "2026-09-06T18:37:30.210Z",
       "updatedAt": "2026-09-07T09:40:23.769Z",
       "publishedAt": "2026-09-06T19:23:15Z"
+    },
+    {
+      "slug": "enhancing-jsdoc-type-safety-legacy-javascript",
+      "title": "Enhancing JSDoc Type Safety in Legacy JavaScript",
+      "dedupText": "Enhancing JSDoc Type Safety in Legacy JavaScript\nDiscover how to improve type safety in legacy JavaScript codebases using JSDoc annotations and modern TypeScript tools without a full rewrite.\njavascript, refactoring, software-architecture, typescript",
+      "textHash": "138007968a14062d25901c427c1f8251dc5ad186f6c5f672dfb09238d2c394a5",
+      "tags": [
+        "javascript",
+        "typescript",
+        "refactoring",
+        "software-architecture"
+      ],
+      "category": "uncategorized",
+      "state": "open",
+      "branch": "bot/post-enhancing-jsdoc-type-safety-legacy-javascript-20260907-6486c503",
+      "runId": "20260907-6486c503",
+      "createdAt": "2026-09-07T20:08:12.082Z",
+      "updatedAt": "2026-09-07T20:09:04.954Z",
+      "prNumber": 29
     }
   ]
 }

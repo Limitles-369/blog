@@ -97,25 +97,6 @@
       "attempts": 0
     },
     {
-      "id": "20260809-5db3b8cd-0",
-      "title": "Enhancing JSDoc Type Safety in Legacy JavaScript",
-      "angle": "Explain how TypeScript 5.7's improved JSDoc support allows teams to gain type safety without the overhead of a full migration to TypeScript.",
-      "dedupText": "Enhancing JSDoc Type Safety in Legacy JavaScript\nExplain how TypeScript 5.7's improved JSDoc support allows teams to gain type safety without the overhead of a full migration to TypeScript.\nJavaScript, Refactoring, TypeScript",
-      "textHash": "0e03735b00c98eb478779f1728449b8fce496ffaa69128fce01c63b932205826",
-      "tags": [
-        "TypeScript",
-        "JavaScript",
-        "Refactoring"
-      ],
-      "category": "uncategorized",
-      "sourceNames": [],
-      "score": 88,
-      "priority": 50,
-      "sources": [],
-      "discoveredAt": "2026-08-09T21:03:16.210Z",
-      "attempts": 0
-    },
-    {
       "id": "20260809-5db3b8cd-1",
       "title": "Preparing Your Infrastructure for Kubernetes 1.32",
       "angle": "Argue that the deprecation of in-tree cloud provider code necessitates a shift toward standardized CSI/CNI drivers for long-term stability.",
