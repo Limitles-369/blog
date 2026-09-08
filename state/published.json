@@ -417,12 +417,31 @@
         "software-architecture"
       ],
       "category": "uncategorized",
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-enhancing-jsdoc-type-safety-legacy-javascript-20260907-6486c503",
+      "prNumber": 29,
       "runId": "20260907-6486c503",
       "createdAt": "2026-09-07T20:08:12.082Z",
-      "updatedAt": "2026-09-07T20:09:04.954Z",
-      "prNumber": 29
+      "updatedAt": "2026-09-08T19:34:13.337Z",
+      "publishedAt": "2026-09-08T14:06:53Z"
+    },
+    {
+      "slug": "maintaining-production-stability-nodejs-releases",
+      "title": "Maintaining Production Stability with Node.js Releases",
+      "dedupText": "Maintaining Production Stability with Node.js Releases\nLearn how to balance production stability with modern tooling by managing LTS and current Node.js release tracks across your environments.\njavascript, software-architecture, web-performance",
+      "textHash": "460eff204dab9c6ec0b1a7f7475b286629b0851550af0d2e1f1c013b74c96b87",
+      "tags": [
+        "javascript",
+        "web-performance",
+        "software-architecture"
+      ],
+      "category": "cloud-infrastructure",
+      "state": "open",
+      "branch": "bot/post-maintaining-production-stability-nodejs-releases-20260908-c962e52b",
+      "runId": "20260908-c962e52b",
+      "createdAt": "2026-09-08T19:34:13.337Z",
+      "updatedAt": "2026-09-08T19:35:22.328Z",
+      "prNumber": 30
     }
   ]
 }

@@ -1271,43 +1271,6 @@
       "sources": [],
       "discoveredAt": "2026-08-19T13:13:47.595Z",
       "attempts": 0
-    },
-    {
-      "id": "20260901-f99be4b4-1",
-      "title": "Maintaining Production Stability: What to Expect from Node.js 24.20.0 LTS and 26.8.1 Current",
-      "angle": "Examine the practical steps for balancing long-term support stability in Node.js 24.20.0 against the experimental improvements found in Version 26.8.1.",
-      "dedupText": "Maintaining Production Stability: What to Expect from Node.js 24.20.0 LTS and 26.8.1 Current\nExamine the practical steps for balancing long-term support stability in Node.js 24.20.0 against the experimental improvements found in Version 26.8.1.\nBackend, Node.js, Performance, Security",
-      "textHash": "ff581f2606a309f830cdc868342c33ac00e409b50285a7e32db8075e4b9ffeac",
-      "tags": [
-        "Node.js",
-        "Backend",
-        "Security",
-        "Performance"
-      ],
-      "category": "cloud-infrastructure",
-      "sourceNames": [
-        "Cloudflare Blog",
-        "Kubernetes Releases"
-      ],
-      "score": 35,
-      "priority": 50,
-      "sources": [
-        "https://blog.cloudflare.com/botbase-for-operators/",
-        "https://blog.cloudflare.com/cache-transcoding/",
-        "https://blog.cloudflare.com/cloudflare-blog-uses-emdash/",
-        "https://blog.cloudflare.com/introducing-adaptive-intelligence/",
-        "https://blog.cloudflare.com/revisiting-spectre-attacks-on-workers/",
-        "https://blog.cloudflare.com/dns-cache-memory-optimization-1111/",
-        "https://github.com/kubernetes/kubernetes/releases/tag/v1.37.0",
-        "https://blog.cloudflare.com/bot-preference-sync/",
-        "https://github.com/kubernetes/kubernetes/releases/tag/v1.35.8",
-        "https://github.com/kubernetes/kubernetes/releases/tag/v1.34.11",
-        "https://github.com/kubernetes/kubernetes/releases/tag/v1.36.4",
-        "https://github.com/kubernetes/kubernetes/releases/tag/v1.37.0-rc.1",
-        "https://blog.cloudflare.com/task-based-oauth-consent/"
-      ],
-      "discoveredAt": "2026-09-01T20:02:13.320Z",
-      "attempts": 0
     }
   ]
 }
