@@ -211,26 +211,6 @@
       "attempts": 0
     },
     {
-      "id": "20260809-8ff530f7-1",
-      "title": "PostgreSQL 17: Mastering the New SQL/JSON Standard",
-      "angle": "Provide a practical guide on using the new standardized SQL/JSON functions like JSON_TABLE to improve query portability and data manipulation.",
-      "dedupText": "PostgreSQL 17: Mastering the New SQL/JSON Standard\nProvide a practical guide on using the new standardized SQL/JSON functions like JSON_TABLE to improve query portability and data manipulation.\nData Engineering, Databases, PostgreSQL, SQL",
-      "textHash": "080a8b0c452c735bd5392a3b10561231a4af6646fac8af1bb5c61649dfb973d0",
-      "tags": [
-        "PostgreSQL",
-        "Databases",
-        "SQL",
-        "Data Engineering"
-      ],
-      "category": "uncategorized",
-      "sourceNames": [],
-      "score": 88,
-      "priority": 50,
-      "sources": [],
-      "discoveredAt": "2026-08-09T21:08:02.225Z",
-      "attempts": 0
-    },
-    {
       "id": "20260809-8ff530f7-2",
       "title": "Auditing Your Kubernetes Manifests for 1.32 Deprecations",
       "angle": "Provide a checklist for identifying and replacing legacy API versions in CI/CD pipelines before the Kubernetes 1.32 transition.",

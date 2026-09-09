@@ -436,12 +436,30 @@
         "software-architecture"
       ],
       "category": "cloud-infrastructure",
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-maintaining-production-stability-nodejs-releases-20260908-c962e52b",
+      "prNumber": 30,
       "runId": "20260908-c962e52b",
       "createdAt": "2026-09-08T19:34:13.337Z",
-      "updatedAt": "2026-09-08T19:35:22.328Z",
-      "prNumber": 30
+      "updatedAt": "2026-09-09T19:28:29.154Z",
+      "publishedAt": "2026-09-09T16:56:05Z"
+    },
+    {
+      "slug": "postgresql-17-sql-json-standard",
+      "title": "Mastering PostgreSQL 17 SQL/JSON Standard",
+      "dedupText": "Mastering PostgreSQL 17 SQL/JSON Standard\nDiscover how PostgreSQL 17 brings the SQL/JSON standard to life, enabling portable queries, JSON_TABLE projections, and cleaner architectures.\nrefactoring, software-architecture",
+      "textHash": "3209d1bb67d127281a413ddaf24f6563ad6312de75b7bbab0004a122a2728395",
+      "tags": [
+        "software-architecture",
+        "refactoring"
+      ],
+      "category": "uncategorized",
+      "state": "open",
+      "branch": "bot/post-postgresql-17-sql-json-standard-20260909-a4d65c88",
+      "runId": "20260909-a4d65c88",
+      "createdAt": "2026-09-09T19:28:29.154Z",
+      "updatedAt": "2026-09-09T19:29:26.508Z",
+      "prNumber": 31
     }
   ]
 }
