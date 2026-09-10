@@ -544,26 +544,6 @@
       "attempts": 0
     },
     {
-      "id": "20260810-803681f6-5",
-      "title": "SQLite as a Document Store: Leveraging Enhanced JSON Functions in SQLite 3.48.0",
-      "angle": "Explain how SQLite 3.48.0 improves the performance of JSON processing functions, making it a highly efficient embedded document store for local and edge applications.",
-      "dedupText": "SQLite as a Document Store: Leveraging Enhanced JSON Functions in SQLite 3.48.0\nExplain how SQLite 3.48.0 improves the performance of JSON processing functions, making it a highly efficient embedded document store for local and edge applications.\nDatabases, Embedded Systems, JSON, SQLite",
-      "textHash": "48b7a8d2e934df1728ba9953851cdf6f20bb0f61025fc24c5d4ef1e05915faf2",
-      "tags": [
-        "SQLite",
-        "JSON",
-        "Databases",
-        "Embedded Systems"
-      ],
-      "category": "uncategorized",
-      "sourceNames": [],
-      "score": 88,
-      "priority": 50,
-      "sources": [],
-      "discoveredAt": "2026-08-10T10:40:32.354Z",
-      "attempts": 0
-    },
-    {
       "id": "20260810-803681f6-6",
       "title": "Preventing Silent Type Coercions: Strict Mode Enhancements in SQLite 3.48.0",
       "angle": "Explain how SQLite 3.48.0 refines STRICT table definitions to enforce strict type safety and prevent silent data corruption in embedded databases.",

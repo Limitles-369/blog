@@ -454,12 +454,30 @@
         "refactoring"
       ],
       "category": "uncategorized",
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-postgresql-17-sql-json-standard-20260909-a4d65c88",
+      "prNumber": 31,
       "runId": "20260909-a4d65c88",
       "createdAt": "2026-09-09T19:28:29.154Z",
-      "updatedAt": "2026-09-09T19:29:26.508Z",
-      "prNumber": 31
+      "updatedAt": "2026-09-10T19:14:56.632Z",
+      "publishedAt": "2026-09-10T18:07:25Z"
+    },
+    {
+      "slug": "sqlite-as-a-document-store",
+      "title": "SQLite as a Document Store",
+      "dedupText": "SQLite as a Document Store\nDiscover how SQLite functions as a fast local and edge document store by leveraging enhanced JSON parsing, efficient indexing, and hybrid schemas.\nsoftware-architecture, web-performance",
+      "textHash": "4699a6ecd1a00b171a1e5933238542aa437fe73d69152a7f7eb2e6cf3d373d36",
+      "tags": [
+        "software-architecture",
+        "web-performance"
+      ],
+      "category": "uncategorized",
+      "state": "open",
+      "branch": "bot/post-sqlite-as-a-document-store-20260910-ae4c86a6",
+      "runId": "20260910-ae4c86a6",
+      "createdAt": "2026-09-10T19:14:56.632Z",
+      "updatedAt": "2026-09-10T19:16:07.196Z",
+      "prNumber": 32
     }
   ]
 }
