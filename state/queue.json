@@ -563,26 +563,6 @@
       "attempts": 0
     },
     {
-      "id": "20260810-aa5a2440-0",
-      "title": "Preventing Runtime ReferenceErrors: Stricter Closure Validation in TypeScript 5.7",
-      "angle": "Explain how TypeScript 5.7's stricter validation catches variables used in closures before they are initialized, preventing a common class of runtime ReferenceError bugs.",
-      "dedupText": "Preventing Runtime ReferenceErrors: Stricter Closure Validation in TypeScript 5.7\nExplain how TypeScript 5.7's stricter validation catches variables used in closures before they are initialized, preventing a common class of runtime ReferenceError bugs.\nDebugging, JavaScript, Type Safety, TypeScript",
-      "textHash": "0e35dd5a35ad5cd85c4068e1c386327d4179cfa14c6a449efce4e6ae998aea92",
-      "tags": [
-        "TypeScript",
-        "JavaScript",
-        "Debugging",
-        "Type Safety"
-      ],
-      "category": "uncategorized",
-      "sourceNames": [],
-      "score": 88,
-      "priority": 50,
-      "sources": [],
-      "discoveredAt": "2026-08-10T15:34:08.604Z",
-      "attempts": 0
-    },
-    {
       "id": "20260810-aa5a2440-2",
       "title": "Running NestJS and gRPC on Bun: The Power of Native node:http2 Compatibility",
       "angle": "Explain how Bun 1.2's full compatibility with node:http2 allows enterprise frameworks and gRPC libraries to run on Bun without modification.",

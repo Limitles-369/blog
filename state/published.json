@@ -472,12 +472,32 @@
         "web-performance"
       ],
       "category": "uncategorized",
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-sqlite-as-a-document-store-20260910-ae4c86a6",
+      "prNumber": 32,
       "runId": "20260910-ae4c86a6",
       "createdAt": "2026-09-10T19:14:56.632Z",
-      "updatedAt": "2026-09-10T19:16:07.196Z",
-      "prNumber": 32
+      "updatedAt": "2026-09-11T19:16:05.662Z",
+      "publishedAt": "2026-09-11T17:29:56Z"
+    },
+    {
+      "slug": "stricter-closure-validation-typescript",
+      "title": "Stricter Closure Validation in TypeScript",
+      "dedupText": "Stricter Closure Validation in TypeScript\nPrevent runtime ReferenceErrors in TypeScript by leveraging stricter compiler validation for uninitialized variables captured inside closures.\njavascript, refactoring, software-architecture, typescript",
+      "textHash": "7efd3e8e096aa89f5c880d59cb9fa626f7fe691b60b2d72800a5554e81113f3e",
+      "tags": [
+        "typescript",
+        "javascript",
+        "refactoring",
+        "software-architecture"
+      ],
+      "category": "uncategorized",
+      "state": "open",
+      "branch": "bot/post-stricter-closure-validation-typescript-20260911-95ebadd2",
+      "runId": "20260911-95ebadd2",
+      "createdAt": "2026-09-11T19:16:05.662Z",
+      "updatedAt": "2026-09-11T19:17:14.505Z",
+      "prNumber": 33
     }
   ]
 }
