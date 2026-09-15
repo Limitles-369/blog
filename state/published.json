@@ -492,12 +492,32 @@
         "software-architecture"
       ],
       "category": "uncategorized",
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-stricter-closure-validation-typescript-20260911-95ebadd2",
+      "prNumber": 33,
       "runId": "20260911-95ebadd2",
       "createdAt": "2026-09-11T19:16:05.662Z",
-      "updatedAt": "2026-09-11T19:17:14.505Z",
-      "prNumber": 33
+      "updatedAt": "2026-09-15T19:49:01.627Z",
+      "publishedAt": "2026-09-15T19:29:39Z"
+    },
+    {
+      "slug": "typescript-5-5-inferred-type-predicates",
+      "title": "TypeScript 5.5 Inferred Type Predicates",
+      "dedupText": "TypeScript 5.5 Inferred Type Predicates\nDiscover how TypeScript 5.5 eliminates repetitive boilerplate by automatically inferring type predicates, simplifying array filtering and type narrowing.\njavascript, refactoring, software-architecture, typescript",
+      "textHash": "d03aad7a835b1011731813f60c5dc76ff2c00fbe78ed3a30e885c03af5d5a5f9",
+      "tags": [
+        "typescript",
+        "javascript",
+        "refactoring",
+        "software-architecture"
+      ],
+      "category": "uncategorized",
+      "state": "open",
+      "branch": "bot/post-typescript-5-5-inferred-type-predicates-20260915-66497b40",
+      "runId": "20260915-66497b40",
+      "createdAt": "2026-09-15T19:49:01.627Z",
+      "updatedAt": "2026-09-15T19:49:57.430Z",
+      "prNumber": 34
     }
   ]
 }
