@@ -686,25 +686,6 @@
       "attempts": 0
     },
     {
-      "id": "20260811-94854ba8-0",
-      "title": "Decoupling State from Components: Architectural Freedom in Svelte 5",
-      "angle": "Explain how Svelte 5's new Runes architecture ($state, $derived, $effect) frees developers from the component-root scope, allowing them to write reusable, reactive logic in standard JavaScript files without complex writable stores.",
-      "dedupText": "Decoupling State from Components: Architectural Freedom in Svelte 5\nExplain how Svelte 5's new Runes architecture ($state, $derived, $effect) frees developers from the component-root scope, allowing them to write reusable, reactive logic in standard JavaScript files without complex writable stores.\nFrontend Architecture, State Management, Svelte 5",
-      "textHash": "19e3976e06617a77fa175eb0c9b6a8ebb8b6ed39922aa393cd4d782d5508a48a",
-      "tags": [
-        "Svelte 5",
-        "Frontend Architecture",
-        "State Management"
-      ],
-      "category": "uncategorized",
-      "sourceNames": [],
-      "score": 88,
-      "priority": 50,
-      "sources": [],
-      "discoveredAt": "2026-08-11T17:16:25.669Z",
-      "attempts": 0
-    },
-    {
       "id": "20260811-94854ba8-1",
       "title": "Beyond Slots: Mastering Component Composition with Svelte 5 Snippets",
       "angle": "Explain how Svelte 5's new Snippets syntax replaces the traditional slot mechanism, treating UI templates as first-class, passable values to simplify complex component composition.",

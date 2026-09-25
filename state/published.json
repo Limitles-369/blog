@@ -519,6 +519,25 @@
       "createdAt": "2026-09-15T19:49:01.627Z",
       "updatedAt": "2026-09-24T20:06:46.582Z",
       "publishedAt": "2026-09-24T15:22:17Z"
+    },
+    {
+      "slug": "decoupling-state-from-components-svelte-5",
+      "title": "Decoupling State from Components in Svelte 5",
+      "dedupText": "Decoupling State from Components in Svelte 5\nDiscover how Svelte 5 runes remove component-root bottlenecks, enabling modular state management and cleaner software architecture in pure JavaScript modules.\njavascript, refactoring, software-architecture, typescript",
+      "textHash": "b4a7d8700ef4d573e7d7aab62ab87950f26ab50d74d5f746c6e66410354ed57c",
+      "tags": [
+        "software-architecture",
+        "javascript",
+        "typescript",
+        "refactoring"
+      ],
+      "category": "uncategorized",
+      "state": "open",
+      "branch": "bot/post-decoupling-state-from-components-svelte-5-20260925-2e4364ec",
+      "runId": "20260925-2e4364ec",
+      "createdAt": "2026-09-25T09:46:36.482Z",
+      "updatedAt": "2026-09-25T09:47:28.683Z",
+      "prNumber": 35
     }
   ]
 }
