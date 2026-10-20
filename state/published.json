@@ -532,12 +532,32 @@
         "refactoring"
       ],
       "category": "uncategorized",
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-decoupling-state-from-components-svelte-5-20260925-2e4364ec",
+      "prNumber": 35,
       "runId": "20260925-2e4364ec",
       "createdAt": "2026-09-25T09:46:36.482Z",
-      "updatedAt": "2026-09-25T09:47:28.683Z",
-      "prNumber": 35
+      "updatedAt": "2026-10-20T20:07:20.079Z",
+      "publishedAt": "2026-10-20T18:25:54Z"
+    },
+    {
+      "slug": "typescript-5-7-relative-import-rewriting-esm",
+      "title": "TypeScript 5.7 Relative Import Rewriting for ESM",
+      "dedupText": "TypeScript 5.7 Relative Import Rewriting for ESM\nSimplify your ESM build pipelines with TypeScript 5.7's native relative import rewriting, eliminating custom post-processing scripts and brittle workarounds.\njavascript, refactoring, software-architecture, typescript",
+      "textHash": "05c9341ae4deb7f2e25c35a93584fd1545b19352bc75ba4085a9541ee32d3a1c",
+      "tags": [
+        "typescript",
+        "javascript",
+        "refactoring",
+        "software-architecture"
+      ],
+      "category": "uncategorized",
+      "state": "open",
+      "branch": "bot/post-typescript-5-7-relative-import-rewriting-esm-20261020-40059cee",
+      "runId": "20261020-40059cee",
+      "createdAt": "2026-10-20T20:07:20.079Z",
+      "updatedAt": "2026-10-20T20:09:25.385Z",
+      "prNumber": 36
     }
   ]
 }
