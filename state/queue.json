@@ -386,26 +386,6 @@
       "attempts": 0
     },
     {
-      "id": "20260809-e854e22e-4",
-      "title": "Bypassing the AWS SDK: Native S3 File Operations in Bun 1.2",
-      "angle": "Argue that Bun 1.2's native S3 protocol support (Bun.file) simplifies cloud architecture and reduces bundle sizes by eliminating the need for the heavy @aws-sdk/client-s3 package.",
-      "dedupText": "Bypassing the AWS SDK: Native S3 File Operations in Bun 1.2\nArgue that Bun 1.2's native S3 protocol support (Bun.file) simplifies cloud architecture and reduces bundle sizes by eliminating the need for the heavy @aws-sdk/client-s3 package.\nAWS S3, Bun, Cloud Architecture, Serverless",
-      "textHash": "b4ca99c41d725abb09a49425fb3b93f648dfe2adf2dc0aff31ab798cc1255712",
-      "tags": [
-        "Bun",
-        "AWS S3",
-        "Cloud Architecture",
-        "Serverless"
-      ],
-      "category": "uncategorized",
-      "sourceNames": [],
-      "score": 87,
-      "priority": 50,
-      "sources": [],
-      "discoveredAt": "2026-08-09T21:45:37.502Z",
-      "attempts": 0
-    },
-    {
       "id": "20260809-e854e22e-5",
       "title": "Optimizing Serverless Cold Starts with Prisma 6's Reduced Engine Size",
       "angle": "Explain how Prisma 6's 50% reduction in engine binary size directly addresses cold-start latency on serverless platforms like AWS Lambda and Vercel.",

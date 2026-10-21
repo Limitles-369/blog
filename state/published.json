@@ -552,12 +552,32 @@
         "software-architecture"
       ],
       "category": "uncategorized",
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-typescript-5-7-relative-import-rewriting-esm-20261020-40059cee",
+      "prNumber": 36,
       "runId": "20261020-40059cee",
       "createdAt": "2026-10-20T20:07:20.079Z",
-      "updatedAt": "2026-10-20T20:09:25.385Z",
-      "prNumber": 36
+      "updatedAt": "2026-10-21T20:21:34.950Z",
+      "publishedAt": "2026-10-21T14:20:30Z"
+    },
+    {
+      "slug": "native-s3-file-operations-bun-1-2",
+      "title": "Native S3 File Operations in Bun 1.2",
+      "dedupText": "Native S3 File Operations in Bun 1.2\nLearn how Bun 1.2 introduces native S3 file operations, eliminating heavy cloud SDK dependencies and simplifying backend storage workflows.\njavascript, refactoring, typescript, web-performance",
+      "textHash": "d1f0214ae88a99f9ab088ccd42b4b4e9a1fa9adfb6de7c5d71d1f7b5c2cf4090",
+      "tags": [
+        "typescript",
+        "javascript",
+        "web-performance",
+        "refactoring"
+      ],
+      "category": "uncategorized",
+      "state": "open",
+      "branch": "bot/post-native-s3-file-operations-bun-1-2-20261021-2b642736",
+      "runId": "20261021-2b642736",
+      "createdAt": "2026-10-21T20:21:34.950Z",
+      "updatedAt": "2026-10-21T20:22:29.207Z",
+      "prNumber": 37
     }
   ]
 }
