@@ -2,25 +2,6 @@
   "version": 1,
   "entries": [
     {
-      "id": "20260809-a04a23e1-0",
-      "title": "Navigating the Next.js 15 Caching Shift",
-      "angle": "Explain why moving from implicit to explicit caching in Next.js 15 is a net positive for application predictability and how to refactor existing data-fetching patterns.",
-      "dedupText": "Navigating the Next.js 15 Caching Shift\nExplain why moving from implicit to explicit caching in Next.js 15 is a net positive for application predictability and how to refactor existing data-fetching patterns.\nCaching, Next.js, Web Development",
-      "textHash": "4a05d50199c423f3e203c7004b87c37792812e020dbbeb0e641b92717bb3ad6b",
-      "tags": [
-        "Next.js",
-        "Web Development",
-        "Caching"
-      ],
-      "category": "uncategorized",
-      "sourceNames": [],
-      "score": 85,
-      "priority": 50,
-      "sources": [],
-      "discoveredAt": "2026-08-09T20:50:15.477Z",
-      "attempts": 0
-    },
-    {
       "id": "20260809-a04a23e1-2",
       "title": "Optimizing High-Write Workloads with PostgreSQL 17",
       "angle": "Argue that the new memory-based vacuuming in PostgreSQL 17 is the most significant performance update for database-heavy applications in years.",
