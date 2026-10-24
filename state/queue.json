@@ -97,25 +97,6 @@
       "attempts": 0
     },
     {
-      "id": "20260809-5db3b8cd-2",
-      "title": "Building Local Multimodal Pipelines with Llama 3.2",
-      "angle": "Explain how to integrate vision models into local, private workflows using llama.cpp, moving beyond simple text-based LLM interactions.",
-      "dedupText": "Building Local Multimodal Pipelines with Llama 3.2\nExplain how to integrate vision models into local, private workflows using llama.cpp, moving beyond simple text-based LLM interactions.\nAI, LLM, Local Inference",
-      "textHash": "f7f8390d0fc53b3d79f8e2b6322d7b0f9542b2fa9b235c8e6c17c9166b715c77",
-      "tags": [
-        "AI",
-        "LLM",
-        "Local Inference"
-      ],
-      "category": "uncategorized",
-      "sourceNames": [],
-      "score": 85,
-      "priority": 50,
-      "sources": [],
-      "discoveredAt": "2026-08-09T21:03:16.210Z",
-      "attempts": 0
-    },
-    {
       "id": "20260809-5db3b8cd-3",
       "title": "Beyond Basic Audits: Using OpenSSF Scorecard for Nuanced Security",
       "angle": "Explain how updated Scorecard heuristics for branch protection and dependency pinning provide a more accurate picture of project security health.",

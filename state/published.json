@@ -593,12 +593,31 @@
         "web-performance"
       ],
       "category": "uncategorized",
-      "state": "open",
+      "state": "merged",
       "branch": "bot/post-nextjs-15-caching-shift-20261023-aee48556",
+      "prNumber": 38,
       "runId": "20261023-aee48556",
       "createdAt": "2026-10-23T09:31:44.783Z",
-      "updatedAt": "2026-10-23T09:32:37.424Z",
-      "prNumber": 38
+      "updatedAt": "2026-10-24T18:58:33.123Z",
+      "publishedAt": "2026-10-24T18:03:42Z"
+    },
+    {
+      "slug": "building-local-multimodal-pipelines",
+      "title": "Building Local Multimodal Pipelines",
+      "dedupText": "Building Local Multimodal Pipelines\nLearn how to build local multimodal AI pipelines using vision-language models and llama.cpp to process images and text securely on your own hardware.\nsoftware-architecture, typescript, web-performance",
+      "textHash": "66f293bed48f341846ed0a2c247e4c8550d8756cb3a54aa3b71091fc06b0b02e",
+      "tags": [
+        "software-architecture",
+        "typescript",
+        "web-performance"
+      ],
+      "category": "uncategorized",
+      "state": "open",
+      "branch": "bot/post-building-local-multimodal-pipelines-20261024-c86a7575",
+      "runId": "20261024-c86a7575",
+      "createdAt": "2026-10-24T18:58:33.123Z",
+      "updatedAt": "2026-10-24T18:59:45.719Z",
+      "prNumber": 39
     }
   ]
 }
